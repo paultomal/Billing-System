@@ -2,6 +2,7 @@ package com.paul.billing_system.service;
 
 import com.paul.billing_system.dto.OrganizationDTO;
 import com.paul.billing_system.entity.Organization;
+import com.paul.billing_system.enums.OrganizationTypes;
 import com.paul.billing_system.repository.OrganizationRepository;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,8 @@ public class OrganizationServices {
         organization.setName(organizationDTO.getName());
         organization.setAddress(organizationDTO.getAddress());
         organization.setContact(organizationDTO.getContact());
-        organization.setType(organizationDTO.getType());
+        OrganizationTypes organizationType = OrganizationTypes.getOrganizationTypeByLabel(organizationDTO.getType());
+        organization.setType(organizationType);
         organization.setEmail(organizationDTO.getEmail());
         organization.setWebsite(organizationDTO.getWebsite());
         return organizationRepository.save(organization);
