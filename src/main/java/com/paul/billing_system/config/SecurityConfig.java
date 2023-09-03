@@ -1,3 +1,4 @@
+/*
 package com.paul.billing_system.config;
 
 import com.paul.billing_system.service.UserInfoUserDetailsService;
@@ -40,3 +41,4 @@ public class SecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 }
+*/

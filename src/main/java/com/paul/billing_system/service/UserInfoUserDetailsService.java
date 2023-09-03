@@ -1,3 +1,4 @@
+/*
 package com.paul.billing_system.service;
 
 import com.paul.billing_system.config.UserInfoUserDetails;
@@ -24,3 +25,4 @@ public class UserInfoUserDetailsService implements UserDetailsService {
                 .orElseThrow(()-> new UsernameNotFoundException("user not found" + username));
     }
 }
+*/

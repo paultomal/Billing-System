@@ -5,8 +5,8 @@ import java.util.List;
 
 public enum OrganizationTypes {
     HOSPITAL("Hospital"),
-    CLINIC("Clinic"),
-    PHARMACEUTICAL("Pharmaceutical");
+    DIAGNOSTIC_CENTER("Diagnostic Center"),
+    CHAMBER("Chamber");
     private final String label;
     OrganizationTypes (String label) {
         this.label = label;
