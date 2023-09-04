@@ -13,9 +13,9 @@ public class CompoundersDTO {
     private String designation;
 
     public static CompoundersDTO form(Compounders compounders){
-        CompoundersDTO staffsDTO = new CompoundersDTO();
-        staffsDTO.setName(compounders.getName());
-        staffsDTO.setDesignation(compounders.getDesignation());
-        return staffsDTO;
+        CompoundersDTO compoundersDTO = new CompoundersDTO();
+        compoundersDTO.setName(compounders.getName());
+        compoundersDTO.setDesignation(compounders.getDesignation());
+        return compoundersDTO;
     }
 }
