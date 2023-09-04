@@ -1,7 +1,13 @@
 package com.paul.billing_system.controller;
 
+import com.paul.billing_system.dto.ServicesInfoDTO;
+import com.paul.billing_system.entity.ServicesInfo;
 import com.paul.billing_system.service.ServicesInfoServices;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class ServicesController {
@@ -9,5 +15,30 @@ public class ServicesController {
 
     public ServicesController(ServicesInfoServices servicesInfoServices) {
         this.servicesInfoServices = servicesInfoServices;
+    }
+
+    @PostMapping("/addServices")
+    public ResponseEntity<?> save(@RequestBody ServicesInfoDTO servicesInfoDTO){
+        ServicesInfoDTO servicesInfoDTO1 = ServicesInfoDTO.form(servicesInfoServices.save(servicesInfoDTO));
+        return new ResponseEntity<>(servicesInfoDTO1, HttpStatus.OK);
+    }
+
+    @GetMapping("/getAllServices")
+    public ResponseEntity<?> getAllServices(){
+        List<ServicesInfo> servicesInfos = servicesInfoServices.getAllServices();
+        List<ServicesInfoDTO> servicesInfoDTOList = servicesInfos.stream().map(ServicesInfoDTO::form).toList();
+        return new ResponseEntity<>(servicesInfoDTOList,HttpStatus.OK);
+    }
+
+    @GetMapping("/getService/{id}")
+    public ResponseEntity<?> getServiceById(@PathVariable Long id){
+        ServicesInfoDTO servicesInfoDTO = ServicesInfoDTO.form(servicesInfoServices.getServiceById(id));
+        return new ResponseEntity<>(servicesInfoDTO,HttpStatus.OK);
+    }
+
+    @PutMapping("/updateServices")
+    public ResponseEntity<?> updateService(@RequestBody ServicesInfoDTO servicesInfoDTO, @PathVariable Long id){
+        ServicesInfoDTO servicesInfoDTO1 = ServicesInfoDTO.form(servicesInfoServices.updateService(servicesInfoDTO,id));
+        return new ResponseEntity<>(servicesInfoDTO1,HttpStatus.OK);
     }
 }

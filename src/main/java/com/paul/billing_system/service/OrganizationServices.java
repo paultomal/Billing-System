@@ -1,7 +1,8 @@
 package com.paul.billing_system.service;
 
+import com.paul.billing_system.dto.DepartmentDTO;
 import com.paul.billing_system.dto.OrganizationDTO;
-import com.paul.billing_system.entity.Organization;
+import com.paul.billing_system.entity.*;
 import com.paul.billing_system.enums.OrganizationTypes;
 import com.paul.billing_system.repository.OrganizationRepository;
 import org.springframework.stereotype.Service;
@@ -25,9 +26,13 @@ public class OrganizationServices {
         OrganizationTypes organizationType = OrganizationTypes.getOrganizationTypeByLabel(organizationDTO.getType());
         organization.setType(organizationType);
         organization.setEmail(organizationDTO.getEmail());
-        organization.setWebsite(organizationDTO.getWebsite());
+        organization.setDepartments(organizationDTO.getDepartmentDTOS().stream().map(Department::form).toList());
+        organization.setPatients(organizationDTO.getPatientsDTOS().stream().map(Patients::form).toList());
+        organization.setAdmins(organizationDTO.getAdminDTOS().stream().map(UserInfo::form).toList());
+        organization.setCompounders(organizationDTO.getCompoundersDTOS().stream().map(Compounders::form).toList());
         return organizationRepository.save(organization);
     }
+
 
     public List<Organization> getAllOrganization() {
         return organizationRepository.findAll();
@@ -49,7 +54,10 @@ public class OrganizationServices {
             organization1.setAddress(organizationDTO.getAddress());
             organization1.setContact(organizationDTO.getContact());
             organization1.setEmail(organizationDTO.getEmail());
-            organization1.setWebsite(organizationDTO.getWebsite());
+            organization1.setDepartments(organizationDTO.getDepartmentDTOS().stream().map(Department::form).toList());
+            organization1.setPatients(organizationDTO.getPatientsDTOS().stream().map(Patients::form).toList());
+            organization1.setAdmins(organizationDTO.getAdminDTOS().stream().map(UserInfo::form).toList());
+            organization1.setCompounders(organizationDTO.getCompoundersDTOS().stream().map(Compounders::form).toList());
             return organizationRepository.save(organization1);
         }
         return new Organization();

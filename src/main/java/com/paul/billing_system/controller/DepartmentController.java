@@ -1,0 +1,42 @@
+package com.paul.billing_system.controller;
+
+import com.paul.billing_system.dto.DepartmentDTO;
+import com.paul.billing_system.entity.Department;
+import com.paul.billing_system.service.DepartmentServices;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+public class DepartmentController {
+    private final DepartmentServices departmentServices;
+
+    public DepartmentController(DepartmentServices departmentServices) {
+        this.departmentServices = departmentServices;
+    }
+
+    @PostMapping("/addDepartment")
+    public ResponseEntity<?> save(@RequestBody DepartmentDTO departmentDTO){
+        DepartmentDTO departmentDTO1 = DepartmentDTO.form(departmentServices.save(departmentDTO));
+        return new ResponseEntity<>(departmentDTO1, HttpStatus.OK);
+    }
+    @GetMapping("/getAllDepartment")
+    public ResponseEntity<?> getAllDepartment(){
+        List<Department> departments = departmentServices.getAllDepartmant();
+        List<DepartmentDTO> departmentDTOList = departments.stream().map(DepartmentDTO::form).toList();
+        return new ResponseEntity<>(departmentDTOList,HttpStatus.OK);
+    }
+    @GetMapping("/getDepartment/{id}")
+    public ResponseEntity<?> getDepartmentById(@PathVariable Long id){
+        DepartmentDTO departmentDTO = DepartmentDTO.form(departmentServices.getDepartmentById(id));
+        return new ResponseEntity<>(departmentDTO,HttpStatus.OK);
+    }
+
+    @PutMapping("/updateDepartment/{id}")
+    public ResponseEntity<?> updateDepartment(@PathVariable Long id, @RequestBody DepartmentDTO departmentDTO){
+        DepartmentDTO departmentDTO1 = DepartmentDTO.form(departmentServices.updateDepartment(departmentDTO,id));
+        return new ResponseEntity<>(departmentDTO1,HttpStatus.OK);
+    }
+}

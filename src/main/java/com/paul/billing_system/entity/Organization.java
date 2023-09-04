@@ -1,11 +1,16 @@
 package com.paul.billing_system.entity;
 
+import com.paul.billing_system.dto.AdminDTO;
 import com.paul.billing_system.enums.OrganizationTypes;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -25,5 +30,36 @@ public class Organization {
     @Email(message = "Email should be valid")
     @Column(unique = true)
     private String email;
-    private String website;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(
+            name = "organization_department",
+            joinColumns = @JoinColumn(name = "organization_id",referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "depertment_id")
+    )
+    private List<Department> departments;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(
+            name = "organization_patients",
+            joinColumns = @JoinColumn(name = "organization_id",referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "patients_id")
+    )
+    private List<Patients> patients;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(
+            name = "organization_admins",
+            joinColumns = @JoinColumn(name = "organization_id",referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "admin_id")
+    )
+    private List<UserInfo> admins;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(
+            name = "organization_compounders",
+            joinColumns = @JoinColumn(name = "organization_id",referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "compounder_id")
+    )
+    private List<Compounders> compounders;
 }

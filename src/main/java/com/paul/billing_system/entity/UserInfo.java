@@ -1,5 +1,6 @@
 package com.paul.billing_system.entity;
 
+import com.paul.billing_system.dto.AdminDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,4 +21,13 @@ public class UserInfo {
     private String email;
     private String password;
     private String roles;
+
+    public static UserInfo form(AdminDTO adminDTO) {
+    UserInfo userInfo=new UserInfo();
+    userInfo.setName(adminDTO.getName());
+    userInfo.setEmail(adminDTO.getEmail());
+    userInfo.setPassword(adminDTO.getPassword());
+    userInfo.setRoles("Admin");
+    return userInfo;
+    }
 }
