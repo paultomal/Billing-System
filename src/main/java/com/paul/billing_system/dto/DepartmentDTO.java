@@ -1,7 +1,9 @@
 package com.paul.billing_system.dto;
 
 import com.paul.billing_system.entity.Department;
+import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.entity.ServicesInfo;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,11 +14,14 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DepartmentDTO {
+
+    @NotEmpty(message = "Department name should not be empty")
     private String deptName;
 
     private Long noOfPatients;
 
     private List<ServicesInfoDTO> services;
+
 
     public static DepartmentDTO form(Department department){
         DepartmentDTO departmentDTO = new DepartmentDTO();

@@ -3,8 +3,10 @@ package com.paul.billing_system.controller;
 import com.paul.billing_system.dto.ServicesInfoDTO;
 import com.paul.billing_system.entity.ServicesInfo;
 import com.paul.billing_system.service.ServicesInfoServices;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +20,10 @@ public class ServicesController {
     }
 
     @PostMapping("/addServices")
-    public ResponseEntity<?> save(@RequestBody ServicesInfoDTO servicesInfoDTO){
+    public ResponseEntity<?> save(@Valid @RequestBody ServicesInfoDTO servicesInfoDTO, BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>("Validation errors: " + bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+        }
         ServicesInfoDTO servicesInfoDTO1 = ServicesInfoDTO.form(servicesInfoServices.save(servicesInfoDTO));
         return new ResponseEntity<>(servicesInfoDTO1, HttpStatus.OK);
     }
@@ -36,8 +41,11 @@ public class ServicesController {
         return new ResponseEntity<>(servicesInfoDTO,HttpStatus.OK);
     }
 
-    @PutMapping("/updateServices")
-    public ResponseEntity<?> updateService(@RequestBody ServicesInfoDTO servicesInfoDTO, @PathVariable Long id){
+    @PutMapping("/updateServices/{id}")
+    public ResponseEntity<?> updateService( @Valid @RequestBody ServicesInfoDTO servicesInfoDTO, @PathVariable Long id, BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>("Validation errors: " + bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+        }
         ServicesInfoDTO servicesInfoDTO1 = ServicesInfoDTO.form(servicesInfoServices.updateService(servicesInfoDTO,id));
         return new ResponseEntity<>(servicesInfoDTO1,HttpStatus.OK);
     }

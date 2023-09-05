@@ -3,8 +3,10 @@ package com.paul.billing_system.controller;
 import com.paul.billing_system.dto.DepartmentDTO;
 import com.paul.billing_system.entity.Department;
 import com.paul.billing_system.service.DepartmentServices;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +20,10 @@ public class DepartmentController {
     }
 
     @PostMapping("/addDepartment")
-    public ResponseEntity<?> save(@RequestBody DepartmentDTO departmentDTO){
+    public ResponseEntity<?> save(@Valid @RequestBody DepartmentDTO departmentDTO, BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>("Validation errors: " + bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+        }
         DepartmentDTO departmentDTO1 = DepartmentDTO.form(departmentServices.save(departmentDTO));
         return new ResponseEntity<>(departmentDTO1, HttpStatus.OK);
     }
@@ -35,7 +40,10 @@ public class DepartmentController {
     }
 
     @PutMapping("/updateDepartment/{id}")
-    public ResponseEntity<?> updateDepartment(@PathVariable Long id, @RequestBody DepartmentDTO departmentDTO){
+    public ResponseEntity<?> updateDepartment(@Valid @PathVariable Long id, @RequestBody DepartmentDTO departmentDTO,BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>("Validation errors: " + bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+        }
         DepartmentDTO departmentDTO1 = DepartmentDTO.form(departmentServices.updateDepartment(departmentDTO,id));
         return new ResponseEntity<>(departmentDTO1,HttpStatus.OK);
     }

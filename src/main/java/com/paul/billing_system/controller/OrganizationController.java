@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-//@RequestMapping("/api/organization")
+@RequestMapping("api/organization")
 public class OrganizationController {
     private final OrganizationServices organizationServices;
 
@@ -24,29 +24,22 @@ public class OrganizationController {
         this.organizationServices = organizationServices;
     }
 
-    @PostMapping("/organization/create")
+    @PostMapping("/create")
     public ResponseEntity<?> save(@Valid @RequestBody OrganizationDTO organizationDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            String errorMessage = bindingResult.getAllErrors()
-                    .stream()
-                    .map(error -> {
-                        if (error instanceof FieldError fieldError) {
-                            return fieldError.getField() + ": " + error.getDefaultMessage();
-                        }
-                        return error.getDefaultMessage();
-                    })
-                    .collect(Collectors.joining("; "));
-            return ResponseEntity.badRequest().body(errorMessage);
+            return new ResponseEntity<>("Validation errors: " + bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
         }
+
         OrganizationDTO organizationDTO1 = OrganizationDTO.form(organizationServices.save(organizationDTO));
         return new ResponseEntity<>(organizationDTO1, HttpStatus.OK);
     }
+
     @GetMapping("/OrganizationType")
     public List<String> getAllOrganizationTypesList() {
         return OrganizationTypes.getAllOrganizationTypesList();
     }
 
-    @GetMapping("/organization/list")
+    @GetMapping("/list")
     public ResponseEntity<?> getAllOrganization(){
         List<Organization> organizations =  organizationServices.getAllOrganization();
        /* List<OrganizationDTO> organizationDTOList = organizations.stream()
@@ -57,13 +50,17 @@ public class OrganizationController {
         return new ResponseEntity<>(organizationName,HttpStatus.OK);
     }
 
-    @GetMapping("/organization/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> getOrganizationById(@PathVariable Long id){
         OrganizationDTO organizationDTO = OrganizationDTO.form(organizationServices.getOrganizationByid(id));
         return new ResponseEntity<>(organizationDTO,HttpStatus.OK);
     }
+
     @PutMapping("/updateOrganizationProfile/{id}")
-    public ResponseEntity<?> updateOrganizationProfile(@Valid @PathVariable Long id, @RequestBody OrganizationDTO organizationDTO){
+    public ResponseEntity<?> updateOrganizationProfile(@Valid @PathVariable Long id, @RequestBody OrganizationDTO organizationDTO, BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>("Validation errors: " + bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+        }
         OrganizationDTO organizationDTO1 = OrganizationDTO.form(organizationServices.updateOrganizationProfile(organizationDTO,id));
         return new ResponseEntity<>(organizationDTO1,HttpStatus.OK);
     }

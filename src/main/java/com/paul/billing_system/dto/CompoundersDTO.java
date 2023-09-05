@@ -1,6 +1,7 @@
 package com.paul.billing_system.dto;
 
 import com.paul.billing_system.entity.Compounders;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CompoundersDTO {
+
+    @NotEmpty(message = "Name should not be empty")
     private String name;
     private String designation;
 

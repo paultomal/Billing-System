@@ -8,25 +8,26 @@ public enum OrganizationTypes {
     DIAGNOSTIC_CENTER("Diagnostic Center"),
     CHAMBER("Chamber");
     private final String label;
+
     OrganizationTypes (String label) {
         this.label = label;
     }
-    public static String getLabelByGrade(OrganizationTypes organizationTypes) {
-        return organizationTypes.label;
-    }
+
     public static OrganizationTypes getOrganizationTypeByLabel(String label) {
         for (OrganizationTypes types : OrganizationTypes.values()) {
             if(types.label.equals(label)) return types;
         }
         return null;
     }
+
     public static String getLabelByOrganizationType(OrganizationTypes organizationTypes){
         return organizationTypes.label;
     }
+
     public static List<String> getAllOrganizationTypesList() {
         List<String> organizationTypesList = new ArrayList<>();
-        for (OrganizationTypes organizationTypes: OrganizationTypes.values()) {
-            organizationTypesList.add(OrganizationTypes.getLabelByGrade(organizationTypes));
+        for (OrganizationTypes organizationTypes : OrganizationTypes.values()) {
+            organizationTypesList.add(OrganizationTypes.getLabelByOrganizationType(organizationTypes));
         }
         return organizationTypesList;
     }

@@ -3,8 +3,10 @@ package com.paul.billing_system.controller;
 import com.paul.billing_system.dto.AdminDTO;
 import com.paul.billing_system.entity.UserInfo;
 import com.paul.billing_system.service.UserServices;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,7 +21,10 @@ public class AdminController {
     }
 
     @PostMapping ("/addAdmin")
-    public ResponseEntity<?> save(@RequestBody AdminDTO adminDTO){
+    public ResponseEntity<?> save(@Valid @RequestBody AdminDTO adminDTO, BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>("Validation errors: " + bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+        }
         AdminDTO adminDTO1 = AdminDTO.form(userServices.saveAdmin(adminDTO));
         return new ResponseEntity<>(adminDTO1, HttpStatus.OK);
     }
@@ -40,7 +45,7 @@ public class AdminController {
     }
 
     @PutMapping("/updateAdmin/{id}")
-    public ResponseEntity<?> updateAdmin(@PathVariable Long id, @RequestBody AdminDTO adminDTO){
+    public ResponseEntity<?> updateAdmin(@Valid @PathVariable Long id, @RequestBody AdminDTO adminDTO,BindingResult bindingResult){
         AdminDTO adminDTO1 = AdminDTO.form(userServices.updateAdmin(id,adminDTO));
         return new ResponseEntity<>(adminDTO1,HttpStatus.OK);
     }

@@ -1,6 +1,7 @@
 package com.paul.billing_system.dto;
 
 import com.paul.billing_system.entity.Patients;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PatientsDTO {
+
+    @NotEmpty(message = "Name should not be empty")
     private String name;
+
     private int age;
 
     public static PatientsDTO form(Patients patients){

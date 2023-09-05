@@ -1,10 +1,8 @@
 package com.paul.billing_system.entity;
 
 import com.paul.billing_system.dto.ServicesInfoDTO;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,8 +15,13 @@ public class ServicesInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotEmpty(message = "Name should not be empty")
     private String serviceName;
+
     private Double serviceCharge;
+
+
     public static ServicesInfo form(ServicesInfoDTO servicesInfoDTO){
         ServicesInfo servicesInfo = new ServicesInfo();
         servicesInfo.setServiceName(servicesInfoDTO.getServiceName());

@@ -20,13 +20,18 @@ public class Organization {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotEmpty(message = "Name should not be empty")
     private String name;
+
     @NotEmpty(message = "Address Should Not Be Empty")
     private String address;
+
     private String contact;
+
+    @Enumerated(EnumType.STRING)
     private OrganizationTypes type;
-    @NotBlank(message = "Email is mandatory")
+
     @Email(message = "Email should be valid")
     @Column(unique = true)
     private String email;
@@ -35,7 +40,7 @@ public class Organization {
     @JoinTable(
             name = "organization_department",
             joinColumns = @JoinColumn(name = "organization_id",referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "depertment_id")
+            inverseJoinColumns = @JoinColumn(name = "department_id")
     )
     private List<Department> departments;
 

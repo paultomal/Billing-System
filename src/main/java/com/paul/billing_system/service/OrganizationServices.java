@@ -23,13 +23,15 @@ public class OrganizationServices {
         organization.setName(organizationDTO.getName());
         organization.setAddress(organizationDTO.getAddress());
         organization.setContact(organizationDTO.getContact());
+        
         OrganizationTypes organizationType = OrganizationTypes.getOrganizationTypeByLabel(organizationDTO.getType());
         organization.setType(organizationType);
+
         organization.setEmail(organizationDTO.getEmail());
-        organization.setDepartments(organizationDTO.getDepartmentDTOS().stream().map(Department::form).toList());
-        organization.setPatients(organizationDTO.getPatientsDTOS().stream().map(Patients::form).toList());
-        organization.setAdmins(organizationDTO.getAdminDTOS().stream().map(UserInfo::form).toList());
-        organization.setCompounders(organizationDTO.getCompoundersDTOS().stream().map(Compounders::form).toList());
+        organization.setDepartments(organizationDTO.getDepartment().stream().map(Department::form).toList());
+        organization.setPatients(organizationDTO.getPatients().stream().map(Patients::form).toList());
+        organization.setAdmins(organizationDTO.getAdmin().stream().map(UserInfo::form).toList());
+        organization.setCompounders(organizationDTO.getCompounders().stream().map(Compounders::form).toList());
         return organizationRepository.save(organization);
     }
 
@@ -54,10 +56,10 @@ public class OrganizationServices {
             organization1.setAddress(organizationDTO.getAddress());
             organization1.setContact(organizationDTO.getContact());
             organization1.setEmail(organizationDTO.getEmail());
-            organization1.setDepartments(organizationDTO.getDepartmentDTOS().stream().map(Department::form).toList());
-            organization1.setPatients(organizationDTO.getPatientsDTOS().stream().map(Patients::form).toList());
-            organization1.setAdmins(organizationDTO.getAdminDTOS().stream().map(UserInfo::form).toList());
-            organization1.setCompounders(organizationDTO.getCompoundersDTOS().stream().map(Compounders::form).toList());
+            organization1.setDepartments(organizationDTO.getDepartment().stream().map(Department::form).toList());
+            organization1.setPatients(organizationDTO.getPatients().stream().map(Patients::form).toList());
+            organization1.setAdmins(organizationDTO.getAdmin().stream().map(UserInfo::form).toList());
+            organization1.setCompounders(organizationDTO.getCompounders().stream().map(Compounders::form).toList());
             return organizationRepository.save(organization1);
         }
         return new Organization();

@@ -3,6 +3,7 @@ package com.paul.billing_system.entity;
 import com.paul.billing_system.dto.DepartmentDTO;
 import com.paul.billing_system.dto.ServicesInfoDTO;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,14 +18,16 @@ public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String deptName;
-    private Long noOfPatients;
 
+    @NotEmpty(message = "Department name should not be empty")
+    private String deptName;
+
+    private Long noOfPatients;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(
-            name = "depertment_services",
-            joinColumns = @JoinColumn(name = "depertment_id", referencedColumnName = "id"),
+            name = "department_services",
+            joinColumns = @JoinColumn(name = "department_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "services_id")
     )
     private List<ServicesInfo> services;
