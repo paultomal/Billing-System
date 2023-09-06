@@ -1,6 +1,5 @@
 package com.paul.billing_system.service;
 
-import com.paul.billing_system.dto.DepartmentDTO;
 import com.paul.billing_system.dto.OrganizationDTO;
 import com.paul.billing_system.entity.*;
 import com.paul.billing_system.enums.OrganizationTypes;
@@ -31,7 +30,7 @@ public class OrganizationServices {
         organization.setDepartments(organizationDTO.getDepartment().stream().map(Department::form).toList());
         organization.setPatients(organizationDTO.getPatients().stream().map(Patients::form).toList());
         organization.setAdmins(organizationDTO.getAdmin().stream().map(UserInfo::form).toList());
-        organization.setCompounders(organizationDTO.getCompounders().stream().map(Compounders::form).toList());
+        organization.setCompounders(organizationDTO.getCompounders().stream().map(Compounders::formCompunderHospital).toList());
         return organizationRepository.save(organization);
     }
 
@@ -59,7 +58,7 @@ public class OrganizationServices {
             organization1.setDepartments(organizationDTO.getDepartment().stream().map(Department::form).toList());
             organization1.setPatients(organizationDTO.getPatients().stream().map(Patients::form).toList());
             organization1.setAdmins(organizationDTO.getAdmin().stream().map(UserInfo::form).toList());
-            organization1.setCompounders(organizationDTO.getCompounders().stream().map(Compounders::form).toList());
+            organization1.setCompounders(organizationDTO.getCompounders().stream().map(Compounders::formCompunderHospital).toList());
             return organizationRepository.save(organization1);
         }
         return new Organization();

@@ -9,16 +9,16 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CompoundersDTO {
+public class CompoundersHospitalDTO {
 
     @NotEmpty(message = "Name should not be empty")
     private String name;
     private String designation;
 
-    public static CompoundersDTO form(Compounders compounders){
-        CompoundersDTO compoundersDTO = new CompoundersDTO();
-        compoundersDTO.setName(compounders.getName());
-        compoundersDTO.setDesignation(compounders.getDesignation());
-        return compoundersDTO;
+    public static CompoundersHospitalDTO form(Compounders compounders){
+        CompoundersHospitalDTO compoundersHospitalDTO = new CompoundersHospitalDTO();
+        compoundersHospitalDTO.setName(compounders.getName());
+        compoundersHospitalDTO.setDesignation(compounders.getDesignation());
+        return compoundersHospitalDTO;
     }
 }

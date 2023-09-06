@@ -1,6 +1,7 @@
 package com.paul.billing_system.entity;
 
-import com.paul.billing_system.dto.CompoundersDTO;
+import com.paul.billing_system.dto.CompoundersChamberDTO;
+import com.paul.billing_system.dto.CompoundersHospitalDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,10 +25,19 @@ public class Compounders {
 
     private String designation;
 
-    public static Compounders form(CompoundersDTO compoundersDTO) {
+    private String department;
+
+    public static Compounders formCompunderHospital(CompoundersHospitalDTO compoundersHospitalDTO) {
     Compounders compounders = new Compounders();
-    compounders.setName(compoundersDTO.getName());
-    compounders.setDesignation(compoundersDTO.getDesignation());
+    compounders.setName(compoundersHospitalDTO.getName());
+    compounders.setDesignation(compoundersHospitalDTO.getDesignation());
     return compounders;
+    }
+
+    public static Compounders formCompounderChamber(CompoundersChamberDTO compoundersChamberDTO){
+        Compounders compounders = new Compounders();
+        compounders.setName(compoundersChamberDTO.getName());
+        compounders.setDepartment(compoundersChamberDTO.getDepartment());
+        return compounders;
     }
 }

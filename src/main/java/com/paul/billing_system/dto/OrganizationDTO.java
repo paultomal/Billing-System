@@ -38,7 +38,7 @@ public class OrganizationDTO {
 
     private List<AdminDTO> admin;
 
-    private List<CompoundersDTO> compounders;
+    private List<CompoundersHospitalDTO> compounders;
 
     public static OrganizationDTO form(Organization organization) {
         OrganizationDTO organizationDTO = new OrganizationDTO();
@@ -53,7 +53,7 @@ public class OrganizationDTO {
         organizationDTO.setAdmin(organization.getAdmins().stream()
                 .filter(adminDTO -> "Admin".equals(adminDTO.getRoles()))
                 .map(AdminDTO::form).toList());
-        organizationDTO.setCompounders(organization.getCompounders().stream().map(CompoundersDTO::form).toList());
+        organizationDTO.setCompounders(organization.getCompounders().stream().map(CompoundersHospitalDTO::form).toList());
         return organizationDTO;
     }
 }
