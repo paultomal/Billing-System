@@ -20,11 +20,11 @@ public class ServicesController {
     }
 
     @PostMapping("/addServices")
-    public ResponseEntity<?> save(@Valid @RequestBody ServicesInfoDTO servicesInfoDTO, BindingResult bindingResult){
+    public ResponseEntity<?> save(@Valid @RequestBody ServicesInfoDTO servicesInfoDTO, BindingResult bindingResult,Long id){
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>("Validation errors: " + bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
         }
-        ServicesInfoDTO servicesInfoDTO1 = ServicesInfoDTO.form(servicesInfoServices.save(servicesInfoDTO));
+        ServicesInfoDTO servicesInfoDTO1 = ServicesInfoDTO.form(servicesInfoServices.save(id,servicesInfoDTO));
         return new ResponseEntity<>(servicesInfoDTO1, HttpStatus.OK);
     }
 

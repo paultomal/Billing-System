@@ -4,8 +4,10 @@ import com.paul.billing_system.dto.CompoundersChamberDTO;
 import com.paul.billing_system.dto.MedSpecialistDTO;
 import com.paul.billing_system.entity.Compounders;
 import com.paul.billing_system.entity.MedSpecialist;
+import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.repository.CompoundersRepository;
 import com.paul.billing_system.repository.MedSpecialistRepository;
+import com.paul.billing_system.repository.OrganizationRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,17 +18,26 @@ public class MedSpecialistServices {
     private final MedSpecialistRepository medSpecialistRepository;
     private final CompoundersRepository compoundersRepository;
 
-    public MedSpecialistServices(MedSpecialistRepository medSpecialistRepository, CompoundersRepository compoundersRepository) {
+    private final OrganizationRepository organizationRepository;
+
+    public MedSpecialistServices(MedSpecialistRepository medSpecialistRepository, CompoundersRepository compoundersRepository, OrganizationRepository organizationRepository) {
         this.medSpecialistRepository = medSpecialistRepository;
         this.compoundersRepository = compoundersRepository;
+        this.organizationRepository = organizationRepository;
     }
 
-    public MedSpecialist saveMedSpecialist(MedSpecialistDTO medSpecialistDTO) {
+    public MedSpecialist saveMedSpecialist(Long id, MedSpecialistDTO medSpecialistDTO) {
+        Optional<Organization> organization = organizationRepository.findById(id);
         MedSpecialist medSpecialist = new MedSpecialist();
-        medSpecialist.setMedSpecName(medSpecialistDTO.getMedSpecName());
-        medSpecialist.setNoOfDoctors(medSpecialistDTO.getNoOfDoctors());
-        medSpecialist.setDoctors(medSpecialistDTO.getDoctors());
-        return medSpecialistRepository.save(medSpecialist);
+        if (organization.isPresent()) {
+            medSpecialist.setMedSpecName(medSpecialistDTO.getMedSpecName());
+            medSpecialist.setNoOfDoctors(medSpecialistDTO.getNoOfDoctors());
+            medSpecialist.setDoctors(medSpecialistDTO.getDoctors());
+            medSpecialistRepository.save(medSpecialist);
+            organization.get().setMedSpecialists(List.of(medSpecialist));
+            organizationRepository.save(organization.get());
+        }
+        return medSpecialist;
     }
 
     public List<MedSpecialist> getAllMedSpecialist() {

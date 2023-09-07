@@ -1,7 +1,10 @@
 package com.paul.billing_system.service;
 
 import com.paul.billing_system.dto.PatientsDTO;
+import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.entity.Patients;
+import com.paul.billing_system.enums.OrganizationTypes;
+import com.paul.billing_system.repository.OrganizationRepository;
 import com.paul.billing_system.repository.PatientsRepository;
 import org.springframework.stereotype.Service;
 
@@ -11,19 +14,31 @@ import java.util.Optional;
 @Service
 public class PatientsServices {
     private final PatientsRepository patientsRepository;
-    public PatientsServices(PatientsRepository patientsRepository) {
+    private final OrganizationRepository organizationRepository;
+
+    public PatientsServices(PatientsRepository patientsRepository, OrganizationRepository organizationRepository) {
         this.patientsRepository = patientsRepository;
+        this.organizationRepository = organizationRepository;
     }
 
-    public Patients savePatients(PatientsDTO patientsDTO) {
+    public Patients savePatients(Long id, PatientsDTO patientsDTO) {
+        Optional<Organization> organization = organizationRepository.findById(id);
         Patients patients = new Patients();
-        patients.setName(patientsDTO.getName());
-        patients.setAge(patientsDTO.getAge());
-        return patientsRepository.save(patients);
+
+        if (organization.equals(OrganizationTypes.HOSPITAL)) {
+            if (organization.isPresent()) {
+                patients.setName(patientsDTO.getName());
+                patients.setAge(patientsDTO.getAge());
+                patientsRepository.save(patients);
+                organization.get().setPatients(List.of(patients));
+                organizationRepository.save(organization.get());
+            }
+        }
+        return patients;
     }
 
     public List<Patients> getAllPatients() {
-    return patientsRepository.findAll();
+        return patientsRepository.findAll();
     }
 
     public Patients getPatientById(Long id) {
@@ -35,13 +50,13 @@ public class PatientsServices {
     }
 
     public Patients updatePatient(PatientsDTO patientsDTO, Long id) {
-    Optional<Patients> patients = patientsRepository.findById(id);
-    if (patients.isPresent()){
-        Patients patients1 = new Patients();
-        patients1.setName(patientsDTO.getName());
-        patients1.setAge(patientsDTO.getAge());
-        return patientsRepository.save(patients1);
-    }
-    return new Patients();
+        Optional<Patients> patients = patientsRepository.findById(id);
+        if (patients.isPresent()) {
+            Patients patients1 = new Patients();
+            patients1.setName(patientsDTO.getName());
+            patients1.setAge(patientsDTO.getAge());
+            return patientsRepository.save(patients1);
+        }
+        return new Patients();
     }
 }

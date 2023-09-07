@@ -21,11 +21,11 @@ public class AdminController {
     }
 
     @PostMapping ("/addAdmin")
-    public ResponseEntity<?> save(@Valid @RequestBody AdminDTO adminDTO, BindingResult bindingResult){
+    public ResponseEntity<?> save(@Valid @RequestBody AdminDTO adminDTO, BindingResult bindingResult, Long id){
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>("Validation errors: " + bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
         }
-        AdminDTO adminDTO1 = AdminDTO.form(userServices.saveAdmin(adminDTO));
+        AdminDTO adminDTO1 = AdminDTO.form(userServices.saveAdmin(id,adminDTO));
         return new ResponseEntity<>(adminDTO1, HttpStatus.OK);
     }
 

@@ -22,11 +22,11 @@ public class CompoundersController {
 
     //create compouders for hospital
     @PostMapping("/addHospitalCompounders")
-    public ResponseEntity<?> saveHospitalCompounders(@Valid @RequestBody CompoundersHospitalDTO compoundersHospitalDTO, BindingResult bindingResult){
+    public ResponseEntity<?> saveHospitalCompounders(@Valid @RequestBody CompoundersHospitalDTO compoundersHospitalDTO, BindingResult bindingResult, Long id){
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>("Validation errors: " + bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
         }
-        CompoundersHospitalDTO compoundersHospitalDTO1 = CompoundersHospitalDTO.form(compoundersServices.saveHospitalCompounders(compoundersHospitalDTO));
+        CompoundersHospitalDTO compoundersHospitalDTO1 = CompoundersHospitalDTO.form(compoundersServices.saveHospitalCompounders(id,compoundersHospitalDTO));
         return new ResponseEntity<>(compoundersHospitalDTO1, HttpStatus.OK);
     }
 
@@ -49,8 +49,8 @@ public class CompoundersController {
 
     //create compouders for chamber
     @PostMapping("/addChamberCompounders")
-    public ResponseEntity<?> saveChamberCoumpounder(@Valid @RequestBody CompoundersChamberDTO compoundersChamberDTO){
-        CompoundersChamberDTO compoundersChamberDTO1 = CompoundersChamberDTO.form(compoundersServices.saveChamberCoumpounder(compoundersChamberDTO));
+    public ResponseEntity<?> saveChamberCoumpounder(@Valid @RequestBody CompoundersChamberDTO compoundersChamberDTO, Long id){
+        CompoundersChamberDTO compoundersChamberDTO1 = CompoundersChamberDTO.form(compoundersServices.saveChamberCoumpounder(id,compoundersChamberDTO));
         return new ResponseEntity<>(compoundersChamberDTO1, HttpStatus.OK);
     }
 

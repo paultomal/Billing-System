@@ -27,10 +27,13 @@ public class OrganizationServices {
         organization.setType(organizationType);
 
         organization.setEmail(organizationDTO.getEmail());
-        organization.setDepartments(organizationDTO.getDepartment().stream().map(Department::form).toList());
-        organization.setPatients(organizationDTO.getPatients().stream().map(Patients::form).toList());
-        organization.setAdmins(organizationDTO.getAdmin().stream().map(UserInfo::form).toList());
-        organization.setCompounders(organizationDTO.getCompounders().stream().map(Compounders::formCompunderHospital).toList());
+       /* if (organizationType.equals(OrganizationTypes.HOSPITAL)) {
+            organization.setDepartments(organizationDTO.getDepartment().stream().map(Department::form).toList());
+            organization.setPatients(organizationDTO.getPatients().stream().map(Patients::form).toList());
+            organization.setAdmins(organizationDTO.getAdmin().stream().map(UserInfo::form).toList());
+            organization.setCompounders(organizationDTO.getCompounders().stream().map(Compounders::formCompunderHospital).toList());
+        }*/
+
         return organizationRepository.save(organization);
     }
 
@@ -55,10 +58,11 @@ public class OrganizationServices {
             organization1.setAddress(organizationDTO.getAddress());
             organization1.setContact(organizationDTO.getContact());
             organization1.setEmail(organizationDTO.getEmail());
+            /*
             organization1.setDepartments(organizationDTO.getDepartment().stream().map(Department::form).toList());
             organization1.setPatients(organizationDTO.getPatients().stream().map(Patients::form).toList());
             organization1.setAdmins(organizationDTO.getAdmin().stream().map(UserInfo::form).toList());
-            organization1.setCompounders(organizationDTO.getCompounders().stream().map(Compounders::formCompunderHospital).toList());
+            organization1.setCompounders(organizationDTO.getCompounders().stream().map(Compounders::formCompunderHospital).toList());*/
             return organizationRepository.save(organization1);
         }
         return new Organization();

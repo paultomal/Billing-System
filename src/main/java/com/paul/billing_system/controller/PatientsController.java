@@ -1,6 +1,7 @@
 package com.paul.billing_system.controller;
 
 import com.paul.billing_system.dto.PatientsDTO;
+import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.entity.Patients;
 import com.paul.billing_system.service.PatientsServices;
 import jakarta.validation.Valid;
@@ -10,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class PatientsController {
@@ -19,12 +21,12 @@ public class PatientsController {
         this.patientsServices = patientsServices;
     }
 
-    @PostMapping("/addPatients")
-    public ResponseEntity<?> savePatients(@Valid @RequestBody PatientsDTO patientsDTO , BindingResult bindingResult){
+    @PostMapping("/addPatients/{id}")
+    public ResponseEntity<?> savePatients(@Valid @RequestBody PatientsDTO patientsDTO , BindingResult bindingResult,@PathVariable Long id){
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>("Validation errors: " + bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
         }
-        PatientsDTO patientsDTO1 = PatientsDTO.form(patientsServices.savePatients(patientsDTO));
+        PatientsDTO patientsDTO1 = PatientsDTO.form(patientsServices.savePatients(id,patientsDTO));
         return new ResponseEntity<>(patientsDTO1, HttpStatus.OK);
     }
 

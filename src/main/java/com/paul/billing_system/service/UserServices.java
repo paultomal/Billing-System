@@ -1,7 +1,9 @@
 package com.paul.billing_system.service;
 
 import com.paul.billing_system.dto.AdminDTO;
+import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.entity.UserInfo;
+import com.paul.billing_system.repository.OrganizationRepository;
 import com.paul.billing_system.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -11,18 +13,26 @@ import java.util.Optional;
 @Service
 public class UserServices {
     private final UserRepository userRepository;
+    private final OrganizationRepository organizationRepository;
 
-    public UserServices(UserRepository userRepository) {
+    public UserServices(UserRepository userRepository, OrganizationRepository organizationRepository) {
         this.userRepository = userRepository;
+        this.organizationRepository = organizationRepository;
     }
 
-    public UserInfo saveAdmin(AdminDTO adminDTO) {
+    public UserInfo saveAdmin(Long id, AdminDTO adminDTO) {
+        Optional<Organization> organization = organizationRepository.findById(id);
         UserInfo userInfo = new UserInfo();
+        if (organization.isPresent()){
         userInfo.setName(adminDTO.getName());
         userInfo.setEmail(adminDTO.getEmail());
         userInfo.setPassword(adminDTO.getPassword());
         userInfo.setRoles("Admin");
-        return userRepository.save(userInfo);
+        userRepository.save(userInfo);
+        organization.get().setAdmins(List.of(userInfo));
+        organizationRepository.save(organization.get());
+        }
+        return userInfo;
     }
 
     public List<UserInfo> getAdmins() {

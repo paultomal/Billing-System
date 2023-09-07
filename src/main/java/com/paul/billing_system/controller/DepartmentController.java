@@ -20,11 +20,11 @@ public class DepartmentController {
     }
 
     @PostMapping("/addDepartment")
-    public ResponseEntity<?> save(@Valid @RequestBody DepartmentDTO departmentDTO, BindingResult bindingResult){
+    public ResponseEntity<?> save(@Valid @RequestBody DepartmentDTO departmentDTO,Long orgId, BindingResult bindingResult){
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>("Validation errors: " + bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
         }
-        DepartmentDTO departmentDTO1 = DepartmentDTO.form(departmentServices.save(departmentDTO));
+        DepartmentDTO departmentDTO1 = DepartmentDTO.form(departmentServices.save(departmentDTO,orgId));
         return new ResponseEntity<>(departmentDTO1, HttpStatus.OK);
     }
     @GetMapping("/getAllDepartment")

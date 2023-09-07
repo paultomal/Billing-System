@@ -21,9 +21,9 @@ public class MedSpecialistController {
         this.medSpecialistServices = medSpecialistServices;
     }
 
-    @PostMapping("/addMedSpecialist")
-    public ResponseEntity<?> saveMedSpecialist(@RequestBody MedSpecialistDTO medSpecialistDTO){
-        MedSpecialistDTO medSpecialistDTO1 = MedSpecialistDTO.form(medSpecialistServices.saveMedSpecialist(medSpecialistDTO));
+    @PostMapping("/addMedSpecialist/{id}")
+    public ResponseEntity<?> saveMedSpecialist(@RequestBody MedSpecialistDTO medSpecialistDTO,@PathVariable Long id){
+        MedSpecialistDTO medSpecialistDTO1 = MedSpecialistDTO.form(medSpecialistServices.saveMedSpecialist(id,medSpecialistDTO));
         return new ResponseEntity<>(medSpecialistDTO1, HttpStatus.OK);
     }
     @GetMapping("/getAllMedSpecialist")

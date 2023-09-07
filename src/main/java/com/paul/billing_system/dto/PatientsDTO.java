@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PatientsDTO {
 
+    private Long id;
+
     @NotEmpty(message = "Name should not be empty")
     private String name;
 
@@ -18,6 +20,7 @@ public class PatientsDTO {
 
     public static PatientsDTO form(Patients patients){
         PatientsDTO patientsDTO = new PatientsDTO();
+        patientsDTO.setId(patients.getId());
         patientsDTO.setName(patients.getName());
         patientsDTO.setAge(patients.getAge());
         return patientsDTO;

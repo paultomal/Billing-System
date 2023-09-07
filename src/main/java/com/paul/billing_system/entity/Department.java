@@ -32,6 +32,7 @@ public class Department {
     )
     private List<ServicesInfo> services;
 
+
     public static Department form(DepartmentDTO departmentDTO){
         Department department = new Department();
         department.setDeptName(departmentDTO.getDeptName());
