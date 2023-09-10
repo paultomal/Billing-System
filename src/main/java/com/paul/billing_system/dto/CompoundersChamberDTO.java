@@ -11,12 +11,15 @@ import lombok.NoArgsConstructor;
 
 public class CompoundersChamberDTO {
 
+    private Long id;
+
     private String name;
 
     private String department;
 
     public static CompoundersChamberDTO form(Compounders compounders){
         CompoundersChamberDTO compoundersChamberDTO = new CompoundersChamberDTO();
+        compoundersChamberDTO.setId(compounders.getId());
         compoundersChamberDTO.setName(compounders.getName());
         compoundersChamberDTO.setDepartment(compounders.getDepartment());
         return compoundersChamberDTO;

@@ -1,5 +1,6 @@
 package com.paul.billing_system.dto;
 
+import com.paul.billing_system.entity.MedSpecialist;
 import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.enums.OrganizationTypes;
 import jakarta.persistence.Column;
@@ -32,13 +33,17 @@ public class OrganizationDTO {
     @Column(unique = true)
     private String email;
 
+    private List<AdminDTO> admin;
+
     private List<DepartmentDTO> department;
 
     private List<PatientsDTO> patients;
 
-    private List<AdminDTO> admin;
+    private List<CompoundersHospitalDTO> compoundersHospital;
 
-    private List<CompoundersHospitalDTO> compounders;
+    private List<CompoundersChamberDTO> compoundersChamber;
+
+    private List<MedSpecialistDTO> medSpecialists;
 
     public static OrganizationDTO form(Organization organization) {
         OrganizationDTO organizationDTO = new OrganizationDTO();
@@ -48,12 +53,15 @@ public class OrganizationDTO {
         String organizationTypes = OrganizationTypes.getLabelByOrganizationType(organization.getType());
         organizationDTO.setType(organizationTypes);
         organizationDTO.setEmail(organization.getEmail());
-        organizationDTO.setDepartment(organization.getDepartments().stream().map(DepartmentDTO::form).toList());
-        organizationDTO.setPatients(organization.getPatients().stream().map(PatientsDTO::form).toList());
-        organizationDTO.setAdmin(organization.getAdmins().stream()
+        //organizationDTO.setDepartment(organization.getDepartments().stream().map(DepartmentDTO::form).toList());
+        organizationDTO.setDepartment(organization.getDepartments()!=null ? organization.getDepartments().stream().map(DepartmentDTO::form).toList() : null);
+        organizationDTO.setAdmin(organization.getAdmins()!=null ? organization.getAdmins().stream()
                 .filter(adminDTO -> "Admin".equals(adminDTO.getRoles()))
-                .map(AdminDTO::form).toList());
-        organizationDTO.setCompounders(organization.getCompounders().stream().map(CompoundersHospitalDTO::form).toList());
+                .map(AdminDTO::form).toList() : null);
+        organizationDTO.setCompoundersHospital(organization.getCompounders()!= null ? organization.getCompounders().stream().map(CompoundersHospitalDTO::form).toList() : null);
+        organizationDTO.setCompoundersChamber(organization.getCompounders()!=null ? organization.getCompounders().stream().map(CompoundersChamberDTO::form).toList() : null);
+        organizationDTO.setPatients(organization.getPatients() != null ? organization.getPatients().stream().map(PatientsDTO::form).toList() : null);
+        organizationDTO.setMedSpecialists(organization.getMedSpecialists() != null ? organization.getMedSpecialists().stream().map(MedSpecialistDTO::form).toList() : null);
         return organizationDTO;
     }
 }

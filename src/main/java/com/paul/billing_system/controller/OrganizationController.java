@@ -1,6 +1,8 @@
 package com.paul.billing_system.controller;
 
+import com.paul.billing_system.dto.CompoundersHospitalDTO;
 import com.paul.billing_system.dto.OrganizationDTO;
+import com.paul.billing_system.entity.Compounders;
 import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.enums.OrganizationTypes;
 import com.paul.billing_system.service.OrganizationServices;
@@ -13,10 +15,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/organization")
+@RequestMapping("/organization")
 public class OrganizationController {
     private final OrganizationServices organizationServices;
 
@@ -39,21 +42,15 @@ public class OrganizationController {
         return OrganizationTypes.getAllOrganizationTypesList();
     }
 
-    @GetMapping("/list")
-    public ResponseEntity<?> getAllOrganization(){
-        List<Organization> organizations =  organizationServices.getAllOrganization();
-       /* List<OrganizationDTO> organizationDTOList = organizations.stream()
+    @GetMapping("/{type}")
+    public ResponseEntity<?> getAllOrganization(@PathVariable String type){
+        List<Organization> organizations =  organizationServices.getAllOrganization(OrganizationTypes.getOrganizationTypeByLabel(type));
+        List<OrganizationDTO> organizationDTOList = organizations.stream()
                 .map(OrganizationDTO::form)
-                .collect(Collectors.toList());*/
-        List<String> organizationName = organizations.stream()
-                .map(Organization::getName).toList();
-        return new ResponseEntity<>(organizationName,HttpStatus.OK);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getOrganizationById(@PathVariable Long id){
-        OrganizationDTO organizationDTO = OrganizationDTO.form(organizationServices.getOrganizationByid(id));
-        return new ResponseEntity<>(organizationDTO,HttpStatus.OK);
+                .collect(Collectors.toList());
+/*        List<String> organizationName = organizations.stream()
+                .map(Organization::getName).toList();*/
+        return new ResponseEntity<>(organizationDTOList,HttpStatus.OK);
     }
 
     @PutMapping("/updateOrganizationProfile/{id}")
@@ -64,4 +61,17 @@ public class OrganizationController {
         OrganizationDTO organizationDTO1 = OrganizationDTO.form(organizationServices.updateOrganizationProfile(organizationDTO,id));
         return new ResponseEntity<>(organizationDTO1,HttpStatus.OK);
     }
+
+    @GetMapping("/getOrganizationById/{id}")
+    public ResponseEntity<?> getOrganizationById(@PathVariable Long id){
+        OrganizationDTO organizationDTO = OrganizationDTO.form(organizationServices.getOrganizationByid(id));
+        return new ResponseEntity<>(organizationDTO,HttpStatus.OK);
+    }
+
+    /*    @GetMapping()
+        public ResponseEntity<?> getAllCompoundersByOrgId(@PathVariable Long id){
+            Organization organization = organizationServices.getOrganizationByid(id);
+            List<Compounders> compounders = organization.getCompounders();
+            List<CompoundersHospitalDTO> compoundersHospitalDTOList = compounders.stream().map()
+        }*/
 }

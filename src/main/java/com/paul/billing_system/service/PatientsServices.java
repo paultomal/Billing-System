@@ -22,15 +22,17 @@ public class PatientsServices {
     }
 
     public Patients savePatients(Long id, PatientsDTO patientsDTO) {
-        Optional<Organization> organization = organizationRepository.findById(id);
+
         Patients patients = new Patients();
 
-        if (organization.equals(OrganizationTypes.HOSPITAL)) {
-            if (organization.isPresent()) {
+        Optional<Organization> organization = organizationRepository.findById(id);
+
+        if (organization.isPresent()) {
+            if (organization.get().getType().equals(OrganizationTypes.HOSPITAL)) {
                 patients.setName(patientsDTO.getName());
                 patients.setAge(patientsDTO.getAge());
                 patientsRepository.save(patients);
-                organization.get().setPatients(List.of(patients));
+                organization.get().getPatients().add(patients);
                 organizationRepository.save(organization.get());
             }
         }

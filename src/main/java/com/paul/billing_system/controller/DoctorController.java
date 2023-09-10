@@ -18,9 +18,9 @@ public class DoctorController {
         this.doctorServices = doctorServices;
     }
 
-    @PostMapping("/addDoctor")
-    public ResponseEntity<?> save(@RequestBody DoctorDTO doctorDTO){
-        DoctorDTO doctorDTO1 = DoctorDTO.form(doctorServices.save(doctorDTO));
+    @PostMapping("/addDoctor/{id}")
+    public ResponseEntity<?> save(@RequestBody DoctorDTO doctorDTO, @PathVariable Long id){
+        DoctorDTO doctorDTO1 = DoctorDTO.form(doctorServices.save(id,doctorDTO));
         return new ResponseEntity<>(doctorDTO1, HttpStatus.OK);
     }
 

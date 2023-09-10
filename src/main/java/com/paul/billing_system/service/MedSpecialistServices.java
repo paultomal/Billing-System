@@ -5,6 +5,7 @@ import com.paul.billing_system.dto.MedSpecialistDTO;
 import com.paul.billing_system.entity.Compounders;
 import com.paul.billing_system.entity.MedSpecialist;
 import com.paul.billing_system.entity.Organization;
+import com.paul.billing_system.enums.OrganizationTypes;
 import com.paul.billing_system.repository.CompoundersRepository;
 import com.paul.billing_system.repository.MedSpecialistRepository;
 import com.paul.billing_system.repository.OrganizationRepository;
@@ -30,12 +31,14 @@ public class MedSpecialistServices {
         Optional<Organization> organization = organizationRepository.findById(id);
         MedSpecialist medSpecialist = new MedSpecialist();
         if (organization.isPresent()) {
-            medSpecialist.setMedSpecName(medSpecialistDTO.getMedSpecName());
-            medSpecialist.setNoOfDoctors(medSpecialistDTO.getNoOfDoctors());
-            medSpecialist.setDoctors(medSpecialistDTO.getDoctors());
-            medSpecialistRepository.save(medSpecialist);
-            organization.get().setMedSpecialists(List.of(medSpecialist));
-            organizationRepository.save(organization.get());
+            if (organization.get().getType().equals(OrganizationTypes.CHAMBER)) {
+                medSpecialist.setMedSpecName(medSpecialistDTO.getMedSpecName());
+                medSpecialist.setNoOfDoctors(medSpecialistDTO.getNoOfDoctors());
+                //medSpecialist.setDoctors(medSpecialistDTO.getDoctors());
+                medSpecialistRepository.save(medSpecialist);
+                organization.get().getMedSpecialists().add(medSpecialist);
+                organizationRepository.save(organization.get());
+            }
         }
         return medSpecialist;
     }
@@ -44,10 +47,10 @@ public class MedSpecialistServices {
         return medSpecialistRepository.findAll();
     }
 
-    public MedSpecialist saveCompounder(Long id, CompoundersChamberDTO compoundersChamberDTO){
+/*    public MedSpecialist saveCompounder(Long id, CompoundersChamberDTO compoundersChamberDTO) {
         Compounders compounders = compoundersRepository.save(Compounders.formCompounderChamber(compoundersChamberDTO));
         Optional<MedSpecialist> medSpecialist = medSpecialistRepository.findById(id);
         medSpecialist.get().setCompounders(compounders);
         return medSpecialistRepository.save(medSpecialist.get());
-    }
+    }*/
 }

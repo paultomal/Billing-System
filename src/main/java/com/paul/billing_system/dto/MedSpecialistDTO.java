@@ -19,17 +19,13 @@ public class MedSpecialistDTO {
 
     private Long noOfDoctors;
 
-    private Compounders compounders;
 
-    private List<Doctors> doctors;
 
     public static MedSpecialistDTO form(MedSpecialist medSpecialist){
         MedSpecialistDTO medSpecialistDTO = new MedSpecialistDTO();
         medSpecialistDTO.setId(medSpecialist.getId());
         medSpecialistDTO.setMedSpecName(medSpecialist.getMedSpecName());
         medSpecialistDTO.setNoOfDoctors(medSpecialist.getNoOfDoctors());
-        medSpecialistDTO.setCompounders(medSpecialist.getCompounders());
-        medSpecialistDTO.setDoctors(medSpecialist.getDoctors());
         return medSpecialistDTO;
     }
 }

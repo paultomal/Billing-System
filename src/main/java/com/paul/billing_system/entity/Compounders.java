@@ -26,18 +26,4 @@ public class Compounders {
     private String designation;
 
     private String department;
-
-    public static Compounders formCompunderHospital(CompoundersHospitalDTO compoundersHospitalDTO) {
-    Compounders compounders = new Compounders();
-    compounders.setName(compoundersHospitalDTO.getName());
-    compounders.setDesignation(compoundersHospitalDTO.getDesignation());
-    return compounders;
-    }
-
-    public static Compounders formCompounderChamber(CompoundersChamberDTO compoundersChamberDTO){
-        Compounders compounders = new Compounders();
-        compounders.setName(compoundersChamberDTO.getName());
-        compounders.setDepartment(compoundersChamberDTO.getDepartment());
-        return compounders;
-    }
 }

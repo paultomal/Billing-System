@@ -33,10 +33,10 @@ public class MedSpecialistController {
         return new ResponseEntity<>(medSpecialistDTOList,HttpStatus.OK);
     }
 
-    @PostMapping("/addCompounder")
+/*    @PostMapping("/addCompounder")
     public ResponseEntity<?> addCompounder(@PathVariable Long id,@RequestBody CompoundersChamberDTO compoundersChamberDTO){
         MedSpecialist medSpecialist = medSpecialistServices.saveCompounder(id,compoundersChamberDTO);
         return new ResponseEntity<>(medSpecialist,HttpStatus.OK);
 
-    }
+    }*/
 }

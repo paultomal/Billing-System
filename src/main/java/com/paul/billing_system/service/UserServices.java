@@ -21,17 +21,21 @@ public class UserServices {
     }
 
     public UserInfo saveAdmin(Long id, AdminDTO adminDTO) {
+
         Optional<Organization> organization = organizationRepository.findById(id);
         UserInfo userInfo = new UserInfo();
+
         if (organization.isPresent()){
-        userInfo.setName(adminDTO.getName());
-        userInfo.setEmail(adminDTO.getEmail());
-        userInfo.setPassword(adminDTO.getPassword());
-        userInfo.setRoles("Admin");
-        userRepository.save(userInfo);
-        organization.get().setAdmins(List.of(userInfo));
-        organizationRepository.save(organization.get());
+            userInfo.setName(adminDTO.getName());
+            userInfo.setEmail(adminDTO.getEmail());
+            userInfo.setPassword(adminDTO.getPassword());
+            userInfo.setRoles("Admin");
+            userRepository.save(userInfo);
+            organization.get().getAdmins().add(userInfo);
+            //organization.get().setAdmins(List.of(userInfo));
+            organizationRepository.save(organization.get());
         }
+
         return userInfo;
     }
 

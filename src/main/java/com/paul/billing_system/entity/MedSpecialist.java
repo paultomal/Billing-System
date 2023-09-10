@@ -23,7 +23,12 @@ public class MedSpecialist {
     @OneToOne
     private Compounders compounders;
 
-    @OneToMany(orphanRemoval = true,mappedBy = "medSpecialist")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(
+            name = "medicalspecialist_doctors",
+            joinColumns = @JoinColumn(name = "medSpecialist_id",referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "doctors_id")
+    )
     private List<Doctors> doctors;
 
 }

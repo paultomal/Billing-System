@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,11 +20,14 @@ public class PatientsDTO {
 
     private int age;
 
+    private LocalDate since;
+
     public static PatientsDTO form(Patients patients){
         PatientsDTO patientsDTO = new PatientsDTO();
         patientsDTO.setId(patients.getId());
         patientsDTO.setName(patients.getName());
         patientsDTO.setAge(patients.getAge());
+        patientsDTO.setSince(patients.getSince());
         return patientsDTO;
     }
 }

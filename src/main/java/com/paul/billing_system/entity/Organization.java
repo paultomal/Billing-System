@@ -46,19 +46,20 @@ public class Organization {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(
+            name = "organization_admins",
+            joinColumns = @JoinColumn(name = "organization_id",referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "admin_id")
+    )
+    private List<UserInfo> admins;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(
             name = "organization_patients",
             joinColumns = @JoinColumn(name = "organization_id",referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "patients_id")
     )
     private List<Patients> patients;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinTable(
-            name = "organization_admins",
-            joinColumns = @JoinColumn(name = "organization_id",referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "admin_id")
-    )
-    private List<UserInfo> admins;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(

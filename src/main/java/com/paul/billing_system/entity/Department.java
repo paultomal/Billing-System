@@ -32,6 +32,7 @@ public class Department {
     )
     private List<ServicesInfo> services;
 
+/*
 
     public static Department form(DepartmentDTO departmentDTO){
         Department department = new Department();
@@ -40,7 +41,5 @@ public class Department {
         department.setServices(departmentDTO.getServices().stream().map(ServicesInfo::form).toList());
         return department;
     }
-
-
-
+*/
 }

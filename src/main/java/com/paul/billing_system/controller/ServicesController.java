@@ -19,8 +19,8 @@ public class ServicesController {
         this.servicesInfoServices = servicesInfoServices;
     }
 
-    @PostMapping("/addServices")
-    public ResponseEntity<?> save(@Valid @RequestBody ServicesInfoDTO servicesInfoDTO, BindingResult bindingResult,Long id){
+    @PostMapping("/addServices/{id}")
+    public ResponseEntity<?> save(@Valid @RequestBody ServicesInfoDTO servicesInfoDTO, BindingResult bindingResult,@PathVariable Long id){
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>("Validation errors: " + bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
         }

@@ -20,8 +20,8 @@ public class AdminController {
         this.userServices = userServices;
     }
 
-    @PostMapping ("/addAdmin")
-    public ResponseEntity<?> save(@Valid @RequestBody AdminDTO adminDTO, BindingResult bindingResult, Long id){
+    @PostMapping ("/addAdmin/{id}")
+    public ResponseEntity<?> save(@Valid @RequestBody AdminDTO adminDTO, BindingResult bindingResult,@PathVariable Long id){
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>("Validation errors: " + bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
         }

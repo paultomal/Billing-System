@@ -27,7 +27,7 @@ public class ServicesInfoServices {
         servicesInfo.setServiceName(servicesInfoDTO.getServiceName());
         servicesInfo.setServiceCharge(servicesInfoDTO.getServiceCharge());
          servicesRepository.save(servicesInfo);
-         department.get().setServices(List.of(servicesInfo));
+         department.get().getServices().add(servicesInfo);
          departmentRepository.save(department.get());
         }
         return servicesInfo;

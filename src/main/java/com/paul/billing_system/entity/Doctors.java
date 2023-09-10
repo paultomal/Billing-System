@@ -18,11 +18,4 @@ public class Doctors {
 
     private String doctorDegree;
 
-    @ManyToOne()
-    @JoinTable(
-            name = "doctors_medicalspecialist",
-            joinColumns = @JoinColumn(name = "doctors_id",referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "medSpecialist_id")
-    )
-    private MedSpecialist medSpecialist;
 }

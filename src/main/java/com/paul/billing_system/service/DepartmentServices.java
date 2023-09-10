@@ -22,24 +22,22 @@ public class DepartmentServices {
         this.organizationRepository = organizationRepository;
     }
 
-    public Department save(DepartmentDTO departmentDTO,Long id) {
+    public Department save(Long id, DepartmentDTO departmentDTO) {
         Optional<Organization> organization = organizationRepository.findById(id);
         Department department = new Department();
         if (organization.isPresent()){
+            if (organization.get().getType().equals(OrganizationTypes.HOSPITAL)) {
+                department.setDeptName(departmentDTO.getDeptName());
+                department.setNoOfPatients(departmentDTO.getNoOfPatients());
+                departmentRepository.save(department);
+                organization.get().getDepartments().add(department);
+                organizationRepository.save(organization.get());
 
-            department.setDeptName(departmentDTO.getDeptName());
-            department.setNoOfPatients(departmentDTO.getNoOfPatients());
-            department.setServices(departmentDTO.getServices().stream().map(ServicesInfo::form).toList());
-            //department = departmentRepository.save(department);
-            Organization newOrg = organization.get();
+            /*Organization newOrg = organization.get();
 
-            newOrg.setDepartments((List.of(department)));
-
-            organizationRepository.save(newOrg);
-
+            newOrg.setDepartments((List.of(department)));*/
+            }
         }
-
-
     return department;
     }
 
@@ -60,7 +58,7 @@ public class DepartmentServices {
             Department department1 = department.get();
             department1.setDeptName(departmentDTO.getDeptName());
             department1.setNoOfPatients(departmentDTO.getNoOfPatients());
-            department1.setServices(departmentDTO.getServices().stream().map(ServicesInfo::form).toList());
+           //department1.setServices(departmentDTO.getServices().stream().map(ServicesInfo::form).toList());
             return departmentRepository.save(department1);
         }
         return new Department();
