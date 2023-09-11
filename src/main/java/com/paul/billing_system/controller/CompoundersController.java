@@ -3,6 +3,7 @@ package com.paul.billing_system.controller;
 import com.paul.billing_system.dto.CompoundersChamberDTO;
 import com.paul.billing_system.dto.CompoundersHospitalDTO;
 import com.paul.billing_system.entity.Compounders;
+import com.paul.billing_system.enums.OrganizationTypes;
 import com.paul.billing_system.service.CompoundersServices;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -30,12 +31,12 @@ public class CompoundersController {
         return new ResponseEntity<>(compoundersHospitalDTO1, HttpStatus.OK);
     }
 
-    @GetMapping("/getAllCompoundersOfHospital")
-    public ResponseEntity<?> getAllCompoundersOfHopitals(){
-        List<Compounders> staffs = compoundersServices.getAllCompoundersOfHopitals();
-        List<CompoundersHospitalDTO> staffsDTOList = staffs.stream()
+    @GetMapping("/getAllCompoundersOfHospital/{id}")
+    public ResponseEntity<?> getAllCompoundersOfHopitals(@PathVariable Long id){
+        List<Compounders> compounders = compoundersServices.getAllCompoundersOfHospitals(id);
+        List<CompoundersHospitalDTO> compoundersHospitalDTOList = compounders.stream()
                 .map(CompoundersHospitalDTO::form).toList();
-        return new ResponseEntity<>(staffsDTOList,HttpStatus.OK);
+        return new ResponseEntity<>(compoundersHospitalDTOList,HttpStatus.OK);
     }
 
     @PutMapping("/updateCompounderOfHospital/{id}")
@@ -55,9 +56,9 @@ public class CompoundersController {
         return new ResponseEntity<>(compoundersChamberDTO1, HttpStatus.OK);
     }
 
-    @GetMapping("/getAllCompoundersOfChamber")
-    public ResponseEntity<?> getAllCompoundersOfChamber(){
-        List<Compounders> compounders = compoundersServices.getAllCompoundersOfChamber();
+    @GetMapping("/getAllCompoundersOfChamber/{id}")
+    public ResponseEntity<?> getAllCompoundersOfChamber(@PathVariable Long id){
+        List<Compounders> compounders = compoundersServices.getAllCompoundersOfChamber(id);
         List<CompoundersChamberDTO> compoundersChamberDTOList = compounders.stream()
                 .map(CompoundersChamberDTO::form).toList();
         return new ResponseEntity<>(compoundersChamberDTOList,HttpStatus.OK);

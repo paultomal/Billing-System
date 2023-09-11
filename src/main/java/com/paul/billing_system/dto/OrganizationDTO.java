@@ -33,6 +33,10 @@ public class OrganizationDTO {
     @Column(unique = true)
     private String email;
 
+    private String emergencyContact;
+
+    private String operatingHour;
+
     private List<AdminDTO> admin;
 
     private List<DepartmentDTO> department;
@@ -53,6 +57,8 @@ public class OrganizationDTO {
         String organizationTypes = OrganizationTypes.getLabelByOrganizationType(organization.getType());
         organizationDTO.setType(organizationTypes);
         organizationDTO.setEmail(organization.getEmail());
+        organizationDTO.setEmergencyContact(organization.getEmergencyContact());
+        organizationDTO.setOperatingHour(organization.getOperatingHour());
         //organizationDTO.setDepartment(organization.getDepartments().stream().map(DepartmentDTO::form).toList());
         organizationDTO.setDepartment(organization.getDepartments()!=null ? organization.getDepartments().stream().map(DepartmentDTO::form).toList() : null);
         organizationDTO.setAdmin(organization.getAdmins()!=null ? organization.getAdmins().stream()

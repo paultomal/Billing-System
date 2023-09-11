@@ -36,6 +36,10 @@ public class Organization {
     @Column(unique = true)
     private String email;
 
+    private String emergencyContact;
+
+    private String operatingHour;
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(
             name = "organization_department",

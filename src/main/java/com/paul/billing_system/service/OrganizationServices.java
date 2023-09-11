@@ -27,6 +27,8 @@ public class OrganizationServices {
         OrganizationTypes organizationType = OrganizationTypes.getOrganizationTypeByLabel(organizationDTO.getType());
         organization.setType(organizationType);
         organization.setEmail(organizationDTO.getEmail());
+        organization.setEmergencyContact(organizationDTO.getEmergencyContact());
+        organization.setOperatingHour(organizationDTO.getOperatingHour());
         return organizationRepository.save(organization);
     }
 
@@ -51,6 +53,8 @@ public class OrganizationServices {
             organization1.setAddress(organizationDTO.getAddress());
             organization1.setContact(organizationDTO.getContact());
             organization1.setEmail(organizationDTO.getEmail());
+            organization1.setEmergencyContact(organizationDTO.getEmergencyContact());
+            organization1.setOperatingHour(organizationDTO.getOperatingHour());
             return organizationRepository.save(organization1);
         }
         return new Organization();

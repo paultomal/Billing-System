@@ -40,8 +40,14 @@ public class CompoundersServices {
         return compounders;
     }
 
-    public List<Compounders> getAllCompoundersOfHopitals() {
-        return compoundersRepository.findAll();
+    public List<Compounders> getAllCompoundersOfHospitals(Long id) {
+        Optional<Organization> organization = organizationRepository.findById(id);
+        if (organization.isPresent()) {
+            if (organization.get().getType().equals(OrganizationTypes.HOSPITAL)) {
+                return compoundersRepository.findByOrganizationId(id);
+            }
+        }
+        return (List<Compounders>) new Compounders();
     }
 
     public Compounders updateCompounderOfHospital(CompoundersHospitalDTO compoundersHospitalDTO, Long id) {
@@ -72,8 +78,14 @@ public class CompoundersServices {
         return compounders;
     }
 
-    public List<Compounders> getAllCompoundersOfChamber() {
-        return compoundersRepository.findAll();
+    public List<Compounders> getAllCompoundersOfChamber(Long id) {
+        Optional<Organization> organization = organizationRepository.findById(id);
+        if (organization.isPresent()) {
+            if (organization.get().getType().equals(OrganizationTypes.CHAMBER)) {
+                return compoundersRepository.findAll();
+            }
+        }
+        return (List<Compounders>) new Compounders();
     }
 
     public Compounders updateCompounderOfChamber(CompoundersChamberDTO compoundersChamberDTO, Long id) {
