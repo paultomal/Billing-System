@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/admin")
 public class AdminController {
     private final UserServices userServices;
 
@@ -38,7 +39,7 @@ public class AdminController {
         return new ResponseEntity<>(admins,HttpStatus.OK);
     }
 
-    @GetMapping("/getAdmin/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> getAdminById(@PathVariable Long id){
         AdminDTO adminDTO = AdminDTO.form(userServices.getAdminById(id));
         return new ResponseEntity<>(adminDTO,HttpStatus.OK);

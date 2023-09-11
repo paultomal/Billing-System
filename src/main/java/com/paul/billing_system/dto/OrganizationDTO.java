@@ -1,6 +1,5 @@
 package com.paul.billing_system.dto;
 
-import com.paul.billing_system.entity.MedSpecialist;
 import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.enums.OrganizationTypes;
 import jakarta.persistence.Column;
@@ -43,9 +42,7 @@ public class OrganizationDTO {
 
     private List<PatientsDTO> patients;
 
-    private List<CompoundersHospitalDTO> compoundersHospital;
-
-    private List<CompoundersChamberDTO> compoundersChamber;
+    private List<CompoundersDTO> compounders;
 
     private List<MedSpecialistDTO> medSpecialists;
 
@@ -64,8 +61,7 @@ public class OrganizationDTO {
         organizationDTO.setAdmin(organization.getAdmins()!=null ? organization.getAdmins().stream()
                 .filter(adminDTO -> "Admin".equals(adminDTO.getRoles()))
                 .map(AdminDTO::form).toList() : null);
-        organizationDTO.setCompoundersHospital(organization.getCompounders()!= null ? organization.getCompounders().stream().map(CompoundersHospitalDTO::form).toList() : null);
-        organizationDTO.setCompoundersChamber(organization.getCompounders()!=null ? organization.getCompounders().stream().map(CompoundersChamberDTO::form).toList() : null);
+        organizationDTO.setCompounders(organization.getCompounders()!= null ? organization.getCompounders().stream().map(CompoundersDTO::form).toList() : null);
         organizationDTO.setPatients(organization.getPatients() != null ? organization.getPatients().stream().map(PatientsDTO::form).toList() : null);
         organizationDTO.setMedSpecialists(organization.getMedSpecialists() != null ? organization.getMedSpecialists().stream().map(MedSpecialistDTO::form).toList() : null);
         return organizationDTO;

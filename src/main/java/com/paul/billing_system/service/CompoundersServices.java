@@ -1,14 +1,11 @@
 package com.paul.billing_system.service;
 
-import com.paul.billing_system.dto.CompoundersChamberDTO;
-import com.paul.billing_system.dto.CompoundersHospitalDTO;
+import com.paul.billing_system.dto.CompoundersDTO;
 import com.paul.billing_system.entity.Compounders;
 import com.paul.billing_system.entity.Organization;
-import com.paul.billing_system.enums.OrganizationTypes;
 import com.paul.billing_system.repository.CompoundersRepository;
 import com.paul.billing_system.repository.OrganizationRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,45 +21,51 @@ public class CompoundersServices {
     }
 
     //Hospital Compouder Services
-    public Compounders saveHospitalCompounders(Long id, CompoundersHospitalDTO compoundersHospitalDTO) {
+    public Compounders saveCompounders(Long id, CompoundersDTO compoundersDTO) {
         Optional<Organization> organization = organizationRepository.findById(id);
         Compounders compounders = new Compounders();
         if (organization.isPresent()) {
-            if (organization.get().getType().equals(OrganizationTypes.HOSPITAL)) {
-                compounders.setName(compoundersHospitalDTO.getName());
-                compounders.setDesignation(compoundersHospitalDTO.getDesignation());
-                compoundersRepository.save(compounders);
-                organization.get().getCompounders().add(compounders);
-                organizationRepository.save(organization.get());
-            }
+            compounders.setName(compoundersDTO.getName());
+            compounders.setDesignation(compoundersDTO.getDesignation());
+            compounders.setDepartment(compoundersDTO.getDepartment());
+            compoundersRepository.save(compounders);
+            organization.get().getCompounders().add(compounders);
+            organizationRepository.save(organization.get());
         }
 
         return compounders;
     }
 
-    public List<Compounders> getAllCompoundersOfHospitals(Long id) {
-        Optional<Organization> organization = organizationRepository.findById(id);
-        if (organization.isPresent()) {
-            if (organization.get().getType().equals(OrganizationTypes.HOSPITAL)) {
-                return compoundersRepository.findByOrganizationId(id);
-            }
-        }
-        return (List<Compounders>) new Compounders();
-    }
-
-    public Compounders updateCompounderOfHospital(CompoundersHospitalDTO compoundersHospitalDTO, Long id) {
+    public Compounders updateCompounder(CompoundersDTO compoundersDTO, Long id) {
         Optional<Compounders> compounders = compoundersRepository.findById(id);
         if (compounders.isPresent()) {
             Compounders compounders1 = new Compounders();
-            compounders1.setName(compoundersHospitalDTO.getName());
-            compounders1.setDesignation(compoundersHospitalDTO.getDesignation());
+            compounders1.setName(compoundersDTO.getName());
+            compounders1.setDesignation(compoundersDTO.getDesignation());
+            compounders1.setDepartment(compoundersDTO.getDepartment());
             return compoundersRepository.save(compounders1);
         }
         return new Compounders();
     }
 
+    public Compounders getCompounderById(Long id) {
+        Optional<Compounders> compounders = compoundersRepository.findById(id);
+        if (compounders.isPresent())
+            return compounders.get();
+        return new Compounders();
+    }
 
-    //Chamber Compounder Services
+
+/*    public List<Compounders> getAllCompounders(Long id) {
+        Optional<Organization> organization = organizationRepository.findById(id);
+        if (organization.isPresent()) {
+            return compoundersRepository.findAll();
+        }
+        return (List<Compounders>) new Compounders();
+    }*/
+
+
+/*    //Chamber Compounder Services
     public Compounders saveChamberCoumpounder(Long id, CompoundersChamberDTO compoundersChamberDTO) {
         Optional<Organization> organization = organizationRepository.findById(id);
         Compounders compounders = new Compounders();
@@ -104,5 +107,5 @@ public class CompoundersServices {
         if (compounders.isPresent())
             return compounders.get();
         return new Compounders();
-    }
+    }*/
 }

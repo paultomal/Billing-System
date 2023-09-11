@@ -1,21 +1,20 @@
 package com.paul.billing_system.controller;
 
-import com.paul.billing_system.dto.CompoundersHospitalDTO;
+import com.paul.billing_system.dto.CompoundersDTO;
 import com.paul.billing_system.dto.OrganizationDTO;
+import com.paul.billing_system.dto.PatientsDTO;
 import com.paul.billing_system.entity.Compounders;
 import com.paul.billing_system.entity.Organization;
+import com.paul.billing_system.entity.Patients;
 import com.paul.billing_system.enums.OrganizationTypes;
 import com.paul.billing_system.service.OrganizationServices;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -68,10 +67,22 @@ public class OrganizationController {
         return new ResponseEntity<>(organizationDTO,HttpStatus.OK);
     }
 
-    /*    @GetMapping()
-        public ResponseEntity<?> getAllCompoundersByOrgId(@PathVariable Long id){
-            Organization organization = organizationServices.getOrganizationByid(id);
-            List<Compounders> compounders = organization.getCompounders();
-            List<CompoundersHospitalDTO> compoundersHospitalDTOList = compounders.stream().map()
-        }*/
+    //Patients List
+    @GetMapping("/getAllPatientsByOrganization/{id}")
+    public ResponseEntity<?> getAllPatientsByOrganization(@PathVariable Long id){
+      Organization organization = organizationServices.getOrganizationByid(id);
+      List<Patients> patients = organization.getPatients();
+      List<PatientsDTO> patientsDTOList = patients.stream().map(PatientsDTO::form).toList();
+      return new ResponseEntity<>(patientsDTOList,HttpStatus.OK);
+    }
+
+    //Compounder List
+
+    @GetMapping("/getCompoundersByOrganization/{id}")
+    public ResponseEntity<?> getCompoundersByOrganization(@PathVariable Long id){
+        Organization organization = organizationServices.getOrganizationByid(id);
+        List<Compounders> compounders = organization.getCompounders();
+        List<CompoundersDTO> compoundersDTOList = compounders.stream().map(CompoundersDTO::form).toList();
+        return new ResponseEntity<>(compoundersDTOList,HttpStatus.OK);
+    }
 }

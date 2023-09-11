@@ -32,10 +32,6 @@ public class DepartmentServices {
                 departmentRepository.save(department);
                 organization.get().getDepartments().add(department);
                 organizationRepository.save(organization.get());
-
-            /*Organization newOrg = organization.get();
-
-            newOrg.setDepartments((List.of(department)));*/
             }
         }
     return department;

@@ -1,8 +1,6 @@
 package com.paul.billing_system.service;
 
-import com.paul.billing_system.dto.CompoundersChamberDTO;
 import com.paul.billing_system.dto.MedSpecialistDTO;
-import com.paul.billing_system.entity.Compounders;
 import com.paul.billing_system.entity.MedSpecialist;
 import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.enums.OrganizationTypes;
@@ -45,6 +43,13 @@ public class MedSpecialistServices {
 
     public List<MedSpecialist> getAllMedSpecialist() {
         return medSpecialistRepository.findAll();
+    }
+
+    public MedSpecialist getMedicalSpecialist(Long id) {
+        Optional<MedSpecialist> medSpecialist = medSpecialistRepository.findById(id);
+        if (medSpecialist.isPresent())
+            return medSpecialist.get();
+        return new MedSpecialist();
     }
 
 /*    public MedSpecialist saveCompounder(Long id, CompoundersChamberDTO compoundersChamberDTO) {

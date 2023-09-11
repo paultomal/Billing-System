@@ -1,9 +1,7 @@
 package com.paul.billing_system.controller;
 
-import com.paul.billing_system.dto.CompoundersChamberDTO;
-import com.paul.billing_system.dto.CompoundersHospitalDTO;
+import com.paul.billing_system.dto.CompoundersDTO;
 import com.paul.billing_system.entity.Compounders;
-import com.paul.billing_system.enums.OrganizationTypes;
 import com.paul.billing_system.service.CompoundersServices;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -14,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/compounder")
 public class CompoundersController {
     private final CompoundersServices compoundersServices;
 
@@ -21,34 +20,51 @@ public class CompoundersController {
         this.compoundersServices = compoundersServices;
     }
 
-    //create compouders for hospital
-    @PostMapping("/addHospitalCompounders/{id}")
-    public ResponseEntity<?> saveHospitalCompounders(@Valid @RequestBody CompoundersHospitalDTO compoundersHospitalDTO, BindingResult bindingResult,@PathVariable Long id){
+    @PostMapping("/addCompounders/{id}")
+    public ResponseEntity<?> saveCompounders(@Valid @RequestBody CompoundersDTO compoundersDTO, BindingResult bindingResult, @PathVariable Long id){
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>("Validation errors: " + bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
         }
-        CompoundersHospitalDTO compoundersHospitalDTO1 = CompoundersHospitalDTO.form(compoundersServices.saveHospitalCompounders(id,compoundersHospitalDTO));
-        return new ResponseEntity<>(compoundersHospitalDTO1, HttpStatus.OK);
+        CompoundersDTO compoundersDTO1 = CompoundersDTO.form(compoundersServices.saveCompounders(id, compoundersDTO));
+        return new ResponseEntity<>(compoundersDTO1, HttpStatus.OK);
     }
 
-    @GetMapping("/getAllCompoundersOfHospital/{id}")
-    public ResponseEntity<?> getAllCompoundersOfHopitals(@PathVariable Long id){
-        List<Compounders> compounders = compoundersServices.getAllCompoundersOfHospitals(id);
-        List<CompoundersHospitalDTO> compoundersHospitalDTOList = compounders.stream()
-                .map(CompoundersHospitalDTO::form).toList();
-        return new ResponseEntity<>(compoundersHospitalDTOList,HttpStatus.OK);
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getCompounderById(@PathVariable Long id){
+        CompoundersDTO compoundersDTO = CompoundersDTO.form(compoundersServices.getCompounderById(id));
+        return new ResponseEntity<>(compoundersDTO,HttpStatus.OK);
     }
 
-    @PutMapping("/updateCompounderOfHospital/{id}")
-    public ResponseEntity<?> updateCompounderOfHospital(@Valid @RequestBody CompoundersHospitalDTO compoundersHospitalDTO, @PathVariable Long id, BindingResult bindingResult){
+
+    @PutMapping("/updateCompounder/{id}")
+    public ResponseEntity<?> updateCompounder(@Valid @RequestBody CompoundersDTO compoundersDTO, @PathVariable Long id, BindingResult bindingResult){
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>("Validation errors: " + bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
         }
-        CompoundersHospitalDTO staffsDTO1 = CompoundersHospitalDTO.form(compoundersServices.updateCompounderOfHospital(compoundersHospitalDTO,id));
+        CompoundersDTO staffsDTO1 = CompoundersDTO.form(compoundersServices.updateCompounder(compoundersDTO,id));
         return new ResponseEntity<>(staffsDTO1,HttpStatus.OK);
     }
 
-    //create compouders for chamber
+
+
+
+
+
+
+
+
+
+
+
+/*    @GetMapping("/getAllCompounders/{id}")
+    public ResponseEntity<?> getAllCompounders(@PathVariable Long id){
+        List<Compounders> compounders = compoundersServices.getAllCompounders(id);
+        List<CompoundersDTO> compoundersDTOList = compounders.stream()
+                .map(CompoundersDTO::form)
+                .toList();
+        return new ResponseEntity<>(compoundersDTOList,HttpStatus.OK);
+    }*/
+/*    //create compouders for chamber
     @PostMapping("/addChamberCompounders/{id}")
     public ResponseEntity<?> saveChamberCoumpounder(@Valid @RequestBody CompoundersChamberDTO compoundersChamberDTO,@PathVariable Long id){
 
@@ -75,5 +91,5 @@ public class CompoundersController {
     public ResponseEntity<?> getCompounderById(@PathVariable Long id){
         CompoundersChamberDTO compoundersChamberDTO = CompoundersChamberDTO.form(compoundersServices.getCompounderById(id));
         return new ResponseEntity<>(compoundersChamberDTO,HttpStatus.OK);
-    }
+    }*/
 }

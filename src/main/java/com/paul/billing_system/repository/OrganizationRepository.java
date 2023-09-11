@@ -1,6 +1,7 @@
 package com.paul.billing_system.repository;
 
 import com.paul.billing_system.entity.Organization;
+import com.paul.billing_system.entity.Patients;
 import com.paul.billing_system.enums.OrganizationTypes;
 import org.springframework.data.jpa.repository.JpaRepository;
 

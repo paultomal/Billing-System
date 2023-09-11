@@ -1,10 +1,7 @@
 package com.paul.billing_system.controller;
 
-import com.paul.billing_system.dto.CompoundersChamberDTO;
 import com.paul.billing_system.dto.MedSpecialistDTO;
-import com.paul.billing_system.entity.Compounders;
 import com.paul.billing_system.entity.MedSpecialist;
-import com.paul.billing_system.service.CompoundersServices;
 import com.paul.billing_system.service.MedSpecialistServices;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/MedicalSpecialist")
+@RequestMapping("/medicalSpecialist")
 public class MedSpecialistController {
     private final MedSpecialistServices medSpecialistServices;
 
@@ -33,10 +30,10 @@ public class MedSpecialistController {
         return new ResponseEntity<>(medSpecialistDTOList,HttpStatus.OK);
     }
 
-/*    @PostMapping("/addCompounder")
-    public ResponseEntity<?> addCompounder(@PathVariable Long id,@RequestBody CompoundersChamberDTO compoundersChamberDTO){
-        MedSpecialist medSpecialist = medSpecialistServices.saveCompounder(id,compoundersChamberDTO);
-        return new ResponseEntity<>(medSpecialist,HttpStatus.OK);
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getMedicalSpecialist(@PathVariable Long id){
+        MedSpecialistDTO medSpecialistDTO = MedSpecialistDTO.form(medSpecialistServices.getMedicalSpecialist(id));
+        return new ResponseEntity<>(medSpecialistDTO,HttpStatus.OK);
+    }
 
-    }*/
 }

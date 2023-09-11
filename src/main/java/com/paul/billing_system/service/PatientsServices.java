@@ -3,7 +3,6 @@ package com.paul.billing_system.service;
 import com.paul.billing_system.dto.PatientsDTO;
 import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.entity.Patients;
-import com.paul.billing_system.enums.OrganizationTypes;
 import com.paul.billing_system.repository.OrganizationRepository;
 import com.paul.billing_system.repository.PatientsRepository;
 import org.springframework.stereotype.Service;
@@ -28,19 +27,22 @@ public class PatientsServices {
         Optional<Organization> organization = organizationRepository.findById(id);
 
         if (organization.isPresent()) {
-            if (organization.get().getType().equals(OrganizationTypes.HOSPITAL)) {
-                patients.setName(patientsDTO.getName());
-                patients.setAge(patientsDTO.getAge());
-                patientsRepository.save(patients);
-                organization.get().getPatients().add(patients);
-                organizationRepository.save(organization.get());
-            }
+            patients.setName(patientsDTO.getName());
+            patients.setAge(patientsDTO.getAge());
+            patients.setSince(patientsDTO.getSince());
+            patientsRepository.save(patients);
+            organization.get().getPatients().add(patients);
+            organizationRepository.save(organization.get());
         }
         return patients;
     }
 
-    public List<Patients> getAllPatients() {
-        return patientsRepository.findAll();
+    public List<Patients> getAllPatients(Long id) {
+        Optional<Organization> organization = organizationRepository.findById(id);
+        if (organization.isPresent()) {
+            return patientsRepository.findAll();
+        }
+        return (List<Patients>) new Patients();
     }
 
     public Patients getPatientById(Long id) {

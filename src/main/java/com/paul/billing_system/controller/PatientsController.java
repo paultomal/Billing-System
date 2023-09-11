@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/patient")
 public class PatientsController {
     private final PatientsServices patientsServices;
 
@@ -30,9 +31,9 @@ public class PatientsController {
         return new ResponseEntity<>(patientsDTO1, HttpStatus.OK);
     }
 
-    @GetMapping("/getAllPatients")
-    public ResponseEntity<?> getAllPatients(){
-        List<Patients> patients = patientsServices.getAllPatients();
+    @GetMapping("/getAllPatients/{id}")
+    public ResponseEntity<?> getAllPatients(@PathVariable Long id){
+        List<Patients> patients = patientsServices.getAllPatients(id);
         List<PatientsDTO> patientsDTOList = patients.stream().map(PatientsDTO::form).toList();
         return new ResponseEntity<>(patientsDTOList,HttpStatus.OK);
     }

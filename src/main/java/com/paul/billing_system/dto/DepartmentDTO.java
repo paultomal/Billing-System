@@ -21,7 +21,7 @@ public class DepartmentDTO {
 
     private Long noOfPatients;
 
-    //private List<ServicesInfoDTO> services;
+    private List<ServicesInfoDTO> services;
 
 
     public static DepartmentDTO form(Department department){
@@ -29,7 +29,7 @@ public class DepartmentDTO {
         departmentDTO.setId(department.getId());
         departmentDTO.setDeptName(department.getDeptName());
         departmentDTO.setNoOfPatients(department.getNoOfPatients());
-        //departmentDTO.setServices(department.getServices().stream().map(ServicesInfoDTO::form).toList());
+        departmentDTO.setServices(department.getServices().stream().map(ServicesInfoDTO::form).toList());
         return departmentDTO;
     }
 }

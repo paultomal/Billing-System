@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/department")
 public class DepartmentController {
     private final DepartmentServices departmentServices;
 
@@ -33,7 +34,7 @@ public class DepartmentController {
         List<DepartmentDTO> departmentDTOList = departments.stream().map(DepartmentDTO::form).toList();
         return new ResponseEntity<>(departmentDTOList,HttpStatus.OK);
     }
-    @GetMapping("/getDepartment/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> getDepartmentById(@PathVariable Long id){
         DepartmentDTO departmentDTO = DepartmentDTO.form(departmentServices.getDepartmentById(id));
         return new ResponseEntity<>(departmentDTO,HttpStatus.OK);

@@ -1,7 +1,5 @@
 package com.paul.billing_system.entity;
 
-import com.paul.billing_system.dto.CompoundersChamberDTO;
-import com.paul.billing_system.dto.CompoundersHospitalDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -23,7 +21,4 @@ public class Compounders {
     private String designation;
 
     private String department;
-
-    @ManyToOne
-    private Organization organization;
 }
