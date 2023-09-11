@@ -48,6 +48,7 @@ public class OrganizationDTO {
 
     public static OrganizationDTO form(Organization organization) {
         OrganizationDTO organizationDTO = new OrganizationDTO();
+        organizationDTO.setId(organizationDTO.getId());
         organizationDTO.setName(organization.getName());
         organizationDTO.setAddress(organization.getAddress());
         organizationDTO.setContact(organization.getContact());
