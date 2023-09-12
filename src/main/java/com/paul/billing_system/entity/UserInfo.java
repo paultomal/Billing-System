@@ -1,6 +1,5 @@
 package com.paul.billing_system.entity;
 
-import com.paul.billing_system.dto.AdminDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -20,6 +19,8 @@ public class UserInfo {
     @NotEmpty(message = "Name should not be empty")
     private String name;
 
+    private String username;
+
     @Email(message = "Email should be valid")
     @Column(unique = true)
     private String email;
@@ -28,12 +29,5 @@ public class UserInfo {
 
     private String roles;
 
-    public static UserInfo form(AdminDTO adminDTO) {
-    UserInfo userInfo=new UserInfo();
-    userInfo.setName(adminDTO.getName());
-    userInfo.setEmail(adminDTO.getEmail());
-    userInfo.setPassword(adminDTO.getPassword());
-    userInfo.setRoles("Admin");
-    return userInfo;
-    }
+    private String contact;
 }

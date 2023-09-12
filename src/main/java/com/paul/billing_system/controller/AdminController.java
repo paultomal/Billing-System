@@ -1,6 +1,6 @@
 package com.paul.billing_system.controller;
 
-import com.paul.billing_system.dto.AdminDTO;
+import com.paul.billing_system.dto.UserInfoDTO;
 import com.paul.billing_system.entity.UserInfo;
 import com.paul.billing_system.service.UserServices;
 import jakarta.validation.Valid;
@@ -10,7 +10,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/admin")
@@ -22,12 +21,12 @@ public class AdminController {
     }
 
     @PostMapping ("/addAdmin/{id}")
-    public ResponseEntity<?> save(@Valid @RequestBody AdminDTO adminDTO, BindingResult bindingResult,@PathVariable Long id){
+    public ResponseEntity<?> save(@Valid @RequestBody UserInfoDTO userInfoDTO, BindingResult bindingResult, @PathVariable Long id){
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>("Validation errors: " + bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
         }
-        AdminDTO adminDTO1 = AdminDTO.form(userServices.saveAdmin(id,adminDTO));
-        return new ResponseEntity<>(adminDTO1, HttpStatus.OK);
+        UserInfoDTO userInfoDTO1 = UserInfoDTO.form(userServices.saveAdmin(id, userInfoDTO));
+        return new ResponseEntity<>(userInfoDTO1, HttpStatus.OK);
     }
 
     @GetMapping("/getAdmins")
@@ -41,13 +40,13 @@ public class AdminController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getAdminById(@PathVariable Long id){
-        AdminDTO adminDTO = AdminDTO.form(userServices.getAdminById(id));
-        return new ResponseEntity<>(adminDTO,HttpStatus.OK);
+        UserInfoDTO userInfoDTO = UserInfoDTO.form(userServices.getAdminById(id));
+        return new ResponseEntity<>(userInfoDTO,HttpStatus.OK);
     }
 
     @PutMapping("/updateAdmin/{id}")
-    public ResponseEntity<?> updateAdmin(@Valid @PathVariable Long id, @RequestBody AdminDTO adminDTO,BindingResult bindingResult){
-        AdminDTO adminDTO1 = AdminDTO.form(userServices.updateAdmin(id,adminDTO));
-        return new ResponseEntity<>(adminDTO1,HttpStatus.OK);
+    public ResponseEntity<?> updateAdmin(@Valid @PathVariable Long id, @RequestBody UserInfoDTO userInfoDTO, BindingResult bindingResult){
+        UserInfoDTO userInfoDTO1 = UserInfoDTO.form(userServices.updateAdmin(id, userInfoDTO));
+        return new ResponseEntity<>(userInfoDTO1,HttpStatus.OK);
     }
 }

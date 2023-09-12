@@ -36,7 +36,7 @@ public class OrganizationDTO {
 
     private String operatingHour;
 
-    private List<AdminDTO> admin;
+    private List<UserInfoDTO> admin;
 
     private List<DepartmentDTO> department;
 
@@ -48,7 +48,7 @@ public class OrganizationDTO {
 
     public static OrganizationDTO form(Organization organization) {
         OrganizationDTO organizationDTO = new OrganizationDTO();
-        organizationDTO.setId(organizationDTO.getId());
+        organizationDTO.setId(organization.getId());
         organizationDTO.setName(organization.getName());
         organizationDTO.setAddress(organization.getAddress());
         organizationDTO.setContact(organization.getContact());
@@ -61,7 +61,7 @@ public class OrganizationDTO {
         organizationDTO.setDepartment(organization.getDepartments()!=null ? organization.getDepartments().stream().map(DepartmentDTO::form).toList() : null);
         organizationDTO.setAdmin(organization.getAdmins()!=null ? organization.getAdmins().stream()
                 .filter(adminDTO -> "Admin".equals(adminDTO.getRoles()))
-                .map(AdminDTO::form).toList() : null);
+                .map(UserInfoDTO::form).toList() : null);
         organizationDTO.setCompounders(organization.getCompounders()!= null ? organization.getCompounders().stream().map(CompoundersDTO::form).toList() : null);
         organizationDTO.setPatients(organization.getPatients() != null ? organization.getPatients().stream().map(PatientsDTO::form).toList() : null);
         organizationDTO.setMedSpecialists(organization.getMedSpecialists() != null ? organization.getMedSpecialists().stream().map(MedSpecialistDTO::form).toList() : null);

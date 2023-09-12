@@ -1,6 +1,6 @@
 package com.paul.billing_system.service;
 
-import com.paul.billing_system.dto.AdminDTO;
+import com.paul.billing_system.dto.UserInfoDTO;
 import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.entity.UserInfo;
 import com.paul.billing_system.repository.OrganizationRepository;
@@ -19,20 +19,36 @@ public class UserServices {
         this.userRepository = userRepository;
         this.organizationRepository = organizationRepository;
     }
+    //Super Admin
+    public UserInfo saveSuperAdmin( UserInfoDTO userInfoDTO) {
 
-    public UserInfo saveAdmin(Long id, AdminDTO adminDTO) {
+        UserInfo userInfo = new UserInfo();
+            userInfo.setName(userInfoDTO.getName());
+            userInfo.setUsername(userInfoDTO.getUsername());
+            userInfo.setEmail(userInfoDTO.getEmail());
+            userInfo.setPassword(userInfoDTO.getPassword());
+            userInfo.setContact(userInfoDTO.getContact());
+            userInfo.setRoles("Super_Admin");
+            return userRepository.save(userInfo);
+    }
+
+
+    //Admin
+
+    public UserInfo saveAdmin(Long id, UserInfoDTO userInfoDTO) {
 
         Optional<Organization> organization = organizationRepository.findById(id);
         UserInfo userInfo = new UserInfo();
 
         if (organization.isPresent()){
-            userInfo.setName(adminDTO.getName());
-            userInfo.setEmail(adminDTO.getEmail());
-            userInfo.setPassword(adminDTO.getPassword());
+            userInfo.setName(userInfoDTO.getName());
+            userInfo.setUsername(userInfoDTO.getUsername());
+            userInfo.setEmail(userInfoDTO.getEmail());
+            userInfo.setPassword(userInfoDTO.getPassword());
+            userInfo.setContact(userInfoDTO.getContact());
             userInfo.setRoles("Admin");
             userRepository.save(userInfo);
             organization.get().getAdmins().add(userInfo);
-            //organization.get().setAdmins(List.of(userInfo));
             organizationRepository.save(organization.get());
         }
 
@@ -50,13 +66,15 @@ public class UserServices {
         return new UserInfo();
     }
 
-    public UserInfo updateAdmin(Long id, AdminDTO adminDTO) {
+    public UserInfo updateAdmin(Long id, UserInfoDTO userInfoDTO) {
         Optional<UserInfo> userInfo = userRepository.findById(id);
         if (userInfo.isPresent()){
             UserInfo userInfo1 = userInfo.get();
-            userInfo1.setName(adminDTO.getName());
-            userInfo1.setEmail(adminDTO.getEmail());
-            userInfo1.setPassword(adminDTO.getPassword());
+            userInfo1.setName(userInfoDTO.getName());
+            userInfo1.setUsername(userInfoDTO.getUsername());
+            userInfo1.setEmail(userInfoDTO.getEmail());
+            userInfo1.setPassword(userInfoDTO.getPassword());
+            userInfo1.setContact(userInfoDTO.getContact());
             return userRepository.save(userInfo1);
         }
         return new UserInfo();
