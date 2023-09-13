@@ -5,6 +5,8 @@ import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.entity.UserInfo;
 import com.paul.billing_system.repository.OrganizationRepository;
 import com.paul.billing_system.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,24 +14,32 @@ import java.util.Optional;
 
 @Service
 public class UserServices {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     private final UserRepository userRepository;
+
     private final OrganizationRepository organizationRepository;
+
 
     public UserServices(UserRepository userRepository, OrganizationRepository organizationRepository) {
         this.userRepository = userRepository;
         this.organizationRepository = organizationRepository;
     }
-    //Super Admin
-    public UserInfo saveSuperAdmin( UserInfoDTO userInfoDTO) {
 
+    //Super Admin
+    public UserInfo saveSuperAdmin(UserInfoDTO userInfoDTO) {
+
+        userInfoDTO.setPassword(passwordEncoder.encode(userInfoDTO.getPassword()));
         UserInfo userInfo = new UserInfo();
-            userInfo.setName(userInfoDTO.getName());
-            userInfo.setUsername(userInfoDTO.getUsername());
-            userInfo.setEmail(userInfoDTO.getEmail());
-            userInfo.setPassword(userInfoDTO.getPassword());
-            userInfo.setContact(userInfoDTO.getContact());
-            userInfo.setRoles("Super_Admin");
-            return userRepository.save(userInfo);
+        userInfo.setName(userInfoDTO.getName());
+        userInfo.setUsername(userInfoDTO.getUsername());
+        userInfo.setEmail(userInfoDTO.getEmail());
+        userInfo.setPassword(userInfoDTO.getPassword());
+        userInfo.setContact(userInfoDTO.getContact());
+        userInfo.setRoles("ROLE_Super_Admin");
+        return userRepository.save(userInfo);
     }
 
 
@@ -40,13 +50,13 @@ public class UserServices {
         Optional<Organization> organization = organizationRepository.findById(id);
         UserInfo userInfo = new UserInfo();
 
-        if (organization.isPresent()){
+        if (organization.isPresent()) {
             userInfo.setName(userInfoDTO.getName());
             userInfo.setUsername(userInfoDTO.getUsername());
             userInfo.setEmail(userInfoDTO.getEmail());
             userInfo.setPassword(userInfoDTO.getPassword());
             userInfo.setContact(userInfoDTO.getContact());
-            userInfo.setRoles("Admin");
+            userInfo.setRoles("ROLE_Admin");
             userRepository.save(userInfo);
             organization.get().getAdmins().add(userInfo);
             organizationRepository.save(organization.get());
@@ -68,7 +78,7 @@ public class UserServices {
 
     public UserInfo updateAdmin(Long id, UserInfoDTO userInfoDTO) {
         Optional<UserInfo> userInfo = userRepository.findById(id);
-        if (userInfo.isPresent()){
+        if (userInfo.isPresent()) {
             UserInfo userInfo1 = userInfo.get();
             userInfo1.setName(userInfoDTO.getName());
             userInfo1.setUsername(userInfoDTO.getUsername());

@@ -11,6 +11,7 @@ import com.paul.billing_system.service.OrganizationServices;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,6 +43,7 @@ public class OrganizationController {
     }
 
     @GetMapping("/{type}")
+    @PreAuthorize("hasAuthority('ROLE_Super_Admin')")
     public ResponseEntity<?> getAllOrganization(@PathVariable String type){
         List<Organization> organizations =  organizationServices.getAllOrganization(OrganizationTypes.getOrganizationTypeByLabel(type));
         List<OrganizationDTO> organizationDTOList = organizations.stream()

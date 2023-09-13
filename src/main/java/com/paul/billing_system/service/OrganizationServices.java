@@ -4,6 +4,7 @@ import com.paul.billing_system.dto.OrganizationDTO;
 import com.paul.billing_system.entity.*;
 import com.paul.billing_system.enums.OrganizationTypes;
 import com.paul.billing_system.repository.OrganizationRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
