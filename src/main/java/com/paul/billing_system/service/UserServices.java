@@ -29,7 +29,7 @@ public class UserServices {
     }
 
     //Super Admin
-    public UserInfo saveSuperAdmin(UserInfoDTO userInfoDTO) {
+    public UserInfo saveSuperAdmin(UserInfoDTO userInfoDTO){
 
         userInfoDTO.setPassword(passwordEncoder.encode(userInfoDTO.getPassword()));
         UserInfo userInfo = new UserInfo();
@@ -39,7 +39,9 @@ public class UserServices {
         userInfo.setPassword(userInfoDTO.getPassword());
         userInfo.setContact(userInfoDTO.getContact());
         userInfo.setRoles("ROLE_Super_Admin");
-        return userRepository.save(userInfo);
+        userInfo = userRepository.save(userInfo);
+        return userInfo;
+
     }
 
 
@@ -51,6 +53,7 @@ public class UserServices {
         UserInfo userInfo = new UserInfo();
 
         if (organization.isPresent()) {
+            userInfoDTO.setPassword(passwordEncoder.encode(userInfoDTO.getPassword()));
             userInfo.setName(userInfoDTO.getName());
             userInfo.setUsername(userInfoDTO.getUsername());
             userInfo.setEmail(userInfoDTO.getEmail());
@@ -71,9 +74,7 @@ public class UserServices {
 
     public UserInfo getAdminById(Long id) {
         Optional<UserInfo> userInfo = userRepository.findById(id);
-        if (userInfo.isPresent())
-            return userInfo.get();
-        return new UserInfo();
+        return userInfo.orElseGet(UserInfo::new);
     }
 
     public UserInfo updateAdmin(Long id, UserInfoDTO userInfoDTO) {

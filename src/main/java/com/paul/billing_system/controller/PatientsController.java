@@ -7,14 +7,18 @@ import com.paul.billing_system.service.PatientsServices;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
+import static com.paul.billing_system.controller.AuthController.getErrorDetails;
+
 @RestController
 @RequestMapping("/patient")
+@PreAuthorize("hasAuthority('ROLE_Admin')")
 public class PatientsController {
     private final PatientsServices patientsServices;
 
@@ -23,10 +27,9 @@ public class PatientsController {
     }
 
     @PostMapping("/addPatients/{id}")
-    public ResponseEntity<?> savePatients(@Valid @RequestBody PatientsDTO patientsDTO , BindingResult bindingResult,@PathVariable Long id){
-        if (bindingResult.hasErrors()) {
-            return new ResponseEntity<>("Validation errors: " + bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> savePatients(@Valid @RequestBody PatientsDTO patientsDTO ,@PathVariable Long id, BindingResult bindingResult){
+        ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
+        if (errorDetails != null) return errorDetails;
         PatientsDTO patientsDTO1 = PatientsDTO.form(patientsServices.savePatients(id,patientsDTO));
         return new ResponseEntity<>(patientsDTO1, HttpStatus.OK);
     }

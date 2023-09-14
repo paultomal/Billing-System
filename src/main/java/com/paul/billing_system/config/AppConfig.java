@@ -40,8 +40,9 @@ public class AppConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(autz -> autz
-                .requestMatchers("/superAdmin/**","/authenticate").permitAll()
-                .requestMatchers("/organization/**").authenticated())
+                .requestMatchers("/superAdmin/**","/authenticate","/getRole").permitAll()
+                .requestMatchers("/organization/**","/admin/**","/compounder/**","/department/**","/doctors/**","/medicalSpecialist/**","/patient/**","/service/**")
+                        .authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);

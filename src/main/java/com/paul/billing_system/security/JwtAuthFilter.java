@@ -1,6 +1,7 @@
 package com.paul.billing_system.security;
 
 import com.paul.billing_system.component.UserInfoUserDetailsService;
+import com.paul.billing_system.exception.AuthenticationIsNotGivenException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,7 +26,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (request.getServletPath().matches("/authenticate|/user/resetPassword|/user/checkOtpStatus|/user/forgetPassword")) {
+        if (request.getServletPath().matches("/authenticate|/superAdmin/addSuperAdmin |/getRole")) {
             filterChain.doFilter(request, response);
         } else {
             String authHeader = request.getHeader("Authorization");
@@ -44,6 +45,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                 }
                 filterChain.doFilter(request, response);
+            } else {
+                throw new RuntimeException("Token is not given");
             }
         }
     }

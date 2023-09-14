@@ -5,12 +5,17 @@ import com.paul.billing_system.entity.Doctors;
 import com.paul.billing_system.service.DoctorServices;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.paul.billing_system.controller.AuthController.getErrorDetails;
+
 @RestController
 @RequestMapping("/doctors")
+@PreAuthorize("hasAuthority('ROLE_Admin')")
 public class DoctorController {
     private final DoctorServices doctorServices;
 
@@ -19,7 +24,9 @@ public class DoctorController {
     }
 
     @PostMapping("/addDoctor/{id}")
-    public ResponseEntity<?> save(@RequestBody DoctorDTO doctorDTO, @PathVariable Long id){
+    public ResponseEntity<?> save(@RequestBody DoctorDTO doctorDTO, @PathVariable Long id, BindingResult bindingResult){
+        ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
+        if (errorDetails != null) return errorDetails;
         DoctorDTO doctorDTO1 = DoctorDTO.form(doctorServices.save(id,doctorDTO));
         return new ResponseEntity<>(doctorDTO1, HttpStatus.OK);
     }
@@ -38,7 +45,9 @@ public class DoctorController {
     }
 
     @PutMapping("/updateDoctor/{id}")
-    public ResponseEntity<?> updateDoctor(@RequestBody DoctorDTO doctorDTO, @PathVariable Long id){
+    public ResponseEntity<?> updateDoctor(@RequestBody DoctorDTO doctorDTO, @PathVariable Long id,BindingResult bindingResult){
+        ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
+        if (errorDetails != null) return errorDetails;
         DoctorDTO doctorDTO1 = DoctorDTO.form(doctorServices.updateDoctor(id,doctorDTO));
         return new ResponseEntity<>(doctorDTO1,HttpStatus.OK);
     }

@@ -6,13 +6,17 @@ import com.paul.billing_system.service.DepartmentServices;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.paul.billing_system.controller.AuthController.getErrorDetails;
+
 @RestController
 @RequestMapping("/department")
+@PreAuthorize("hasAuthority('ROLE_Admin')")
 public class DepartmentController {
     private final DepartmentServices departmentServices;
 
@@ -22,9 +26,8 @@ public class DepartmentController {
 
     @PostMapping("/addDepartment/{id}")
     public ResponseEntity<?> save(@Valid @RequestBody DepartmentDTO departmentDTO,@PathVariable Long id, BindingResult bindingResult){
-        if (bindingResult.hasErrors()) {
-            return new ResponseEntity<>("Validation errors: " + bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
-        }
+        ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
+        if (errorDetails != null) return errorDetails;
         DepartmentDTO departmentDTO1 = DepartmentDTO.form(departmentServices.save(id,departmentDTO));
         return new ResponseEntity<>(departmentDTO1, HttpStatus.OK);
     }
@@ -42,9 +45,8 @@ public class DepartmentController {
 
     @PutMapping("/updateDepartment/{id}")
     public ResponseEntity<?> updateDepartment(@Valid @PathVariable Long id, @RequestBody DepartmentDTO departmentDTO,BindingResult bindingResult){
-        if (bindingResult.hasErrors()) {
-            return new ResponseEntity<>("Validation errors: " + bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
-        }
+        ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
+        if (errorDetails != null) return errorDetails;
         DepartmentDTO departmentDTO1 = DepartmentDTO.form(departmentServices.updateDepartment(departmentDTO,id));
         return new ResponseEntity<>(departmentDTO1,HttpStatus.OK);
     }

@@ -32,6 +32,7 @@ public class Organization {
 
     @Email(message = "Email should be valid")
     @Column(unique = true)
+    @NotEmpty(message = "Email should not be empty")
     private String email;
 
     private String emergencyContact;

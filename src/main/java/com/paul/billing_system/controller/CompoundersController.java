@@ -1,18 +1,20 @@
 package com.paul.billing_system.controller;
 
 import com.paul.billing_system.dto.CompoundersDTO;
-import com.paul.billing_system.entity.Compounders;
 import com.paul.billing_system.service.CompoundersServices;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import static com.paul.billing_system.controller.AuthController.getErrorDetails;
 
 @RestController
 @RequestMapping("/compounder")
+@PreAuthorize("hasAuthority('ROLE_Admin')")
+
 public class CompoundersController {
     private final CompoundersServices compoundersServices;
 
@@ -21,28 +23,26 @@ public class CompoundersController {
     }
 
     @PostMapping("/addCompounders/{id}")
-    public ResponseEntity<?> saveCompounders(@Valid @RequestBody CompoundersDTO compoundersDTO, BindingResult bindingResult, @PathVariable Long id){
-        if (bindingResult.hasErrors()) {
-            return new ResponseEntity<>("Validation errors: " + bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> saveCompounders(@Valid @RequestBody CompoundersDTO compoundersDTO, BindingResult bindingResult, @PathVariable Long id) {
+        ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
+        if (errorDetails != null) return errorDetails;
         CompoundersDTO compoundersDTO1 = CompoundersDTO.form(compoundersServices.saveCompounders(id, compoundersDTO));
         return new ResponseEntity<>(compoundersDTO1, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getCompounderById(@PathVariable Long id){
+    public ResponseEntity<?> getCompounderById(@PathVariable Long id) {
         CompoundersDTO compoundersDTO = CompoundersDTO.form(compoundersServices.getCompounderById(id));
-        return new ResponseEntity<>(compoundersDTO,HttpStatus.OK);
+        return new ResponseEntity<>(compoundersDTO, HttpStatus.OK);
     }
 
 
     @PutMapping("/updateCompounder/{id}")
-    public ResponseEntity<?> updateCompounder(@Valid @RequestBody CompoundersDTO compoundersDTO, @PathVariable Long id, BindingResult bindingResult){
-        if (bindingResult.hasErrors()) {
-            return new ResponseEntity<>("Validation errors: " + bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
-        }
-        CompoundersDTO staffsDTO1 = CompoundersDTO.form(compoundersServices.updateCompounder(compoundersDTO,id));
-        return new ResponseEntity<>(staffsDTO1,HttpStatus.OK);
+    public ResponseEntity<?> updateCompounder(@Valid @RequestBody CompoundersDTO compoundersDTO, @PathVariable Long id, BindingResult bindingResult) {
+        ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
+        if (errorDetails != null) return errorDetails;
+        CompoundersDTO staffsDTO1 = CompoundersDTO.form(compoundersServices.updateCompounder(compoundersDTO, id));
+        return new ResponseEntity<>(staffsDTO1, HttpStatus.OK);
     }
 
 
