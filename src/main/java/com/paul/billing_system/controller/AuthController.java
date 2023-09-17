@@ -2,6 +2,7 @@ package com.paul.billing_system.controller;
 
 import com.paul.billing_system.component.UserInfoUserDetailsService;
 import com.paul.billing_system.dto.AuthRequestDTO;
+import com.paul.billing_system.dto.ResponseDTO;
 import com.paul.billing_system.exception.ErrorDetails;
 import com.paul.billing_system.security.JwtService;
 import io.micrometer.common.util.internal.logging.InternalLogger;
@@ -35,9 +36,13 @@ public class AuthController {
                     new UsernamePasswordAuthenticationToken(authRequestDTO.getUsername(), authRequestDTO.getPassword())
             );
 
+            ResponseDTO responseDTO = new ResponseDTO();
+            responseDTO.setToken(jwtService.generateToken(authRequestDTO.getUsername(),
+                    (List) userDetailsService.loadUserByUsername(authRequestDTO.getUsername()).getAuthorities()));
+
+
             if (authenticate.isAuthenticated()) {
-                return new ResponseEntity(jwtService.generateToken(authRequestDTO.getUsername(),
-                        (List) userDetailsService.loadUserByUsername(authRequestDTO.getUsername()).getAuthorities()),HttpStatus.OK);
+                return new ResponseEntity<>(responseDTO,HttpStatus.OK);
             } else {
                 throw new UsernameNotFoundException("Invalid user request!!");
             }
@@ -49,6 +54,7 @@ public class AuthController {
 
     @GetMapping("/getRole")
     public ResponseEntity<?> getRole(@RequestHeader("Authorization") String token) {
+
         return new ResponseEntity<>(jwtService.extractRole(token.substring(7)), HttpStatus.OK);
     }
 

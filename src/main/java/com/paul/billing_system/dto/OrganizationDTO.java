@@ -43,9 +43,7 @@ public class OrganizationDTO {
 
     private List<PatientsDTO> patients;
 
-    private List<CompoundersDTO> compounders;
-
-    private List<MedSpecialistDTO> medSpecialists;
+    //private List<SpecialistDTO> specialist;
 
     public static OrganizationDTO form(Organization organization) {
         OrganizationDTO organizationDTO = new OrganizationDTO();
@@ -61,11 +59,11 @@ public class OrganizationDTO {
         //organizationDTO.setDepartment(organization.getDepartments().stream().map(DepartmentDTO::form).toList());
         organizationDTO.setDepartment(organization.getDepartments()!=null ? organization.getDepartments().stream().map(DepartmentDTO::form).toList() : null);
         organizationDTO.setAdmin(organization.getAdmins()!=null ? organization.getAdmins().stream()
-                .filter(adminDTO -> "Admin".equals(adminDTO.getRoles()))
+                .filter(adminDTO -> "ROLE_Admin".equals(adminDTO.getRoles()))
                 .map(UserInfoDTO::form).toList() : null);
-        organizationDTO.setCompounders(organization.getCompounders()!= null ? organization.getCompounders().stream().map(CompoundersDTO::form).toList() : null);
+        //organizationDTO.setCompounders(organization.getCompounders()!= null ? organization.getCompounders().stream().map(CompoundersDTO::form).toList() : null);
         organizationDTO.setPatients(organization.getPatients() != null ? organization.getPatients().stream().map(PatientsDTO::form).toList() : null);
-        organizationDTO.setMedSpecialists(organization.getMedSpecialists() != null ? organization.getMedSpecialists().stream().map(MedSpecialistDTO::form).toList() : null);
+        //organizationDTO.setSpecialist(organization.getSpecialists() != null ? organization.getSpecialists().stream().map(SpecialistDTO::form).toList() : null);
         return organizationDTO;
     }
 }

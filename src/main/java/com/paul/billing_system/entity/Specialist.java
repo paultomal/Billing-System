@@ -11,22 +11,20 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class MedSpecialist {
+public class Specialist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String medSpecName;
-
-    private Long noOfDoctors;
-
-    @OneToOne
-    private Compounders compounders;
+    private String specialityName;
+    
+/*    @OneToOne
+    private Compounders compounders;*/
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(
-            name = "medicalspecialist_doctors",
-            joinColumns = @JoinColumn(name = "medSpecialist_id",referencedColumnName = "id"),
+            name = "specialitist_doctors",
+            joinColumns = @JoinColumn(name = "specialist_id",referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "doctors_id")
     )
     private List<Doctors> doctors;

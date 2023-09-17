@@ -1,8 +1,10 @@
 package com.paul.billing_system.service;
 
 import com.paul.billing_system.dto.UserInfoDTO;
+import com.paul.billing_system.entity.Department;
 import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.entity.UserInfo;
+import com.paul.billing_system.repository.DepartmentRepository;
 import com.paul.billing_system.repository.OrganizationRepository;
 import com.paul.billing_system.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +23,13 @@ public class UserServices {
     private final UserRepository userRepository;
 
     private final OrganizationRepository organizationRepository;
+    private final DepartmentRepository departmentRepository;
 
 
-    public UserServices(UserRepository userRepository, OrganizationRepository organizationRepository) {
+    public UserServices(UserRepository userRepository, OrganizationRepository organizationRepository, DepartmentRepository departmentRepository) {
         this.userRepository = userRepository;
         this.organizationRepository = organizationRepository;
+        this.departmentRepository = departmentRepository;
     }
 
     //Super Admin
@@ -89,5 +93,26 @@ public class UserServices {
             return userRepository.save(userInfo1);
         }
         return new UserInfo();
+    }
+
+    // Staffs
+
+    public UserInfo saveStaff(Long id, UserInfoDTO userInfoDTO) {
+        Optional<Department> department = departmentRepository.findById(id);
+        UserInfo userInfo = new UserInfo();
+        if (department.isPresent()) {
+            userInfoDTO.setPassword(passwordEncoder.encode(userInfoDTO.getPassword()));
+            userInfo.setName(userInfoDTO.getName());
+            userInfo.setUsername(userInfoDTO.getUsername());
+            userInfo.setEmail(userInfoDTO.getEmail());
+            userInfo.setPassword(userInfoDTO.getPassword());
+            userInfo.setContact(userInfoDTO.getContact());
+            userInfo.setRoles("ROLE_Staff");
+            userRepository.save(userInfo);
+            department.get().getStaffs().add(userInfo);
+            departmentRepository.save(department.get());
+        }
+
+        return userInfo;
     }
 }

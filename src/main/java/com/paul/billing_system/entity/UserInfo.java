@@ -30,4 +30,8 @@ public class UserInfo {
     private String roles;
 
     private String contact;
+
+    private String department;
+
+    private String designation;
 }

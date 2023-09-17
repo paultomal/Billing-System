@@ -22,8 +22,6 @@ public class Department {
     @NotEmpty(message = "Department name should not be empty")
     private String deptName;
 
-    private Long noOfPatients;
-
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(
             name = "department_services",
@@ -31,6 +29,22 @@ public class Department {
             inverseJoinColumns = @JoinColumn(name = "services_id")
     )
     private List<ServicesInfo> services;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(
+            name = "department_specialists",
+            joinColumns = @JoinColumn(name = "department_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "specialists_id")
+    )
+    private List<Specialist> specialists;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(
+            name = "department_staffs",
+            joinColumns = @JoinColumn(name = "department_id",referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "staff_id")
+    )
+    private List<UserInfo> staffs;
 
 /*
 

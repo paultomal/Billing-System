@@ -1,3 +1,4 @@
+/*
 package com.paul.billing_system.repository;
 
 import com.paul.billing_system.entity.Compounders;
@@ -8,3 +9,4 @@ import java.util.List;
 
 public interface CompoundersRepository extends JpaRepository<Compounders, Long> {
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package com.paul.billing_system.entity;
 
 import jakarta.persistence.*;
@@ -22,3 +23,4 @@ public class Compounders {
 
     private String department;
 }
+*/

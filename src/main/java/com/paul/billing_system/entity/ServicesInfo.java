@@ -20,12 +20,4 @@ public class ServicesInfo {
     private String serviceName;
 
     private Double serviceCharge;
-
-
-    public static ServicesInfo form(ServicesInfoDTO servicesInfoDTO){
-        ServicesInfo servicesInfo = new ServicesInfo();
-        servicesInfo.setServiceName(servicesInfoDTO.getServiceName());
-        servicesInfo.setServiceCharge(servicesInfoDTO.getServiceCharge());
-        return servicesInfo;
-    }
 }

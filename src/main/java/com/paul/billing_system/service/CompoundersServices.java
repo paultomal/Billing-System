@@ -1,3 +1,4 @@
+/*
 package com.paul.billing_system.service;
 
 import com.paul.billing_system.dto.CompoundersDTO;
@@ -19,8 +20,6 @@ public class CompoundersServices {
         this.compoundersRepository = compoundersRepository;
         this.organizationRepository = organizationRepository;
     }
-
-    //Hospital Compouder Services
     public Compounders saveCompounders(Long id, CompoundersDTO compoundersDTO) {
         Optional<Organization> organization = organizationRepository.findById(id);
         Compounders compounders = new Compounders();
@@ -56,16 +55,17 @@ public class CompoundersServices {
     }
 
 
-/*    public List<Compounders> getAllCompounders(Long id) {
+    public List<Compounders> getAllCompounders(Long id) {
         Optional<Organization> organization = organizationRepository.findById(id);
         if (organization.isPresent()) {
             return compoundersRepository.findAll();
         }
         return (List<Compounders>) new Compounders();
-    }*/
+    }
 
 
-/*    //Chamber Compounder Services
+
+    //Chamber Compounder Services
     public Compounders saveChamberCoumpounder(Long id, CompoundersChamberDTO compoundersChamberDTO) {
         Optional<Organization> organization = organizationRepository.findById(id);
         Compounders compounders = new Compounders();
@@ -107,5 +107,7 @@ public class CompoundersServices {
         if (compounders.isPresent())
             return compounders.get();
         return new Compounders();
-    }*/
+    }
+
 }
+*/

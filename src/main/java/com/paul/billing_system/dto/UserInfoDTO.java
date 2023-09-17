@@ -29,15 +29,20 @@ public class UserInfoDTO {
 
     private String roles;
 
+    private String department;
+
+    private String designation;
+
     public static UserInfoDTO form(UserInfo userInfo){
         UserInfoDTO userInfoDTO = new UserInfoDTO();
         userInfoDTO.setId(userInfo.getId());
         userInfoDTO.setName(userInfo.getName());
         userInfoDTO.setUsername(userInfo.getUsername());
         userInfoDTO.setEmail(userInfo.getEmail());
-        userInfoDTO.setPassword(userInfo.getPassword());
         userInfoDTO.setContact(userInfo.getContact());
         userInfoDTO.setRoles(userInfo.getRoles());
+        userInfoDTO.setDepartment(userInfo.getDepartment());
+        userInfoDTO.setDesignation(userInfo.getDesignation());
         return userInfoDTO;
     }
 }

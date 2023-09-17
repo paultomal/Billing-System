@@ -13,13 +13,20 @@ public class DoctorDTO {
 
     private String doctorName;
 
+    private String contact;
+
+    private String email;
+
     private String doctorDegree;
 
     public static DoctorDTO form(Doctors doctors){
         DoctorDTO doctorDTO = new DoctorDTO();
         doctorDTO.setId(doctors.getId());
         doctorDTO.setDoctorName(doctors.getDoctorName());
+        doctorDTO.setContact(doctors.getContact());
+        doctorDTO.setEmail(doctors.getEmail());
         doctorDTO.setDoctorDegree(doctors.getDoctorDegree());
+
         return doctorDTO;
     }
 }

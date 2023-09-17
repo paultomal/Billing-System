@@ -1,9 +1,7 @@
 package com.paul.billing_system.controller;
 
-import com.paul.billing_system.dto.CompoundersDTO;
 import com.paul.billing_system.dto.OrganizationDTO;
 import com.paul.billing_system.dto.PatientsDTO;
-import com.paul.billing_system.entity.Compounders;
 import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.entity.Patients;
 import com.paul.billing_system.enums.OrganizationTypes;
@@ -80,12 +78,12 @@ public class OrganizationController {
     }
 
     //Compounder List
-
+/*
     @GetMapping("/getCompoundersByOrganization/{id}")
     public ResponseEntity<?> getCompoundersByOrganization(@PathVariable Long id) {
         Organization organization = organizationServices.getOrganizationByid(id);
         List<Compounders> compounders = organization.getCompounders();
         List<CompoundersDTO> compoundersDTOList = compounders.stream().map(CompoundersDTO::form).toList();
         return new ResponseEntity<>(compoundersDTOList, HttpStatus.OK);
-    }
+    }*/
 }

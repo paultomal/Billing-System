@@ -64,19 +64,19 @@ public class Organization {
     private List<Patients> patients;
 
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+/*    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(
             name = "organization_compounders",
             joinColumns = @JoinColumn(name = "organization_id",referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "compounder_id")
     )
-    private List<Compounders> compounders;
+    private List<Compounders> compounders;*/
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+/*    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(
             name = "organization_medspecialists",
             joinColumns = @JoinColumn(name = "organization_id",referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "medspecialists_id")
     )
-    private List<MedSpecialist> medSpecialists;
+    private List<Specialist> specialists;*/
 }

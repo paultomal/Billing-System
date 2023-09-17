@@ -26,7 +26,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (request.getServletPath().matches("/authenticate|/superAdmin/addSuperAdmin |/getRole")) {
+        if (request.getServletPath().matches("/authenticate|/superAdmin/addSuperAdmin|/getRole")) {
             filterChain.doFilter(request, response);
         } else {
             String authHeader = request.getHeader("Authorization");

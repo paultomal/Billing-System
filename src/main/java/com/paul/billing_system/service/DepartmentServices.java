@@ -3,7 +3,6 @@ package com.paul.billing_system.service;
 import com.paul.billing_system.dto.DepartmentDTO;
 import com.paul.billing_system.entity.Department;
 import com.paul.billing_system.entity.Organization;
-import com.paul.billing_system.entity.ServicesInfo;
 import com.paul.billing_system.enums.OrganizationTypes;
 import com.paul.billing_system.repository.DepartmentRepository;
 import com.paul.billing_system.repository.OrganizationRepository;
@@ -28,7 +27,6 @@ public class DepartmentServices {
         if (organization.isPresent()){
             if (organization.get().getType().equals(OrganizationTypes.HOSPITAL)) {
                 department.setDeptName(departmentDTO.getDeptName());
-                department.setNoOfPatients(departmentDTO.getNoOfPatients());
                 departmentRepository.save(department);
                 organization.get().getDepartments().add(department);
                 organizationRepository.save(organization.get());
@@ -37,7 +35,7 @@ public class DepartmentServices {
     return department;
     }
 
-    public List<Department> getAllDepartmant() {
+    public List<Department> getAllDepartment() {
         return departmentRepository.findAll();
     }
 
@@ -53,7 +51,6 @@ public class DepartmentServices {
         if (department.isPresent()) {
             Department department1 = department.get();
             department1.setDeptName(departmentDTO.getDeptName());
-            department1.setNoOfPatients(departmentDTO.getNoOfPatients());
            //department1.setServices(departmentDTO.getServices().stream().map(ServicesInfo::form).toList());
             return departmentRepository.save(department1);
         }

@@ -1,3 +1,4 @@
+/*
 package com.paul.billing_system.dto;
 
 import com.paul.billing_system.entity.Compounders;
@@ -26,3 +27,4 @@ public class CompoundersDTO {
         return compoundersDTO;
     }
 }
+*/

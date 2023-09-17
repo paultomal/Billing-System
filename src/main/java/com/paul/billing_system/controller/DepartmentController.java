@@ -33,7 +33,7 @@ public class DepartmentController {
     }
     @GetMapping("/getAllDepartment")
     public ResponseEntity<?> getAllDepartment(){
-        List<Department> departments = departmentServices.getAllDepartmant();
+        List<Department> departments = departmentServices.getAllDepartment();
         List<DepartmentDTO> departmentDTOList = departments.stream().map(DepartmentDTO::form).toList();
         return new ResponseEntity<>(departmentDTOList,HttpStatus.OK);
     }

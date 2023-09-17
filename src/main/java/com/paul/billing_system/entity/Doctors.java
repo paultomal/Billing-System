@@ -18,4 +18,8 @@ public class Doctors {
 
     private String doctorDegree;
 
+    private String contact;
+
+    private String email;
+
 }
