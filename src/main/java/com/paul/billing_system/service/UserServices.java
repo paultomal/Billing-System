@@ -42,7 +42,7 @@ public class UserServices {
         userInfo.setEmail(userInfoDTO.getEmail());
         userInfo.setPassword(userInfoDTO.getPassword());
         userInfo.setContact(userInfoDTO.getContact());
-        userInfo.setRoles("ROLE_Super_Admin");
+        userInfo.setRoles("ROLE_ROOT");
         userInfo = userRepository.save(userInfo);
         return userInfo;
 
@@ -63,7 +63,7 @@ public class UserServices {
             userInfo.setEmail(userInfoDTO.getEmail());
             userInfo.setPassword(userInfoDTO.getPassword());
             userInfo.setContact(userInfoDTO.getContact());
-            userInfo.setRoles("ROLE_Admin");
+            userInfo.setRoles("ROLE_ORG_ADMIN");
             userRepository.save(userInfo);
             organization.get().getAdmins().add(userInfo);
             organizationRepository.save(organization.get());
@@ -107,7 +107,7 @@ public class UserServices {
             userInfo.setEmail(userInfoDTO.getEmail());
             userInfo.setPassword(userInfoDTO.getPassword());
             userInfo.setContact(userInfoDTO.getContact());
-            userInfo.setRoles("ROLE_Staff");
+            userInfo.setRoles("ROLE_ADMIN");
             userRepository.save(userInfo);
             department.get().getStaffs().add(userInfo);
             departmentRepository.save(department.get());
