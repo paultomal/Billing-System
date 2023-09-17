@@ -45,15 +45,4 @@ public class Department {
             inverseJoinColumns = @JoinColumn(name = "staff_id")
     )
     private List<UserInfo> staffs;
-
-/*
-
-    public static Department form(DepartmentDTO departmentDTO){
-        Department department = new Department();
-        department.setDeptName(departmentDTO.getDeptName());
-        department.setNoOfPatients(departmentDTO.getNoOfPatients());
-        department.setServices(departmentDTO.getServices().stream().map(ServicesInfo::form).toList());
-        return department;
-    }
-*/
 }

@@ -16,7 +16,7 @@ import static com.paul.billing_system.controller.AuthController.getErrorDetails;
 
 @RestController
 @RequestMapping("/department")
-@PreAuthorize("hasAuthority('ROLE_Admin')")
+@PreAuthorize("hasAuthority('ROLE_ORG_ADMIN')")
 public class DepartmentController {
     private final DepartmentServices departmentServices;
 

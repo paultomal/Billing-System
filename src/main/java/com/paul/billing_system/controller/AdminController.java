@@ -16,7 +16,7 @@ import static com.paul.billing_system.controller.AuthController.getErrorDetails;
 
 @RestController
 @RequestMapping("/admin")
-@PreAuthorize("hasAuthority('ROLE_Super_Admin')")
+@PreAuthorize("hasAuthority('ROLE_ROOT')")
 public class AdminController {
     private final UserServices userServices;
 
@@ -36,7 +36,7 @@ public class AdminController {
     public ResponseEntity<?> getAdmins() {
         List<UserInfo> userInfos = userServices.getAdmins();
         List<UserInfo> admins = userInfos.stream()
-                .filter(userInfo -> userInfo.getRoles().contains("Admin"))
+                .filter(userInfo -> userInfo.getRoles().contains("ROLE_ORG_ADMIN"))
                 .toList();
         return new ResponseEntity<>(admins, HttpStatus.OK);
     }

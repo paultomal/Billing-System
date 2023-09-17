@@ -59,7 +59,7 @@ public class OrganizationDTO {
         //organizationDTO.setDepartment(organization.getDepartments().stream().map(DepartmentDTO::form).toList());
         organizationDTO.setDepartment(organization.getDepartments()!=null ? organization.getDepartments().stream().map(DepartmentDTO::form).toList() : null);
         organizationDTO.setAdmin(organization.getAdmins()!=null ? organization.getAdmins().stream()
-                .filter(adminDTO -> "ROLE_Admin".equals(adminDTO.getRoles()))
+                .filter(adminDTO -> "ROLE_ORG_ADMIN".equals(adminDTO.getRoles()))
                 .map(UserInfoDTO::form).toList() : null);
         //organizationDTO.setCompounders(organization.getCompounders()!= null ? organization.getCompounders().stream().map(CompoundersDTO::form).toList() : null);
         organizationDTO.setPatients(organization.getPatients() != null ? organization.getPatients().stream().map(PatientsDTO::form).toList() : null);

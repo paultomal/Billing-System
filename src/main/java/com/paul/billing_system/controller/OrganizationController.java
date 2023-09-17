@@ -20,7 +20,7 @@ import static com.paul.billing_system.controller.AuthController.getErrorDetails;
 
 @RestController
 @RequestMapping("/organization")
-@PreAuthorize("hasAuthority('ROLE_Super_Admin')")
+@PreAuthorize("hasAuthority('ROLE_ROOT')")
 public class OrganizationController {
     private final OrganizationServices organizationServices;
 
