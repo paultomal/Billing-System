@@ -41,7 +41,7 @@ public class AppConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(autz -> autz
                 .requestMatchers("/superAdmin/addSuperAdmin","/authenticate","/getRole").permitAll()
-                .requestMatchers("/organization/**","/admin/**","/compounder/**","/department/**","/doctors/**","/specialist/**","/patient/**","/service/**")
+                .requestMatchers("/organization/**","/admin/**","/compounder/**","/department/**","/doctors/**","/specialist/**","/patient/**","/investigation/**")
                         .authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())

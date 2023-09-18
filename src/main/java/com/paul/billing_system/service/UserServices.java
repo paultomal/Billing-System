@@ -1,12 +1,12 @@
 package com.paul.billing_system.service;
 
 import com.paul.billing_system.dto.UserInfoDTO;
-import com.paul.billing_system.entity.Department;
 import com.paul.billing_system.entity.Organization;
+import com.paul.billing_system.entity.Specialist;
 import com.paul.billing_system.entity.UserInfo;
 import com.paul.billing_system.enums.UserRoles;
-import com.paul.billing_system.repository.DepartmentRepository;
 import com.paul.billing_system.repository.OrganizationRepository;
+import com.paul.billing_system.repository.SpecialistRepository;
 import com.paul.billing_system.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,17 +24,18 @@ public class UserServices {
     private final UserRepository userRepository;
 
     private final OrganizationRepository organizationRepository;
-    private final DepartmentRepository departmentRepository;
+
+    private final SpecialistRepository specialistRepository;
 
 
-    public UserServices(UserRepository userRepository, OrganizationRepository organizationRepository, DepartmentRepository departmentRepository) {
+    public UserServices(UserRepository userRepository, OrganizationRepository organizationRepository, SpecialistRepository specialistRepository) {
         this.userRepository = userRepository;
         this.organizationRepository = organizationRepository;
-        this.departmentRepository = departmentRepository;
+        this.specialistRepository = specialistRepository;
     }
 
     //Super Admin
-    public UserInfo saveSuperAdmin(UserInfoDTO userInfoDTO){
+    public UserInfo saveSuperAdmin(UserInfoDTO userInfoDTO) {
 
         userInfoDTO.setPassword(passwordEncoder.encode(userInfoDTO.getPassword()));
         UserInfo userInfo = new UserInfo();
@@ -44,7 +45,7 @@ public class UserServices {
         userInfo.setPassword(userInfoDTO.getPassword());
         userInfo.setContact(userInfoDTO.getContact());
         UserRoles userRoles = UserRoles.getUserRolesByLabel("ROLE_ROOT");
-                /*UserRoles.getUserRolesByLabel(userInfoDTO.getRoles());*/
+        /*UserRoles.getUserRolesByLabel(userInfoDTO.getRoles());*/
         userInfo.setRoles(userRoles);
         userInfo = userRepository.save(userInfo);
         return userInfo;
@@ -54,7 +55,7 @@ public class UserServices {
 
     //Admin
 
-    public UserInfo saveAdmin(Long id, UserInfoDTO userInfoDTO) {
+    public UserInfo saveOrgAdmin(Long id, UserInfoDTO userInfoDTO) {
 
         Optional<Organization> organization = organizationRepository.findById(id);
         UserInfo userInfo = new UserInfo();
@@ -104,10 +105,10 @@ public class UserServices {
 
     // Staffs
 
-    public UserInfo saveStaff(Long id, UserInfoDTO userInfoDTO) {
-        Optional<Department> department = departmentRepository.findById(id);
+    public UserInfo saveAdmin(Long id, UserInfoDTO userInfoDTO) {
+        Optional<Specialist> specialist = specialistRepository.findById(id);
         UserInfo userInfo = new UserInfo();
-        if (department.isPresent()) {
+        if (specialist.isPresent()) {
             userInfoDTO.setPassword(passwordEncoder.encode(userInfoDTO.getPassword()));
             userInfo.setName(userInfoDTO.getName());
             userInfo.setUsername(userInfoDTO.getUsername());
@@ -115,13 +116,13 @@ public class UserServices {
             userInfo.setPassword(userInfoDTO.getPassword());
             userInfo.setContact(userInfoDTO.getContact());
             UserRoles userRoles = UserRoles.getUserRolesByLabel("ROLE_ADMIN");
-/*
+
                     UserRoles.getUserRolesByLabel(userInfoDTO.getRoles());
-*/
+
             userInfo.setRoles(userRoles);
             userRepository.save(userInfo);
-            department.get().getStaffs().add(userInfo);
-            departmentRepository.save(department.get());
+            specialist.get().getAdmin().add(userInfo);
+            specialistRepository.save(specialist.get());
         }
 
         return userInfo;

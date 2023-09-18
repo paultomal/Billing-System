@@ -21,16 +21,16 @@ public class DoctorServices {
     }
 
     public Doctors save(Long id, DoctorDTO doctorDTO) {
-        Optional<Specialist> medSpecialist = specialistRepository.findById(id);
+        Optional<Specialist> specialist  = specialistRepository.findById(id);
         Doctors doctors = new Doctors();
-        if (medSpecialist.isPresent()) {
+        if (specialist.isPresent()) {
             doctors.setDoctorName(doctorDTO.getDoctorName());
             doctors.setContact(doctorDTO.getContact());
             doctors.setEmail(doctorDTO.getEmail());
             doctors.setDoctorDegree(doctorDTO.getDoctorDegree());
             doctorRepository.save(doctors);
-            medSpecialist.get().getDoctors().add(doctors);
-            specialistRepository.save(medSpecialist.get());
+            specialist.get().getDoctors().add(doctors);
+            specialistRepository.save(specialist.get());
         }
         return doctors;
     }

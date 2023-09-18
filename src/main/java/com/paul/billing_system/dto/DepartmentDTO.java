@@ -1,3 +1,4 @@
+/*
 package com.paul.billing_system.dto;
 
 import com.paul.billing_system.entity.Department;
@@ -34,3 +35,4 @@ public class DepartmentDTO {
         return departmentDTO;
     }
 }
+*/

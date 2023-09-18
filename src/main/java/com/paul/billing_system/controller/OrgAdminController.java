@@ -18,10 +18,10 @@ import static com.paul.billing_system.controller.AuthController.getErrorDetails;
 @RestController
 @RequestMapping("/admin")
 @PreAuthorize("hasAuthority('ROLE_ROOT')")
-public class AdminController {
+public class OrgAdminController {
     private final UserServices userServices;
 
-    public AdminController(UserServices userServices) {
+    public OrgAdminController(UserServices userServices) {
         this.userServices = userServices;
     }
 
@@ -29,7 +29,7 @@ public class AdminController {
     public ResponseEntity<?> save(@Valid @RequestBody UserInfoDTO userInfoDTO, BindingResult bindingResult, @PathVariable Long id) {
         ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
         if (errorDetails != null) return errorDetails;
-        UserInfoDTO userInfoDTO1 = UserInfoDTO.form(userServices.saveAdmin(id, userInfoDTO));
+        UserInfoDTO userInfoDTO1 = UserInfoDTO.form(userServices.saveOrgAdmin(id, userInfoDTO));
         return new ResponseEntity<>(userInfoDTO1, HttpStatus.OK);
     }
 

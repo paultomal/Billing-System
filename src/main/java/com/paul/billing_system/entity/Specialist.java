@@ -16,7 +16,10 @@ public class Specialist {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String specialityName;
+    private String medSpecName;
+
+    private String noOfDoctor = getNoOfDoctor();
+
     
 /*    @OneToOne
     private Compounders compounders;*/
@@ -28,5 +31,29 @@ public class Specialist {
             inverseJoinColumns = @JoinColumn(name = "doctors_id")
     )
     private List<Doctors> doctors;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(
+            name = "specialitist_investigation",
+            joinColumns = @JoinColumn(name = "specialitist_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "investigation_id")
+    )
+    private List<Investigation> investigations;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(
+            name = "specialitist_admin",
+            joinColumns = @JoinColumn(name = "specialitist_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "admin_id")
+    )
+    private List<UserInfo> admin;
+
+    // Custom getter method for noOfDoctor
+    public String getNoOfDoctor() {
+        if (doctors != null) {
+            return String.valueOf(doctors.size());
+        }
+        return "0";
+    }
 
 }

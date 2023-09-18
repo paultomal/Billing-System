@@ -1,3 +1,4 @@
+/*
 package com.paul.billing_system.controller;
 
 import com.paul.billing_system.dto.DepartmentDTO;
@@ -51,3 +52,4 @@ public class DepartmentController {
         return new ResponseEntity<>(departmentDTO1,HttpStatus.OK);
     }
 }
+*/

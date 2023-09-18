@@ -1,6 +1,5 @@
 package com.paul.billing_system.entity;
 
-import com.paul.billing_system.dto.ServicesInfoDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -11,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class ServicesInfo {
+public class Investigation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

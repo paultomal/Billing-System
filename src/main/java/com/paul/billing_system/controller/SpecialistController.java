@@ -42,5 +42,4 @@ public class SpecialistController {
         SpecialistDTO specialistDTO = SpecialistDTO.form(specialistServices.getMedicalSpecialist(id));
         return new ResponseEntity<>(specialistDTO,HttpStatus.OK);
     }
-
 }

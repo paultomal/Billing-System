@@ -39,13 +39,21 @@ public class Organization {
 
     private String operatingHour;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+/*    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(
             name = "organization_department",
             joinColumns = @JoinColumn(name = "organization_id",referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "department_id")
     )
-    private List<Department> departments;
+    private List<Department> departments;*/
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(
+            name = "organization_medspecialists",
+            joinColumns = @JoinColumn(name = "organization_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "medspecialists_id")
+    )
+    private List<Specialist> specialists;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(
@@ -72,11 +80,4 @@ public class Organization {
     )
     private List<Compounders> compounders;*/
 
-/*    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinTable(
-            name = "organization_medspecialists",
-            joinColumns = @JoinColumn(name = "organization_id",referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "medspecialists_id")
-    )
-    private List<Specialist> specialists;*/
 }

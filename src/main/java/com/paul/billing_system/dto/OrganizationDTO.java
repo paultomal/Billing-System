@@ -2,6 +2,7 @@ package com.paul.billing_system.dto;
 
 import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.enums.OrganizationTypes;
+import com.paul.billing_system.enums.UserRoles;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -37,13 +38,13 @@ public class OrganizationDTO {
 
     private String operatingHour;
 
-    private List<UserInfoDTO> admin;
+    private List<UserInfoDTO> orgAdmin;
 
-    private List<DepartmentDTO> department;
+    //private List<DepartmentDTO> department;
 
     private List<PatientsDTO> patients;
 
-    //private List<SpecialistDTO> specialist;
+    private List<SpecialistDTO> specialist;
 
     public static OrganizationDTO form(Organization organization) {
         OrganizationDTO organizationDTO = new OrganizationDTO();
@@ -57,13 +58,13 @@ public class OrganizationDTO {
         organizationDTO.setEmergencyContact(organization.getEmergencyContact());
         organizationDTO.setOperatingHour(organization.getOperatingHour());
         //organizationDTO.setDepartment(organization.getDepartments().stream().map(DepartmentDTO::form).toList());
-        organizationDTO.setDepartment(organization.getDepartments()!=null ? organization.getDepartments().stream().map(DepartmentDTO::form).toList() : null);
-        organizationDTO.setAdmin(organization.getAdmins()!=null ? organization.getAdmins().stream()
-                .filter(adminDTO -> "ROLE_ORG_ADMIN".equals(adminDTO.getRoles()))
+        //organizationDTO.setDepartment(organization.getDepartments()!=null ? organization.getDepartments().stream().map(DepartmentDTO::form).toList() : null);
+        organizationDTO.setOrgAdmin(organization.getAdmins()!=null ? organization.getAdmins().stream()
+                .filter(adminDTO -> UserRoles.getUserRolesByLabel("ROLE_ORG_ADMIN").equals(adminDTO.getRoles()))
                 .map(UserInfoDTO::form).toList() : null);
         //organizationDTO.setCompounders(organization.getCompounders()!= null ? organization.getCompounders().stream().map(CompoundersDTO::form).toList() : null);
         organizationDTO.setPatients(organization.getPatients() != null ? organization.getPatients().stream().map(PatientsDTO::form).toList() : null);
-        //organizationDTO.setSpecialist(organization.getSpecialists() != null ? organization.getSpecialists().stream().map(SpecialistDTO::form).toList() : null);
+        organizationDTO.setSpecialist(organization.getSpecialists() != null ? organization.getSpecialists().stream().map(SpecialistDTO::form).toList() : null);
         return organizationDTO;
     }
 }

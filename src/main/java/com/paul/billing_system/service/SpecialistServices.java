@@ -1,9 +1,9 @@
 package com.paul.billing_system.service;
 
 import com.paul.billing_system.dto.SpecialistDTO;
-import com.paul.billing_system.entity.Department;
+import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.entity.Specialist;
-import com.paul.billing_system.repository.DepartmentRepository;
+import com.paul.billing_system.repository.OrganizationRepository;
 import com.paul.billing_system.repository.SpecialistRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,21 +14,21 @@ import java.util.Optional;
 public class SpecialistServices {
     private final SpecialistRepository specialistRepository;
 
-    private final DepartmentRepository departmentRepository;
+    private final OrganizationRepository organizationRepository;
 
-    public SpecialistServices(SpecialistRepository specialistRepository, DepartmentRepository departmentRepository) {
+    public SpecialistServices(SpecialistRepository specialistRepository, OrganizationRepository organizationRepository) {
         this.specialistRepository = specialistRepository;
-        this.departmentRepository = departmentRepository;
+        this.organizationRepository = organizationRepository;
     }
 
     public Specialist saveSpecialist(Long id, SpecialistDTO specialistDTO) {
-        Optional<Department> department = departmentRepository.findById(id);
+        Optional<Organization> organization = organizationRepository.findById(id);
         Specialist specialist = new Specialist();
-        if (department.isPresent()) {
-            specialist.setSpecialityName(specialistDTO.getSpecialityName());
+        if (organization.isPresent()) {
+            specialist.setMedSpecName(specialistDTO.getMedSpecName());
             specialistRepository.save(specialist);
-            department.get().getSpecialists().add(specialist);
-            departmentRepository.save(department.get());
+            organization.get().getSpecialists().add(specialist);
+            organizationRepository.save(organization.get());
         }
         return specialist;
     }

@@ -54,7 +54,6 @@ public class AuthController {
 
     @GetMapping("/getRole")
     public ResponseEntity<?> getRole(@RequestHeader("Authorization") String token) {
-
         return new ResponseEntity<>(jwtService.extractRole(token.substring(7)), HttpStatus.OK);
     }
 
