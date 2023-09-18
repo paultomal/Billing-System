@@ -1,5 +1,6 @@
 package com.paul.billing_system.entity;
 
+import com.paul.billing_system.enums.UserRoles;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -27,7 +28,8 @@ public class UserInfo {
 
     private String password;
 
-    private String roles;
+    @Enumerated(EnumType.STRING)
+    private UserRoles roles;
 
     private String contact;
 

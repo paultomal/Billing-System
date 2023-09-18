@@ -1,6 +1,7 @@
 package com.paul.billing_system.dto;
 
 import com.paul.billing_system.entity.UserInfo;
+import com.paul.billing_system.enums.UserRoles;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -40,9 +41,13 @@ public class UserInfoDTO {
         userInfoDTO.setUsername(userInfo.getUsername());
         userInfoDTO.setEmail(userInfo.getEmail());
         userInfoDTO.setContact(userInfo.getContact());
-        userInfoDTO.setRoles(userInfo.getRoles());
+        String userRoles =
+                UserRoles.getLabelByUserRoles(userInfo.getRoles());
+        userInfoDTO.setRoles(userRoles);
         userInfoDTO.setDepartment(userInfo.getDepartment());
         userInfoDTO.setDesignation(userInfo.getDesignation());
         return userInfoDTO;
     }
 }
+/*        String organizationTypes = OrganizationTypes.getLabelByOrganizationType(organization.getType());
+        organizationDTO.setType(organizationTypes);*/

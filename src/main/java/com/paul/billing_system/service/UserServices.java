@@ -4,6 +4,7 @@ import com.paul.billing_system.dto.UserInfoDTO;
 import com.paul.billing_system.entity.Department;
 import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.entity.UserInfo;
+import com.paul.billing_system.enums.UserRoles;
 import com.paul.billing_system.repository.DepartmentRepository;
 import com.paul.billing_system.repository.OrganizationRepository;
 import com.paul.billing_system.repository.UserRepository;
@@ -42,7 +43,9 @@ public class UserServices {
         userInfo.setEmail(userInfoDTO.getEmail());
         userInfo.setPassword(userInfoDTO.getPassword());
         userInfo.setContact(userInfoDTO.getContact());
-        userInfo.setRoles("ROLE_ROOT");
+        UserRoles userRoles = UserRoles.getUserRolesByLabel("ROLE_ROOT");
+                /*UserRoles.getUserRolesByLabel(userInfoDTO.getRoles());*/
+        userInfo.setRoles(userRoles);
         userInfo = userRepository.save(userInfo);
         return userInfo;
 
@@ -63,7 +66,11 @@ public class UserServices {
             userInfo.setEmail(userInfoDTO.getEmail());
             userInfo.setPassword(userInfoDTO.getPassword());
             userInfo.setContact(userInfoDTO.getContact());
-            userInfo.setRoles("ROLE_ORG_ADMIN");
+            UserRoles userRoles = UserRoles.getUserRolesByLabel("ROLE_ORG_ADMIN");
+/*
+                    UserRoles.getUserRolesByLabel(userInfoDTO.getRoles());
+*/
+            userInfo.setRoles(userRoles);
             userRepository.save(userInfo);
             organization.get().getAdmins().add(userInfo);
             organizationRepository.save(organization.get());
@@ -107,7 +114,11 @@ public class UserServices {
             userInfo.setEmail(userInfoDTO.getEmail());
             userInfo.setPassword(userInfoDTO.getPassword());
             userInfo.setContact(userInfoDTO.getContact());
-            userInfo.setRoles("ROLE_ADMIN");
+            UserRoles userRoles = UserRoles.getUserRolesByLabel("ROLE_ADMIN");
+/*
+                    UserRoles.getUserRolesByLabel(userInfoDTO.getRoles());
+*/
+            userInfo.setRoles(userRoles);
             userRepository.save(userInfo);
             department.get().getStaffs().add(userInfo);
             departmentRepository.save(department.get());

@@ -13,16 +13,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class UserInfoUserDetails implements UserDetails {
-    private String username;
+    private final String username;
 
-    private String password;
+    private final String password;
 
-    private List<GrantedAuthority> authorities;
+    private final List<GrantedAuthority> authorities;
 
     public UserInfoUserDetails(UserInfo userInfo) {
         username = userInfo.getUsername();
         password = userInfo.getPassword();
-        authorities= Arrays.stream(userInfo.getRoles().split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        authorities= List.of(new SimpleGrantedAuthority(userInfo.getRoles().name()));
+/*
+                Arrays.stream(userInfo.getRoles().split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+*/
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.paul.billing_system.controller;
 
 import com.paul.billing_system.dto.UserInfoDTO;
 import com.paul.billing_system.entity.UserInfo;
+import com.paul.billing_system.enums.UserRoles;
 import com.paul.billing_system.service.UserServices;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -36,7 +37,7 @@ public class AdminController {
     public ResponseEntity<?> getAdmins() {
         List<UserInfo> userInfos = userServices.getAdmins();
         List<UserInfo> admins = userInfos.stream()
-                .filter(userInfo -> userInfo.getRoles().contains("ROLE_ORG_ADMIN"))
+                .filter(userInfo -> userInfo.getRoles().equals(UserRoles.getUserRolesByLabel("ROLE_ORG_ADMIN")))
                 .toList();
         return new ResponseEntity<>(admins, HttpStatus.OK);
     }
