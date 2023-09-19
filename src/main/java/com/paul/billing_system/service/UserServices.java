@@ -9,6 +9,8 @@ import com.paul.billing_system.repository.OrganizationRepository;
 import com.paul.billing_system.repository.SpecialistRepository;
 import com.paul.billing_system.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -80,8 +82,11 @@ public class UserServices {
         return userInfo;
     }
 
-    public List<UserInfo> getOrgAdmins() {
-        return userRepository.findAll();
+    public Page<UserInfo> getOrgAdmins(Long id, int offset, int pageSize) {
+        Optional<Organization> organization = organizationRepository.findById(id);
+        if (organization.isPresent())
+            return userRepository.findAll(PageRequest.of(offset,pageSize));
+        return null;
     }
 
     public UserInfo getOrgAdminById(Long id) {
@@ -116,7 +121,7 @@ public class UserServices {
             userInfo.setContact(userInfoDTO.getContact());
             UserRoles userRoles = UserRoles.getUserRolesByLabel("ROLE_ADMIN");
 
-                    UserRoles.getUserRolesByLabel(userInfoDTO.getRoles());
+            UserRoles.getUserRolesByLabel(userInfoDTO.getRoles());
 
             userInfo.setRoles(userRoles);
             userRepository.save(userInfo);

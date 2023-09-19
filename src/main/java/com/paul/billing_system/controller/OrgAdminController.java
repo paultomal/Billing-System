@@ -5,6 +5,7 @@ import com.paul.billing_system.entity.UserInfo;
 import com.paul.billing_system.enums.UserRoles;
 import com.paul.billing_system.service.UserServices;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -33,9 +34,9 @@ public class OrgAdminController {
         return new ResponseEntity<>(userInfoDTO1, HttpStatus.OK);
     }
 
-    @GetMapping("/getOrgAdmins")
-    public ResponseEntity<?> getAdmins() {
-        List<UserInfo> userInfos = userServices.getOrgAdmins();
+    @GetMapping("/getOrgAdmins/{id}/{offset}/{pageSize}")
+    public ResponseEntity<?> getOrgAdmins(@PathVariable Long id,@PathVariable int offset,@PathVariable int pageSize) {
+        Page<UserInfo> userInfos = userServices.getOrgAdmins(id,offset,pageSize);
         List<UserInfo> admins = userInfos.stream()
                 .filter(userInfo -> userInfo.getRoles().equals(UserRoles.getUserRolesByLabel("ROLE_ORG_ADMIN")))
                 .toList();

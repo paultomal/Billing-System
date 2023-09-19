@@ -3,6 +3,7 @@ package com.paul.billing_system.controller;
 import com.paul.billing_system.dto.SpecialistDTO;
 import com.paul.billing_system.entity.Specialist;
 import com.paul.billing_system.service.SpecialistServices;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,7 +16,7 @@ import static com.paul.billing_system.controller.AuthController.getErrorDetails;
 
 @RestController
 @RequestMapping("/specialist")
-@PreAuthorize("hasAuthority('ROLE_ORG_ADMIN')")
+@PreAuthorize("hasAuthority('ROLE_ROOT')")
 public class SpecialistController {
     private final SpecialistServices specialistServices;
 
@@ -23,16 +24,16 @@ public class SpecialistController {
         this.specialistServices = specialistServices;
     }
 
-    @PostMapping("/addSpecialist/{id}")
-    public ResponseEntity<?> saveMedSpecialist(@RequestBody SpecialistDTO specialistDTO, @PathVariable Long id, BindingResult bindingResult){
+    @PostMapping("/addSpecialist")
+    public ResponseEntity<?> saveMedSpecialist(@RequestBody SpecialistDTO specialistDTO, BindingResult bindingResult){
         ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
         if (errorDetails != null) return errorDetails;
-        SpecialistDTO specialistDTO1 = SpecialistDTO.form(specialistServices.saveSpecialist(id, specialistDTO));
+        SpecialistDTO specialistDTO1 = SpecialistDTO.form(specialistServices.saveSpecialist(specialistDTO));
         return new ResponseEntity<>(specialistDTO1, HttpStatus.OK);
     }
-    @GetMapping("/getAllSpecialist")
-    public ResponseEntity<?> getAllMedSpecialist(){
-        List<Specialist> specialists = specialistServices.getAllMedSpecialist();
+    @GetMapping("/getAllSpecialist/{offset}/{pageSize}")
+    public ResponseEntity<?> getAllSpecialist(@PathVariable int offset, @PathVariable int pageSize){
+        Page<Specialist> specialists = specialistServices.getAllSpecialist(offset,pageSize);
         List<SpecialistDTO> specialistDTOList = specialists.stream().map(SpecialistDTO::form).toList();
         return new ResponseEntity<>(specialistDTOList,HttpStatus.OK);
     }

@@ -5,9 +5,10 @@ import com.paul.billing_system.entity.Investigation;
 import com.paul.billing_system.entity.Specialist;
 import com.paul.billing_system.repository.InvestigationRepository;
 import com.paul.billing_system.repository.SpecialistRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,7 +21,7 @@ public class InvestigationServices {
         this.specialistRepository = specialistRepository;
     }
 
-    public Investigation save(Long id, InvestigationDTO investigationDTO) {
+    public Investigation saveInvestigation(Long id, InvestigationDTO investigationDTO) {
         Optional<Specialist> specialist = specialistRepository.findById(id);
         Investigation investigation = new Investigation();
         if (specialist.isPresent()) {
@@ -33,8 +34,11 @@ public class InvestigationServices {
         return investigation;
     }
 
-    public List<Investigation> getAllServices() {
-        return investigationRepository.findAll();
+    public Page<Investigation> getAllServices(Long id, int offset, int pageSize) {
+        Optional<Specialist> specialist = specialistRepository.findById(id);
+        if (specialist.isPresent())
+            return investigationRepository.findAll(PageRequest.of(offset,pageSize));
+        return null;
     }
 
     public Investigation getServiceById(Long id) {

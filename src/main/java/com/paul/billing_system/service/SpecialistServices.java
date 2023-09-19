@@ -5,6 +5,8 @@ import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.entity.Specialist;
 import com.paul.billing_system.repository.OrganizationRepository;
 import com.paul.billing_system.repository.SpecialistRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,21 +23,16 @@ public class SpecialistServices {
         this.organizationRepository = organizationRepository;
     }
 
-    public Specialist saveSpecialist(Long id, SpecialistDTO specialistDTO) {
-        Optional<Organization> organization = organizationRepository.findById(id);
+    public Specialist saveSpecialist( SpecialistDTO specialistDTO) {
         Specialist specialist = new Specialist();
-        if (organization.isPresent()) {
             specialist.setMedSpecName(specialistDTO.getMedSpecName());
             specialist.setNoOfDoctor(specialist.getNoOfDoctor()+1);
-            specialistRepository.save(specialist);
-            organization.get().getSpecialists().add(specialist);
-            organizationRepository.save(organization.get());
-        }
-        return specialist;
+            return specialistRepository.save(specialist);
+
     }
 
-    public List<Specialist> getAllMedSpecialist() {
-        return specialistRepository.findAll();
+    public Page<Specialist> getAllSpecialist(int offset, int pageSize) {
+        return specialistRepository.findAll(PageRequest.of(offset, pageSize));
     }
 
     public Specialist getMedicalSpecialist(Long id) {
