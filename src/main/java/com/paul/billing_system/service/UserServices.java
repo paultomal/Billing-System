@@ -82,10 +82,10 @@ public class UserServices {
         return userInfo;
     }
 
-    public Page<UserInfo> getOrgAdmins(Long id, int offset, int pageSize) {
+    public List<UserInfo> getOrgAdmins(Long id) {
         Optional<Organization> organization = organizationRepository.findById(id);
         if (organization.isPresent())
-            return userRepository.findAll(PageRequest.of(offset,pageSize));
+            return userRepository.findAll();
         return null;
     }
 
@@ -149,5 +149,14 @@ public class UserServices {
             return userRepository.save(userInfo1);
         }
         return new UserInfo();
+    }
+
+    public List<UserInfo> getAllAdmins(Long id) {
+
+        Optional<Specialist> specialist = specialistRepository.findById(id);
+        if (specialist.isPresent())
+            return userRepository.findAll();
+        return null;
+
     }
 }

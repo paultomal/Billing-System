@@ -34,13 +34,14 @@ public class OrgAdminController {
         return new ResponseEntity<>(userInfoDTO1, HttpStatus.OK);
     }
 
-    @GetMapping("/getOrgAdmins/{id}/{offset}/{pageSize}")
-    public ResponseEntity<?> getOrgAdmins(@PathVariable Long id,@PathVariable int offset,@PathVariable int pageSize) {
-        Page<UserInfo> userInfos = userServices.getOrgAdmins(id,offset,pageSize);
-        List<UserInfo> admins = userInfos.stream()
-                .filter(userInfo -> userInfo.getRoles().equals(UserRoles.getUserRolesByLabel("ROLE_ORG_ADMIN")))
+    @GetMapping("/getOrgAdmins/{id}")
+    public ResponseEntity<?> getOrgAdmins(@PathVariable Long id) {
+        List<UserInfo> userInfos = userServices.getOrgAdmins(id);
+        List<UserInfoDTO> orgAdmin = userInfos.stream()
+                .map(UserInfoDTO::form)
+                .filter(u-> u.getRoles().equals(UserRoles.getLabelByUserRoles(UserRoles.ROLE_ORG_ADMIN)))
                 .toList();
-        return new ResponseEntity<>(admins, HttpStatus.OK);
+        return new ResponseEntity<>(orgAdmin, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
