@@ -26,7 +26,7 @@ public class Specialist {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(
             name = "specialitist_doctors",
-            joinColumns = @JoinColumn(name = "specialist_id",referencedColumnName = "id"),
+            joinColumns = @JoinColumn(name = "specialist_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "doctors_id")
     )
     private List<Doctors> doctors;
@@ -49,12 +49,11 @@ public class Specialist {
     )
     private List<UserInfo> admin;
 
-    // Custom getter method for noOfDoctor
-/*    public String getNoOfDoctor() {
-        if (doctors != null) {
-            return String.valueOf(doctors.size());
-        }
-        return "0";
-    }*/
-
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(
+            name = "specialitist_patients",
+            joinColumns = @JoinColumn(name = "specialitist_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "patients_id")
+    )
+    private List<Patients> patients;
 }
