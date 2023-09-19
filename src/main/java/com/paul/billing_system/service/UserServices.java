@@ -96,7 +96,6 @@ public class UserServices {
             userInfo1.setName(userInfoDTO.getName());
             userInfo1.setUsername(userInfoDTO.getUsername());
             userInfo1.setEmail(userInfoDTO.getEmail());
-            userInfo1.setPassword(userInfoDTO.getPassword());
             userInfo1.setContact(userInfoDTO.getContact());
             return userRepository.save(userInfo1);
         }
