@@ -52,7 +52,7 @@ public class AdminController {
     }
 
     @PutMapping("/updateAdmin/{id}")
-    public ResponseEntity<?> updateCompounder(@Valid @RequestBody UserInfoDTO userInfoDTO, @PathVariable Long id, BindingResult bindingResult) {
+    public ResponseEntity<?> updateAdmin(@Valid @RequestBody UserInfoDTO userInfoDTO, @PathVariable Long id, BindingResult bindingResult) {
         ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
         if (errorDetails != null) return errorDetails;
         UserInfoDTO userInfoDTO1 = UserInfoDTO.form(userServices.updateAdmin(userInfoDTO, id));

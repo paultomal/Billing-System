@@ -1,5 +1,6 @@
 package com.paul.billing_system.entity;
 
+import com.paul.billing_system.enums.DaysOfWeek;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,12 +15,24 @@ public class Doctors {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String doctorName;
+    private String name;
 
-    private String doctorDegree;
+    private String degrees;
 
     private String contact;
 
     private String email;
 
+    private String followUp;
+
+    private String consultation;
+
+    private String minDiscount;
+
+    private String maxDiscount;
+
+    @Enumerated(EnumType.STRING)
+    private DaysOfWeek day;
+
+    private String time;
 }

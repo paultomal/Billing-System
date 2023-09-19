@@ -120,9 +120,6 @@ public class UserServices {
             userInfo.setPassword(userInfoDTO.getPassword());
             userInfo.setContact(userInfoDTO.getContact());
             UserRoles userRoles = UserRoles.getUserRolesByLabel("ROLE_ADMIN");
-
-            UserRoles.getUserRolesByLabel(userInfoDTO.getRoles());
-
             userInfo.setRoles(userRoles);
             userRepository.save(userInfo);
             specialist.get().getAdmin().add(userInfo);
@@ -144,8 +141,9 @@ public class UserServices {
         if (userInfo.isPresent()) {
             UserInfo userInfo1 = new UserInfo();
             userInfo1.setName(userInfoDTO.getName());
-            userInfo1.setDesignation(userInfoDTO.getDesignation());
-            userInfo1.setDepartment(userInfoDTO.getDepartment());
+            userInfo1.setUsername(userInfoDTO.getUsername());
+            userInfo1.setEmail(userInfoDTO.getEmail());
+            userInfo1.setContact(userInfoDTO.getContact());
             return userRepository.save(userInfo1);
         }
         return new UserInfo();

@@ -2,6 +2,8 @@ package com.paul.billing_system.controller;
 
 import com.paul.billing_system.dto.DoctorDTO;
 import com.paul.billing_system.entity.Doctors;
+import com.paul.billing_system.enums.DaysOfWeek;
+import com.paul.billing_system.enums.OrganizationTypes;
 import com.paul.billing_system.service.DoctorServices;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -36,6 +38,10 @@ public class DoctorController {
     public ResponseEntity<?> getDoctorById(@PathVariable Long id){
         DoctorDTO doctorDTO = DoctorDTO.form(doctorServices.getDoctorById(id));
         return new ResponseEntity<>(doctorDTO,HttpStatus.OK);
+    }
+    @GetMapping("/Days")
+    public List<String> getAllOrganizationTypesList() {
+        return DaysOfWeek.getAllDaysOfWeek();
     }
 
     @GetMapping("/getAllDoctors/{id}/{offset}/{pageSize}")
