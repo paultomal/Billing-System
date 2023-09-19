@@ -18,9 +18,8 @@ public class Specialist {
 
     private String medSpecName;
 
-    private String noOfDoctor = getNoOfDoctor();
 
-    
+
 /*    @OneToOne
     private Compounders compounders;*/
 
@@ -31,6 +30,8 @@ public class Specialist {
             inverseJoinColumns = @JoinColumn(name = "doctors_id")
     )
     private List<Doctors> doctors;
+
+    private long noOfDoctor = !(doctors == null) ? doctors.size() : 0;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(
@@ -49,11 +50,11 @@ public class Specialist {
     private List<UserInfo> admin;
 
     // Custom getter method for noOfDoctor
-    public String getNoOfDoctor() {
+/*    public String getNoOfDoctor() {
         if (doctors != null) {
             return String.valueOf(doctors.size());
         }
         return "0";
-    }
+    }*/
 
 }

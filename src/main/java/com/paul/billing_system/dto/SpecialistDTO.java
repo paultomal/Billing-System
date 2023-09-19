@@ -18,7 +18,7 @@ public class SpecialistDTO {
 
     private String medSpecName;
 
-    private String noOfDoctor;
+    private long noOfDoctor;
 
     private List<DoctorDTO> doctors;
 

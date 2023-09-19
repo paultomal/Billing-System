@@ -5,6 +5,8 @@ import com.paul.billing_system.entity.Doctors;
 import com.paul.billing_system.entity.Specialist;
 import com.paul.billing_system.repository.DoctorRepository;
 import com.paul.billing_system.repository.SpecialistRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +23,7 @@ public class DoctorServices {
     }
 
     public Doctors save(Long id, DoctorDTO doctorDTO) {
-        Optional<Specialist> specialist  = specialistRepository.findById(id);
+        Optional<Specialist> specialist = specialistRepository.findById(id);
         Doctors doctors = new Doctors();
         if (specialist.isPresent()) {
             doctors.setDoctorName(doctorDTO.getDoctorName());
@@ -30,6 +32,7 @@ public class DoctorServices {
             doctors.setDoctorDegree(doctorDTO.getDoctorDegree());
             doctorRepository.save(doctors);
             specialist.get().getDoctors().add(doctors);
+            specialist.get().setNoOfDoctor(specialist.get().getNoOfDoctor() + 1);
             specialistRepository.save(specialist.get());
         }
         return doctors;
@@ -43,8 +46,11 @@ public class DoctorServices {
         return new Doctors();
     }
 
-    public List<Doctors> getAllDoctors() {
-        return doctorRepository.findAll();
+    public Page<Doctors> getAllDoctors(Long id, int offset, int pageSize) {
+        Optional<Specialist> specialist = specialistRepository.findById(id);
+        if (specialist.isPresent())
+            return doctorRepository.findAll(PageRequest.of(offset, pageSize));
+        return null;
     }
 
     public Doctors updateDoctor(Long id, DoctorDTO doctorDTO) {

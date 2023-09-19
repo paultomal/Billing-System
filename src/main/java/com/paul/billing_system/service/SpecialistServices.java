@@ -26,6 +26,7 @@ public class SpecialistServices {
         Specialist specialist = new Specialist();
         if (organization.isPresent()) {
             specialist.setMedSpecName(specialistDTO.getMedSpecName());
+            specialist.setNoOfDoctor(specialist.getNoOfDoctor()+1);
             specialistRepository.save(specialist);
             organization.get().getSpecialists().add(specialist);
             organizationRepository.save(organization.get());

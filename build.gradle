@@ -37,6 +37,10 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
 	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
+	//Developer tools
+
+	compileOnly("org.springframework.boot:spring-boot-devtools")
+
 }
 
 tasks.named('test') {

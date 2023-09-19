@@ -3,6 +3,7 @@ package com.paul.billing_system.controller;
 import com.paul.billing_system.dto.DoctorDTO;
 import com.paul.billing_system.entity.Doctors;
 import com.paul.billing_system.service.DoctorServices;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -37,9 +38,9 @@ public class DoctorController {
         return new ResponseEntity<>(doctorDTO,HttpStatus.OK);
     }
 
-    @GetMapping("/getAllDoctors")
-    public ResponseEntity<?> getAllDoctors(){
-        List<Doctors> doctors = doctorServices.getAllDoctors();
+    @GetMapping("/getAllDoctors/{id}/{offset}/{pageSize}")
+    public ResponseEntity<?> getAllDoctors(@PathVariable Long id ,@PathVariable int offset, @PathVariable int pageSize){
+        Page<Doctors> doctors = doctorServices.getAllDoctors(id,offset, pageSize);
         List<DoctorDTO> doctorDTOList = doctors.stream().map(DoctorDTO::form).toList();
         return new ResponseEntity<>(doctorDTOList,HttpStatus.OK);
     }
