@@ -12,36 +12,35 @@ import org.springframework.web.bind.annotation.*;
 import static com.paul.billing_system.controller.AuthController.getErrorDetails;
 
 @RestController
-@RequestMapping("/staffs")
+@RequestMapping("/admin")
 @PreAuthorize("hasAuthority('ROLE_ORG_ADMIN')")
 
-public class StaffController {
+public class AdminController {
     private final UserServices userServices;
 
-    public StaffController(UserServices userServices) {
+    public AdminController(UserServices userServices) {
         this.userServices = userServices;
     }
 
-    @PostMapping("/addStaff/{id}")
-    public ResponseEntity<?> saveStaff(@Valid @RequestBody UserInfoDTO userInfoDTO, BindingResult bindingResult, @PathVariable Long id) {
+    @PostMapping("/addAdmin/{id}")
+    public ResponseEntity<?> saveAdmin(@Valid @RequestBody UserInfoDTO userInfoDTO, BindingResult bindingResult, @PathVariable Long id) {
         ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
         if (errorDetails != null) return errorDetails;
         UserInfoDTO userInfoDTO1 = UserInfoDTO.form(userServices.saveAdmin(id, userInfoDTO));
         return new ResponseEntity<>(userInfoDTO1, HttpStatus.OK);
     }
 
-/*    @GetMapping("/{id}")
-    public ResponseEntity<?> getCompounderById(@PathVariable Long id) {
-        CompoundersDTO compoundersDTO = CompoundersDTO.form(userServices.getCompounderById(id));
-        return new ResponseEntity<>(compoundersDTO, HttpStatus.OK);
+   @GetMapping("/{id}")
+    public ResponseEntity<?> getAdminById(@PathVariable Long id) {
+       UserInfoDTO userInfoDTO = UserInfoDTO.form(userServices.getAdminById(id));
+        return new ResponseEntity<>(userInfoDTO, HttpStatus.OK);
     }
 
-
-    @PutMapping("/updateCompounder/{id}")
-    public ResponseEntity<?> updateCompounder(@Valid @RequestBody CompoundersDTO compoundersDTO, @PathVariable Long id, BindingResult bindingResult) {
+    @PutMapping("/updateAdmin/{id}")
+    public ResponseEntity<?> updateCompounder(@Valid @RequestBody UserInfoDTO userInfoDTO, @PathVariable Long id, BindingResult bindingResult) {
         ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
         if (errorDetails != null) return errorDetails;
-        CompoundersDTO staffsDTO1 = CompoundersDTO.form(userServices.updateCompounder(compoundersDTO, id));
-        return new ResponseEntity<>(staffsDTO1, HttpStatus.OK);
-    }*/
+        UserInfoDTO userInfoDTO1 = UserInfoDTO.form(userServices.updateAdmin(userInfoDTO, id));
+        return new ResponseEntity<>(userInfoDTO1, HttpStatus.OK);
+    }
 }

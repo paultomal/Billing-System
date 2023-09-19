@@ -16,7 +16,7 @@ import java.util.List;
 import static com.paul.billing_system.controller.AuthController.getErrorDetails;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/org_admin")
 @PreAuthorize("hasAuthority('ROLE_ROOT')")
 public class OrgAdminController {
     private final UserServices userServices;
@@ -25,7 +25,7 @@ public class OrgAdminController {
         this.userServices = userServices;
     }
 
-    @PostMapping("/addAdmin/{id}")
+    @PostMapping("/addOrgAdmin/{id}")
     public ResponseEntity<?> save(@Valid @RequestBody UserInfoDTO userInfoDTO, BindingResult bindingResult, @PathVariable Long id) {
         ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
         if (errorDetails != null) return errorDetails;
@@ -33,9 +33,9 @@ public class OrgAdminController {
         return new ResponseEntity<>(userInfoDTO1, HttpStatus.OK);
     }
 
-    @GetMapping("/getAdmins")
+    @GetMapping("/getOrgAdmins")
     public ResponseEntity<?> getAdmins() {
-        List<UserInfo> userInfos = userServices.getAdmins();
+        List<UserInfo> userInfos = userServices.getOrgAdmins();
         List<UserInfo> admins = userInfos.stream()
                 .filter(userInfo -> userInfo.getRoles().equals(UserRoles.getUserRolesByLabel("ROLE_ORG_ADMIN")))
                 .toList();
@@ -44,15 +44,15 @@ public class OrgAdminController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getAdminById(@PathVariable Long id) {
-        UserInfoDTO userInfoDTO = UserInfoDTO.form(userServices.getAdminById(id));
+        UserInfoDTO userInfoDTO = UserInfoDTO.form(userServices.getOrgAdminById(id));
         return new ResponseEntity<>(userInfoDTO, HttpStatus.OK);
     }
 
-    @PutMapping("/updateAdmin/{id}")
+    @PutMapping("/updateOrgAdmin/{id}")
     public ResponseEntity<?> updateAdmin(@Valid @PathVariable Long id, @RequestBody UserInfoDTO userInfoDTO, BindingResult bindingResult) {
         ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
         if (errorDetails != null) return errorDetails;
-        UserInfoDTO userInfoDTO1 = UserInfoDTO.form(userServices.updateAdmin(id, userInfoDTO));
+        UserInfoDTO userInfoDTO1 = UserInfoDTO.form(userServices.updateOrgAdmin(id, userInfoDTO));
         return new ResponseEntity<>(userInfoDTO1, HttpStatus.OK);
     }
 }

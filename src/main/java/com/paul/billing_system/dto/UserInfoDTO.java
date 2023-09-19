@@ -24,6 +24,8 @@ public class UserInfoDTO {
     @Column(unique = true)
     private String email;
 
+    private String password;
+
     private String contact;
 
     private String roles;

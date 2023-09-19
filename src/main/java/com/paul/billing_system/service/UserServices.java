@@ -53,7 +53,7 @@ public class UserServices {
     }
 
 
-    //Admin
+    //Org Admin
 
     public UserInfo saveOrgAdmin(Long id, UserInfoDTO userInfoDTO) {
 
@@ -80,16 +80,16 @@ public class UserServices {
         return userInfo;
     }
 
-    public List<UserInfo> getAdmins() {
+    public List<UserInfo> getOrgAdmins() {
         return userRepository.findAll();
     }
 
-    public UserInfo getAdminById(Long id) {
+    public UserInfo getOrgAdminById(Long id) {
         Optional<UserInfo> userInfo = userRepository.findById(id);
         return userInfo.orElseGet(UserInfo::new);
     }
 
-    public UserInfo updateAdmin(Long id, UserInfoDTO userInfoDTO) {
+    public UserInfo updateOrgAdmin(Long id, UserInfoDTO userInfoDTO) {
         Optional<UserInfo> userInfo = userRepository.findById(id);
         if (userInfo.isPresent()) {
             UserInfo userInfo1 = userInfo.get();
@@ -125,5 +125,24 @@ public class UserServices {
         }
 
         return userInfo;
+    }
+
+    public UserInfo getAdminById(Long id) {
+        Optional<UserInfo> specialist = userRepository.findById(id);
+        if (specialist.isPresent())
+            return specialist.get();
+        return new UserInfo();
+    }
+
+    public UserInfo updateAdmin(UserInfoDTO userInfoDTO, Long id) {
+        Optional<UserInfo> userInfo = userRepository.findById(id);
+        if (userInfo.isPresent()) {
+            UserInfo userInfo1 = new UserInfo();
+            userInfo1.setName(userInfoDTO.getName());
+            userInfo1.setDesignation(userInfoDTO.getDesignation());
+            userInfo1.setDepartment(userInfoDTO.getDepartment());
+            return userRepository.save(userInfo1);
+        }
+        return new UserInfo();
     }
 }
