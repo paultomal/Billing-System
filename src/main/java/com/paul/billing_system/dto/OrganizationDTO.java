@@ -41,9 +41,7 @@ public class OrganizationDTO {
     private List<UserInfoDTO> orgAdmin;
 
     //private List<DepartmentDTO> department;
-
-    private List<PatientsDTO> patients;
-
+    
     private List<SpecialistDTO> specialist;
 
     public static OrganizationDTO form(Organization organization) {
@@ -63,7 +61,6 @@ public class OrganizationDTO {
                 .filter(adminDTO -> UserRoles.getUserRolesByLabel("ROLE_ORG_ADMIN").equals(adminDTO.getRoles()))
                 .map(UserInfoDTO::form).toList() : null);
         //organizationDTO.setCompounders(organization.getCompounders()!= null ? organization.getCompounders().stream().map(CompoundersDTO::form).toList() : null);
-        organizationDTO.setPatients(organization.getPatients() != null ? organization.getPatients().stream().map(PatientsDTO::form).toList() : null);
         organizationDTO.setSpecialist(organization.getSpecialists() != null ? organization.getSpecialists().stream().map(SpecialistDTO::form).toList() : null);
         return organizationDTO;
     }

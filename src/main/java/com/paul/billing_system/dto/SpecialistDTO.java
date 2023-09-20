@@ -1,9 +1,6 @@
 package com.paul.billing_system.dto;
 
-import com.paul.billing_system.entity.Doctors;
-import com.paul.billing_system.entity.Investigation;
-import com.paul.billing_system.entity.Specialist;
-import com.paul.billing_system.entity.UserInfo;
+import com.paul.billing_system.entity.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,6 +23,9 @@ public class SpecialistDTO {
 
     private List<UserInfoDTO> admin;
 
+    private List<PatientsDTO> patients;
+
+
     public static SpecialistDTO form(Specialist specialist){
         SpecialistDTO specialistDTO = new SpecialistDTO();
         specialistDTO.setId(specialist.getId());
@@ -34,6 +34,7 @@ public class SpecialistDTO {
         specialistDTO.setDoctors(specialist.getDoctors() != null ? specialist.getDoctors().stream().map(DoctorDTO::form).toList() : null);
         specialistDTO.setInvestigations(specialist.getInvestigations() != null ? specialist.getInvestigations().stream().map(InvestigationDTO::form).toList() : null);
         specialistDTO.setAdmin(specialist.getAdmin() != null ? specialist.getAdmin().stream().map(UserInfoDTO::form).toList() : null);
+        specialistDTO.setPatients(specialist.getPatients() != null ? specialist.getPatients().stream().map(PatientsDTO::form).toList() : null);
         return specialistDTO;
     }
 }

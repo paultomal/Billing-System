@@ -43,4 +43,11 @@ public class SpecialistController {
         SpecialistDTO specialistDTO = SpecialistDTO.form(specialistServices.getMedicalSpecialist(id));
         return new ResponseEntity<>(specialistDTO,HttpStatus.OK);
     }
+
+    @GetMapping("/search/{name}")
+    public ResponseEntity<?> searchSpecialist(@PathVariable String name){
+        List<Specialist> specialists = specialistServices.searchSpecialist(name);
+        List<SpecialistDTO> specialistDTOList = specialists.stream().map(SpecialistDTO::form).toList();
+        return new ResponseEntity<>(specialistDTOList,HttpStatus.OK);
+    }
 }

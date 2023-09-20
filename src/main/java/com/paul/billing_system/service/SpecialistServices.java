@@ -42,6 +42,11 @@ public class SpecialistServices {
         return new Specialist();
     }
 
+    public List<Specialist> searchSpecialist(String name) {
+       return specialistRepository.findBySearch(name);
+    }
+
+
 /*    public MedSpecialist saveCompounder(Long id, CompoundersChamberDTO compoundersChamberDTO) {
         Compounders compounders = compoundersRepository.save(Compounders.formCompounderChamber(compoundersChamberDTO));
         Optional<MedSpecialist> medSpecialist = medSpecialistRepository.findById(id);

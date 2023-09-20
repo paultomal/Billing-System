@@ -69,13 +69,13 @@ public class OrganizationController {
     }
 
     //Patients List
-    @GetMapping("/getAllPatientsByOrganization/{id}")
+/*    @GetMapping("/getAllPatientsByOrganization/{id}")
     public ResponseEntity<?> getAllPatientsByOrganization(@PathVariable Long id) {
         Organization organization = organizationServices.getOrganizationByid(id);
         List<Patients> patients = organization.getPatients();
         List<PatientsDTO> patientsDTOList = patients.stream().map(PatientsDTO::form).toList();
         return new ResponseEntity<>(patientsDTOList, HttpStatus.OK);
-    }
+    }*/
 
     //Compounder List
 /*
