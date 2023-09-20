@@ -19,4 +19,12 @@ public class Investigation {
     private String serviceName;
 
     private Double serviceCharge;
+
+    @ManyToOne
+    @JoinTable(
+            name = "investigation_specialitist",
+            joinColumns = @JoinColumn(name = "investigation_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "specialitist_id")
+    )
+    private Specialist specialist;
 }

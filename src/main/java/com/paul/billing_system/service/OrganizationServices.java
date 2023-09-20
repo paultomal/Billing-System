@@ -4,7 +4,7 @@ import com.paul.billing_system.dto.OrganizationDTO;
 import com.paul.billing_system.entity.*;
 import com.paul.billing_system.enums.OrganizationTypes;
 import com.paul.billing_system.repository.OrganizationRepository;
-import org.springframework.http.ResponseEntity;
+import com.paul.billing_system.repository.SpecialistRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,15 +13,16 @@ import java.util.Optional;
 @Service
 public class OrganizationServices {
     private final OrganizationRepository organizationRepository;
+    private final SpecialistRepository specialistRepository;
 
-    public OrganizationServices(OrganizationRepository organizationRepository) {
+    public OrganizationServices(OrganizationRepository organizationRepository, SpecialistRepository specialistRepository) {
         this.organizationRepository = organizationRepository;
+        this.specialistRepository = specialistRepository;
     }
 
     public Organization save(OrganizationDTO organizationDTO) {
 
         Organization organization =  new Organization();
-
         organization.setName(organizationDTO.getName());
         organization.setAddress(organizationDTO.getAddress());
         organization.setContact(organizationDTO.getContact());
@@ -30,6 +31,10 @@ public class OrganizationServices {
         organization.setEmail(organizationDTO.getEmail());
         organization.setEmergencyContact(organizationDTO.getEmergencyContact());
         organization.setOperatingHour(organizationDTO.getOperatingHour());
+
+        List<Specialist> specialists = specialistRepository.findAll();
+        organization.setSpecialists(specialists);
+
         return organizationRepository.save(organization);
     }
 

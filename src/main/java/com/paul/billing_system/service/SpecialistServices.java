@@ -23,14 +23,6 @@ public class SpecialistServices {
         this.organizationRepository = organizationRepository;
     }
 
-    public Specialist saveSpecialist( SpecialistDTO specialistDTO) {
-        Specialist specialist = new Specialist();
-            specialist.setMedSpecName(specialistDTO.getMedSpecName());
-            specialist.setNoOfDoctor(specialist.getNoOfDoctor()+1);
-            return specialistRepository.save(specialist);
-
-    }
-
     public Page<Specialist> getAllSpecialist(int offset, int pageSize) {
         return specialistRepository.findAll(PageRequest.of(offset, pageSize));
     }
@@ -45,12 +37,4 @@ public class SpecialistServices {
     public List<Specialist> searchSpecialist(String name) {
        return specialistRepository.findBySearch(name);
     }
-
-
-/*    public MedSpecialist saveCompounder(Long id, CompoundersChamberDTO compoundersChamberDTO) {
-        Compounders compounders = compoundersRepository.save(Compounders.formCompounderChamber(compoundersChamberDTO));
-        Optional<MedSpecialist> medSpecialist = medSpecialistRepository.findById(id);
-        medSpecialist.get().setCompounders(compounders);
-        return medSpecialistRepository.save(medSpecialist.get());
-    }*/
 }

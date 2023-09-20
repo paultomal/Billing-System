@@ -29,12 +29,13 @@ public class BookingInvestigationServices {
     }
 
     public List<Patients> searchPatient(String name) {
-    return patientsRepository.findByName(name);
+        return patientsRepository.findByName(name);
     }
 
     public Page<Investigation> getInvestigations(Long id, int offset, int pageSize) {
         Optional<Specialist> specialist = specialistRepository.findById(id);
         if (specialist.isPresent())
-            return investigationRepository.findAll(PageRequest.of(offset,pageSize));
-        return null;    }
+            return investigationRepository.findAll(PageRequest.of(offset, pageSize));
+        return null;
+    }
 }

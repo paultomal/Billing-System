@@ -1,6 +1,7 @@
 package com.paul.billing_system.dto;
 
 import com.paul.billing_system.entity.Organization;
+import com.paul.billing_system.entity.Specialist;
 import com.paul.billing_system.enums.OrganizationTypes;
 import com.paul.billing_system.enums.UserRoles;
 import jakarta.persistence.Column;
@@ -40,9 +41,7 @@ public class OrganizationDTO {
 
     private List<UserInfoDTO> orgAdmin;
 
-    //private List<DepartmentDTO> department;
-    
-    private List<SpecialistDTO> specialist;
+    private List<Specialist> specialist;
 
     public static OrganizationDTO form(Organization organization) {
         OrganizationDTO organizationDTO = new OrganizationDTO();
@@ -55,13 +54,10 @@ public class OrganizationDTO {
         organizationDTO.setEmail(organization.getEmail());
         organizationDTO.setEmergencyContact(organization.getEmergencyContact());
         organizationDTO.setOperatingHour(organization.getOperatingHour());
-        //organizationDTO.setDepartment(organization.getDepartments().stream().map(DepartmentDTO::form).toList());
-        //organizationDTO.setDepartment(organization.getDepartments()!=null ? organization.getDepartments().stream().map(DepartmentDTO::form).toList() : null);
-        organizationDTO.setOrgAdmin(organization.getAdmins()!=null ? organization.getAdmins().stream()
+        organizationDTO.setOrgAdmin(organization.getOrgAdmin()!=null ? organization.getOrgAdmin().stream()
                 .filter(adminDTO -> UserRoles.getUserRolesByLabel("ROLE_ORG_ADMIN").equals(adminDTO.getRoles()))
                 .map(UserInfoDTO::form).toList() : null);
-        //organizationDTO.setCompounders(organization.getCompounders()!= null ? organization.getCompounders().stream().map(CompoundersDTO::form).toList() : null);
-        organizationDTO.setSpecialist(organization.getSpecialists() != null ? organization.getSpecialists().stream().map(SpecialistDTO::form).toList() : null);
+        organizationDTO.setSpecialist(organization.getSpecialists() != null ? organization.getSpecialists() : null);
         return organizationDTO;
     }
 }

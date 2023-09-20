@@ -24,13 +24,13 @@ public class SpecialistController {
         this.specialistServices = specialistServices;
     }
 
-    @PostMapping("/addSpecialist")
+/*    @PostMapping("/addSpecialist")
     public ResponseEntity<?> saveMedSpecialist(@RequestBody SpecialistDTO specialistDTO, BindingResult bindingResult){
         ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
         if (errorDetails != null) return errorDetails;
         SpecialistDTO specialistDTO1 = SpecialistDTO.form(specialistServices.saveSpecialist(specialistDTO));
         return new ResponseEntity<>(specialistDTO1, HttpStatus.OK);
-    }
+    }*/
     @GetMapping("/getAllSpecialist/{offset}/{pageSize}")
     public ResponseEntity<?> getAllSpecialist(@PathVariable int offset, @PathVariable int pageSize){
         Page<Specialist> specialists = specialistServices.getAllSpecialist(offset,pageSize);

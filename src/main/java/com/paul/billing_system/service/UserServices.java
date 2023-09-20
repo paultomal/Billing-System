@@ -75,7 +75,7 @@ public class UserServices {
 */
             userInfo.setRoles(userRoles);
             userRepository.save(userInfo);
-            organization.get().getAdmins().add(userInfo);
+            organization.get().getOrgAdmin().add(userInfo);
             organizationRepository.save(organization.get());
         }
 

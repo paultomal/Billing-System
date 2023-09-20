@@ -27,6 +27,7 @@ public class InvestigationServices {
         if (specialist.isPresent()) {
             investigation.setServiceName(investigationDTO.getServiceName());
             investigation.setServiceCharge(investigationDTO.getServiceCharge());
+            investigation.setSpecialist(specialist.get());
             investigationRepository.save(investigation);
             specialist.get().getInvestigations().add(investigation);
             specialistRepository.save(specialist.get());
