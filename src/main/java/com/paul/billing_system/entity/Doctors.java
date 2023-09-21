@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -35,4 +37,12 @@ public class Doctors {
     private DaysOfWeek day;
 
     private String time;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "org_id")
+    private Organization organization;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "sp_id")
+    private Specialist specialist;
 }

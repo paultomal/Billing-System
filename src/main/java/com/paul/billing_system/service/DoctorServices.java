@@ -2,13 +2,14 @@ package com.paul.billing_system.service;
 
 import com.paul.billing_system.dto.DoctorDTO;
 import com.paul.billing_system.entity.Doctors;
+import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.entity.Specialist;
 import com.paul.billing_system.enums.DaysOfWeek;
 import com.paul.billing_system.repository.DoctorRepository;
+import com.paul.billing_system.repository.OrganizationRepository;
 import com.paul.billing_system.repository.SpecialistRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,17 +18,22 @@ import java.util.Optional;
 public class DoctorServices {
     private final DoctorRepository doctorRepository;
     private final SpecialistRepository specialistRepository;
+    private final OrganizationRepository organizationRepository;
 
-    public DoctorServices(DoctorRepository doctorRepository, SpecialistRepository specialistRepository) {
+    public DoctorServices(DoctorRepository doctorRepository, SpecialistRepository specialistRepository, OrganizationRepository organizationRepository) {
         this.doctorRepository = doctorRepository;
         this.specialistRepository = specialistRepository;
+        this.organizationRepository = organizationRepository;
     }
 
+    @Transactional
     public Doctors save(Long id, DoctorDTO doctorDTO) {
-        Optional<Specialist> specialist = specialistRepository.findById(id);
+        Optional<Organization> organization1 = organizationRepository.findById(id);
         Doctors doctors = new Doctors();
-        if (specialist.isPresent()) {
+        if (organization1.isPresent()) {
+
             doctors.setName(doctorDTO.getName());
+
             doctors.setContact(doctorDTO.getContact());
             doctors.setDegrees(doctorDTO.getDegrees());
             doctors.setEmail(doctorDTO.getEmail());
@@ -40,26 +46,30 @@ public class DoctorServices {
             doctors.setDay(days);
 
             doctors.setTime(doctorDTO.getTime());
+
+            Organization organization = organizationRepository.findById(doctorDTO.getOrgId()).orElseThrow(RuntimeException::new);
+
+            Specialist specialist1 = specialistRepository.findById(doctorDTO.getSpId()).orElseThrow(RuntimeException::new);
+
+            doctors.setOrganization(organization);
+            doctors.setSpecialist(specialist1);
+
             doctorRepository.save(doctors);
-            specialist.get().getDoctors().add(doctors);
-            specialist.get().setNoOfDoctor(specialist.get().getNoOfDoctor() + 1);
-            specialistRepository.save(specialist.get());
         }
         return doctors;
     }
 
     public Doctors getDoctorById(Long id) {
         Optional<Doctors> doctors = doctorRepository.findById(id);
-        if (doctors.isPresent()) {
-            return doctors.get();
-        }
-        return new Doctors();
+        return doctors.orElseGet(Doctors::new);
     }
 
-    public Page<Doctors> getAllDoctors(Long id, int offset, int pageSize) {
-        Optional<Specialist> specialist = specialistRepository.findById(id);
-        if (specialist.isPresent())
-            return doctorRepository.findAll(PageRequest.of(offset, pageSize));
+    public List<Doctors> getAllDoctors(Long id, Long sId) {
+        Optional<Organization> organization = organizationRepository.findById(id);
+        Optional<Specialist> specialist = specialistRepository.findById(sId);
+        if (organization.isPresent())
+            if (specialist.isPresent())
+                return doctorRepository.findByOrganizationAndSpecialist(id,sId);
         return null;
     }
 

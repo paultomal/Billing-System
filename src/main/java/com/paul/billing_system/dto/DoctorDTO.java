@@ -34,6 +34,10 @@ public class DoctorDTO {
 
     private String time;
 
+    private Long orgId;
+
+    private Long spId;
+
     public static DoctorDTO form(Doctors doctors){
         DoctorDTO doctorDTO = new DoctorDTO();
         doctorDTO.setId(doctors.getId());
@@ -50,6 +54,9 @@ public class DoctorDTO {
         doctorDTO.setDay(days);
 
         doctorDTO.setTime(doctors.getTime());
+
+        doctorDTO.setOrgId(doctors.getOrganization().getId());
+        doctorDTO.setSpId(doctors.getSpecialist().getId());
 
         return doctorDTO;
     }

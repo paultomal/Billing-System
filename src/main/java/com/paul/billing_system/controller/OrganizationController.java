@@ -1,9 +1,12 @@
 package com.paul.billing_system.controller;
 
+import com.paul.billing_system.dto.DoctorDTO;
 import com.paul.billing_system.dto.OrganizationDTO;
 import com.paul.billing_system.dto.PatientsDTO;
+import com.paul.billing_system.entity.Doctors;
 import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.entity.Patients;
+import com.paul.billing_system.entity.Specialist;
 import com.paul.billing_system.enums.OrganizationTypes;
 import com.paul.billing_system.service.OrganizationServices;
 import jakarta.validation.Valid;
@@ -14,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.paul.billing_system.controller.AuthController.getErrorDetails;
@@ -67,23 +71,12 @@ public class OrganizationController {
         OrganizationDTO organizationDTO = OrganizationDTO.form(organizationServices.getOrganizationByid(id));
         return new ResponseEntity<>(organizationDTO, HttpStatus.OK);
     }
-
-    //Patients List
-/*    @GetMapping("/getAllPatientsByOrganization/{id}")
-    public ResponseEntity<?> getAllPatientsByOrganization(@PathVariable Long id) {
-        Organization organization = organizationServices.getOrganizationByid(id);
-        List<Patients> patients = organization.getPatients();
-        List<PatientsDTO> patientsDTOList = patients.stream().map(PatientsDTO::form).toList();
-        return new ResponseEntity<>(patientsDTOList, HttpStatus.OK);
-    }*/
-
-    //Compounder List
-/*
-    @GetMapping("/getCompoundersByOrganization/{id}")
-    public ResponseEntity<?> getCompoundersByOrganization(@PathVariable Long id) {
-        Organization organization = organizationServices.getOrganizationByid(id);
-        List<Compounders> compounders = organization.getCompounders();
-        List<CompoundersDTO> compoundersDTOList = compounders.stream().map(CompoundersDTO::form).toList();
-        return new ResponseEntity<>(compoundersDTOList, HttpStatus.OK);
-    }*/
 }
+
+
+
+        /*    @PostMapping("/createDoctor/{orgId}/{specialityName}")
+    public ResponseEntity<?> createDoctor(@PathVariable Long orgId, @PathVariable String specialityName) {
+        Map<Specialist, List<Doctors>> specialistDoctorsMap = organizationServices.getSpecialistDoctorsMap(orgId,specialityName);
+        return new ResponseEntity<>(specialistDoctorsMap, HttpStatus.OK);
+    }*/

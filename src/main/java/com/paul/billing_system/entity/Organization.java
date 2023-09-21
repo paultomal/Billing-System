@@ -8,7 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @NoArgsConstructor
@@ -39,7 +41,7 @@ public class Organization {
 
     private String operatingHour;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "organization_specialists",
             joinColumns = @JoinColumn(name = "organization_id", referencedColumnName = "id"),
@@ -50,8 +52,16 @@ public class Organization {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(
             name = "organization_admins",
-            joinColumns = @JoinColumn(name = "organization_id",referencedColumnName = "id"),
+            joinColumns = @JoinColumn(name = "organization_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "admin_id")
     )
     private List<UserInfo> orgAdmin;
+
+//    @ManyToMany
+//    @MapKeyJoinColumn(name = "specialist_fk")
+//    @JoinTable(
+//            name = "org_specialist_doctor",
+//            joinColumns = @JoinColumn(name = "org_fk"),
+//            inverseJoinColumns = @JoinColumn(name = "doctor_fk"))
+//    private Map<Specialist, Doctors> specialistDoctorsMap = new HashMap<>();
 }

@@ -1,5 +1,6 @@
 package com.paul.billing_system.dto;
 
+import com.paul.billing_system.entity.Doctors;
 import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.entity.Specialist;
 import com.paul.billing_system.enums.OrganizationTypes;
@@ -11,7 +12,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @AllArgsConstructor
@@ -41,7 +44,9 @@ public class OrganizationDTO {
 
     private List<UserInfoDTO> orgAdmin;
 
-    private List<Specialist> specialist;
+    private List<SpecialistDTO> specialist;
+
+    //private Map<Specialist, Doctors> specialistDoctorsMap = new HashMap<>();
 
     public static OrganizationDTO form(Organization organization) {
         OrganizationDTO organizationDTO = new OrganizationDTO();
@@ -57,7 +62,8 @@ public class OrganizationDTO {
         organizationDTO.setOrgAdmin(organization.getOrgAdmin()!=null ? organization.getOrgAdmin().stream()
                 .filter(adminDTO -> UserRoles.getUserRolesByLabel("ROLE_ORG_ADMIN").equals(adminDTO.getRoles()))
                 .map(UserInfoDTO::form).toList() : null);
-        organizationDTO.setSpecialist(organization.getSpecialists() != null ? organization.getSpecialists() : null);
+        organizationDTO.setSpecialist(organization.getSpecialists() != null ? organization.getSpecialists().stream().map(SpecialistDTO::form).toList() : null);
+       // organizationDTO.setSpecialistDoctorsMap(organization.getSpecialistDoctorsMap() != null ? organization.getSpecialistDoctorsMap() : null);
         return organizationDTO;
     }
 }

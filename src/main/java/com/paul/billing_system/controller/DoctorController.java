@@ -44,9 +44,9 @@ public class DoctorController {
         return DaysOfWeek.getAllDaysOfWeek();
     }
 
-    @GetMapping("/getAllDoctors/{id}/{offset}/{pageSize}")
-    public ResponseEntity<?> getAllDoctors(@PathVariable Long id ,@PathVariable int offset, @PathVariable int pageSize){
-        Page<Doctors> doctors = doctorServices.getAllDoctors(id,offset, pageSize);
+    @GetMapping("/getAllDoctors/{id}/{sId}")
+    public ResponseEntity<?> getAllDoctors(@PathVariable Long id, @PathVariable Long sId ){
+        List<Doctors> doctors = doctorServices.getAllDoctors(id,sId);
         List<DoctorDTO> doctorDTOList = doctors.stream().map(DoctorDTO::form).toList();
         return new ResponseEntity<>(doctorDTOList,HttpStatus.OK);
     }

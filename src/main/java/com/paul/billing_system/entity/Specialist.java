@@ -12,22 +12,12 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Specialist implements Serializable{
+public class Specialist{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String medSpecName;
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinTable(
-            name = "specialitist_doctors",
-            joinColumns = @JoinColumn(name = "specialist_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "doctors_id")
-    )
-    private List<Doctors> doctors;
-
-    private long noOfDoctor = !(doctors == null) ? doctors.size() : 0;
 
     private String iconUrl;
 
@@ -49,5 +39,19 @@ public class Specialist implements Serializable{
             inverseJoinColumns = @JoinColumn(name = "patients_id")
     )
     private List<Patients> patients;
+
+
+////    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+////    @JoinTable(
+////            name = "specialitist_doctors",
+////            joinColumns = @JoinColumn(name = "specialist_id", referencedColumnName = "id"),
+////            inverseJoinColumns = @JoinColumn(name = "doctors_id")
+////    )
+/*
+    private List<Doctors> doctors;
+
+    private long noOfDoctor = !(doctors == null) ? doctors.size() : 0;
+*/
+
 
 }

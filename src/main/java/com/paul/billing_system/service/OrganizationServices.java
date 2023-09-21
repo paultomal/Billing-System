@@ -22,7 +22,7 @@ public class OrganizationServices {
 
     public Organization save(OrganizationDTO organizationDTO) {
 
-        Organization organization =  new Organization();
+        Organization organization = new Organization();
         organization.setName(organizationDTO.getName());
         organization.setAddress(organizationDTO.getAddress());
         organization.setContact(organizationDTO.getContact());
@@ -33,9 +33,15 @@ public class OrganizationServices {
         organization.setOperatingHour(organizationDTO.getOperatingHour());
 
         List<Specialist> specialists = specialistRepository.findAll();
-        organization.setSpecialists(specialists);
 
-        return organizationRepository.save(organization);
+/*        List<Specialist> specialistList = organization.getSpecialists();
+
+        List<String> list = specialistList.stream().map(Specialist::getMedSpecName).toList();*/
+        organization.setSpecialists(specialists);
+        organization =organizationRepository.save(organization);
+
+        return organization;
+
     }
 
 
@@ -44,8 +50,8 @@ public class OrganizationServices {
     }
 
     public Organization getOrganizationByid(Long id) {
-        Optional<Organization> organization =organizationRepository.findById(id);
-        if (organization.isPresent()){
+        Optional<Organization> organization = organizationRepository.findById(id);
+        if (organization.isPresent()) {
             return organization.get();
         }
         return new Organization();
@@ -53,7 +59,7 @@ public class OrganizationServices {
 
     public Organization updateOrganizationProfile(OrganizationDTO organizationDTO, Long id) {
         Optional<Organization> organization = organizationRepository.findById(id);
-        if (organization.isPresent()){
+        if (organization.isPresent()) {
             Organization organization1 = organization.get();
             organization1.setName(organizationDTO.getName());
             organization1.setAddress(organizationDTO.getAddress());
@@ -65,4 +71,9 @@ public class OrganizationServices {
         }
         return new Organization();
     }
+
+/*    public Map<Specialist, List<Doctors>> getSpecialistDoctorsMap(Long orgId, String specialityName) {
+        Optional<Organization> organization = organizationRepository.findById(orgId);
+
+    }*/
 }
