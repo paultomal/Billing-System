@@ -1,7 +1,5 @@
 package com.paul.billing_system.service;
 
-import com.paul.billing_system.dto.SpecialistDTO;
-import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.entity.Specialist;
 import com.paul.billing_system.repository.OrganizationRepository;
 import com.paul.billing_system.repository.SpecialistRepository;
@@ -16,11 +14,9 @@ import java.util.Optional;
 public class SpecialistServices {
     private final SpecialistRepository specialistRepository;
 
-    private final OrganizationRepository organizationRepository;
 
-    public SpecialistServices(SpecialistRepository specialistRepository, OrganizationRepository organizationRepository) {
+    public SpecialistServices(SpecialistRepository specialistRepository) {
         this.specialistRepository = specialistRepository;
-        this.organizationRepository = organizationRepository;
     }
 
     public Page<Specialist> getAllSpecialist(int offset, int pageSize) {
@@ -35,6 +31,6 @@ public class SpecialistServices {
     }
 
     public List<Specialist> searchSpecialist(String name) {
-       return specialistRepository.findBySearch(name);
+        return specialistRepository.findBySearch(name);
     }
 }

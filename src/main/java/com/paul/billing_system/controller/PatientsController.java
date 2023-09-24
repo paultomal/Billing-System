@@ -34,12 +34,13 @@ public class PatientsController {
         return new ResponseEntity<>(patientsDTO1, HttpStatus.OK);
     }
 
-    @GetMapping("/getAllPatients/{id}")
-    public ResponseEntity<?> getAllPatients(@PathVariable Long id){
-        List<Patients> patients = patientsServices.getAllPatients(id);
+    @GetMapping("/getAllPatients/{id}/{spId}")
+    public ResponseEntity<?> getAllPatients(@PathVariable Long id , @PathVariable Long spId){
+        List<Patients> patients = patientsServices.getAllPatients(id,spId);
         List<PatientsDTO> patientsDTOList = patients.stream().map(PatientsDTO::form).toList();
         return new ResponseEntity<>(patientsDTOList,HttpStatus.OK);
     }
+
     @GetMapping("/getPatient/{id}")
     public ResponseEntity<?> getPatientById(@PathVariable Long id){
         PatientsDTO patientsDTO = PatientsDTO.form(patientsServices.getPatientById(id));

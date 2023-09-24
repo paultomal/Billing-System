@@ -11,4 +11,7 @@ public interface PatientsRepository extends JpaRepository<Patients, Long> {
 
     @Query("select p from Patients p where p.name like concat('%', :name, '%') ")
     List<Patients> findByName(@Param("name") String name);
+
+    @Query("SELECT p from  Patients p where p.organization.id = :id AND p.specialist.id = :spId")
+    List<Patients> findByOrganizationAndSpecialist(Long id, Long spId);
 }

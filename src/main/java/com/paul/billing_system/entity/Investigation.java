@@ -20,11 +20,11 @@ public class Investigation {
 
     private Double serviceCharge;
 
-    @ManyToOne
-    @JoinTable(
-            name = "investigation_specialitist",
-            joinColumns = @JoinColumn(name = "investigation_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "specialitist_id")
-    )
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "org_id")
+    private Organization organization;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "sp_id")
     private Specialist specialist;
 }
