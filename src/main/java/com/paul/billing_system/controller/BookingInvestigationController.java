@@ -1,5 +1,6 @@
 package com.paul.billing_system.controller;
 
+import com.paul.billing_system.dto.BookingInvestigationDTO;
 import com.paul.billing_system.dto.InvestigationDTO;
 import com.paul.billing_system.dto.PatientsDTO;
 import com.paul.billing_system.entity.Investigation;
@@ -10,10 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,11 +21,9 @@ import java.util.List;
 public class BookingInvestigationController {
 
     private final BookingInvestigationServices bookingServices;
-    private final PatientsServices patientsServices;
 
-    public BookingInvestigationController(BookingInvestigationServices bookingServices, PatientsServices patientsServices) {
+    public BookingInvestigationController(BookingInvestigationServices bookingServices) {
         this.bookingServices = bookingServices;
-        this.patientsServices = patientsServices;
     }
 
     @GetMapping("/searchPatient/{name}")
@@ -37,14 +33,19 @@ public class BookingInvestigationController {
         return new ResponseEntity<>(patientsDTOList, HttpStatus.OK);
     }
 
-    @GetMapping("/getInvestigationList/{id}/{offset}/{pageSize}")
-    public ResponseEntity<?> getInvestigation( @PathVariable Long id, @PathVariable int offset, @PathVariable int pageSize){
-        Page<Investigation> investigations = bookingServices.getInvestigations(id, offset, pageSize);
-        List<InvestigationDTO> investigationDTOList = investigations.stream().map(InvestigationDTO::form).toList();
+    @GetMapping("/getInvestigationList/{id}/{spId}")
+    public ResponseEntity<?> getInvestigation( @PathVariable Long id,@PathVariable Long spId){
+        List<Investigation> investigations = bookingServices.getInvestigations(id,spId);
+        List<InvestigationDTO> investigationDTOList = investigations
+                .stream()
+                .map(InvestigationDTO::form)
+                .toList();
         return new ResponseEntity<>(investigationDTOList,HttpStatus.OK);
     }
 
-
-
-
+    @PostMapping("/addBooking")
+    public ResponseEntity<?> addBooking(@RequestBody BookingInvestigationDTO bookingInvestigationDTO){
+        BookingInvestigationDTO bookingInvestigationDTO1 = BookingInvestigationDTO.form(bookingServices.addBooking(bookingInvestigationDTO));
+        return new ResponseEntity<>(bookingInvestigationDTO1,HttpStatus.OK);
+    }
 }

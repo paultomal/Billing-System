@@ -22,7 +22,7 @@ public class Patients {
     @NotEmpty(message = "Name should not be empty")
     private String name;
 
-    private int age;
+    private String contact;
 
     @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate since;
