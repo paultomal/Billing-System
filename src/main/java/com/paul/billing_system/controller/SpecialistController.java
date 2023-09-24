@@ -4,13 +4,11 @@ import com.paul.billing_system.dto.SpecialistDTO;
 import com.paul.billing_system.entity.Specialist;
 import com.paul.billing_system.service.SpecialistServices;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,9 +22,9 @@ public class SpecialistController {
         this.specialistServices = specialistServices;
     }
 
-    @GetMapping("/getAllSpecialist/{offset}/{pageSize}")
-    public ResponseEntity<?> getAllSpecialist(@PathVariable int offset, @PathVariable int pageSize) {
-        Page<Specialist> specialists = specialistServices.getAllSpecialist(offset, pageSize);
+    @GetMapping("/getAllSpecialist")
+    public ResponseEntity<?> getAllSpecialist(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+        Page<Specialist> specialists = specialistServices.getAllSpecialist(PageRequest.of(page, size));
         List<SpecialistDTO> specialistDTOList = specialists.stream().map(SpecialistDTO::form).toList();
         return new ResponseEntity<>(specialistDTOList, HttpStatus.OK);
     }

@@ -10,6 +10,7 @@ import com.paul.billing_system.entity.Specialist;
 import com.paul.billing_system.enums.OrganizationTypes;
 import com.paul.billing_system.service.OrganizationServices;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -47,8 +48,9 @@ public class OrganizationController {
     }
 
     @GetMapping("/{type}")
-    public ResponseEntity<?> getAllOrganization(@PathVariable String type) {
-        List<Organization> organizations = organizationServices.getAllOrganization(OrganizationTypes.getOrganizationTypeByLabel(type));
+    public ResponseEntity<?> getAllOrganization(@PathVariable String type, @RequestParam(defaultValue = "0") int page,
+                                                @RequestParam(defaultValue = "10") int size) {
+        List<Organization> organizations = organizationServices.getAllOrganization(OrganizationTypes.getOrganizationTypeByLabel(type), PageRequest.of(page, size));
         List<OrganizationDTO> organizationDTOList = organizations.stream()
                 .map(OrganizationDTO::form)
                 .collect(Collectors.toList());

@@ -7,7 +7,6 @@ import com.paul.billing_system.entity.Specialist;
 import com.paul.billing_system.repository.InvestigationRepository;
 import com.paul.billing_system.repository.OrganizationRepository;
 import com.paul.billing_system.repository.SpecialistRepository;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -45,12 +44,12 @@ public class InvestigationServices {
         return investigation;
     }
 
-    public List<Investigation> getAllServices(Long id, Long spId) {
+    public List<Investigation> getAllServices(Long id, Long spId, PageRequest pageRequest) {
         Optional<Organization> organization = organizationRepository.findById(id);
         Optional<Specialist> specialist = specialistRepository.findById(spId);
         if (organization.isPresent())
             if (specialist.isPresent())
-                return investigationRepository.findByOrganizationAndSpecialist(id, spId);
+                return investigationRepository.findByOrganizationAndSpecialist(id, spId, pageRequest);
         return null;
     }
 

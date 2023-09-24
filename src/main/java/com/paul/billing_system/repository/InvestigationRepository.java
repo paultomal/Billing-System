@@ -1,6 +1,7 @@
 package com.paul.billing_system.repository;
 
 import com.paul.billing_system.entity.Investigation;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -11,5 +12,7 @@ public interface InvestigationRepository extends JpaRepository<Investigation, Lo
     List<Doctors> findByOrganizationAndSpecialist(Long id, Long sId);*/
 
     @Query("SELECT i FROM  Investigation i WHERE  i.organization.id = :id AND i.specialist.id = :spId")
-    List<Investigation> findByOrganizationAndSpecialist(Long id, Long spId);
+    List<Investigation> findByOrganizationAndSpecialist(Long id, Long spId, PageRequest pageRequest);
+
+
 }

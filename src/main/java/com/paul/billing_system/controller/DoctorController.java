@@ -4,6 +4,7 @@ import com.paul.billing_system.dto.DoctorDTO;
 import com.paul.billing_system.entity.Doctors;
 import com.paul.billing_system.enums.DaysOfWeek;
 import com.paul.billing_system.service.DoctorServices;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -44,8 +45,9 @@ public class DoctorController {
     }
 
     @GetMapping("/getAllDoctors/{id}/{sId}")
-    public ResponseEntity<?> getAllDoctors(@PathVariable Long id, @PathVariable Long sId) {
-        List<Doctors> doctors = doctorServices.getAllDoctors(id, sId);
+    public ResponseEntity<?> getAllDoctors(@PathVariable Long id, @PathVariable Long sId, @RequestParam(defaultValue = "0") int page,
+                                           @RequestParam(defaultValue = "10") int size) {
+        List<Doctors> doctors = doctorServices.getAllDoctors(id, sId, PageRequest.of(page,size));
         List<DoctorDTO> doctorDTOList = doctors.stream().map(DoctorDTO::form).toList();
         return new ResponseEntity<>(doctorDTOList, HttpStatus.OK);
     }
@@ -56,5 +58,10 @@ public class DoctorController {
         if (errorDetails != null) return errorDetails;
         DoctorDTO doctorDTO1 = DoctorDTO.form(doctorServices.updateDoctor(id, doctorDTO));
         return new ResponseEntity<>(doctorDTO1, HttpStatus.OK);
+    }
+
+    @GetMapping("/searchDoctor/{name}")
+    public ResponseEntity<?> searchDoctorByName(@PathVariable String name) {
+        return new ResponseEntity<>(doctorServices.searchDoctor(name), HttpStatus.OK);
     }
 }

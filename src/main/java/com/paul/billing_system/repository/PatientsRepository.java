@@ -1,6 +1,7 @@
 package com.paul.billing_system.repository;
 
 import com.paul.billing_system.entity.Patients;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,5 +14,6 @@ public interface PatientsRepository extends JpaRepository<Patients, Long> {
     List<Patients> findByName(@Param("name") String name);
 
     @Query("SELECT p from  Patients p where p.organization.id = :id AND p.specialist.id = :spId")
-    List<Patients> findByOrganizationAndSpecialist(Long id, Long spId);
+    List<Patients> findByOrganizationAndSpecialist(Long id, Long spId, PageRequest pageRequest);
+
 }
