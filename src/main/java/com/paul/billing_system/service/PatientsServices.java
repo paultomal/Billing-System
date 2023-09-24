@@ -33,7 +33,7 @@ public class PatientsServices {
 
         if (organization1.isPresent()) {
             patients.setName(patientsDTO.getName());
-            patients.setAge(patientsDTO.getAge());
+            patients.setContact(patientsDTO.getContact());
             patients.setSince(patientsDTO.getSince());
 
             Organization organization = organizationRepository.findById(patientsDTO.getOrgId()).orElseThrow(RuntimeException::new);
@@ -67,7 +67,7 @@ public class PatientsServices {
         if (patients.isPresent()) {
             Patients patients1 = new Patients();
             patients1.setName(patientsDTO.getName());
-            patients1.setAge(patientsDTO.getAge());
+            patients1.setContact(patientsDTO.getContact());
             return patientsRepository.save(patients1);
         }
         return new Patients();

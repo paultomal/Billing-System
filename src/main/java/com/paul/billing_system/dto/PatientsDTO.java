@@ -20,7 +20,7 @@ public class PatientsDTO {
     @NotEmpty(message = "Name should not be empty")
     private String name;
 
-    private int age;
+    private String contact;
 
     private LocalDate since;
 
@@ -33,7 +33,7 @@ public class PatientsDTO {
         PatientsDTO patientsDTO = new PatientsDTO();
         patientsDTO.setId(patients.getId());
         patientsDTO.setName(patients.getName());
-        patientsDTO.setAge(patients.getAge());
+        patientsDTO.setContact(patients.getContact());
         patientsDTO.setSince(patients.getSince());
 
         patientsDTO.setOrgId(patients.getOrganization().getId());

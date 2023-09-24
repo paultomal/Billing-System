@@ -13,15 +13,26 @@ import java.util.List;
 public class BookingInvestigationDTO {
     private Long id;
 
+    private String pname;
+
+    private Long pid;
+
+    private String contact;
+
     private List<InvestigationDTO> investigations;
 
-    private List<PatientsDTO> patients;
 
     public static BookingInvestigationDTO form(BookingInvestigation booking){
         BookingInvestigationDTO bookingDTO = new BookingInvestigationDTO();
         bookingDTO.setId(booking.getId());
-        bookingDTO.setInvestigations(booking.getInvestigations().stream().map(InvestigationDTO::form).toList());
-        bookingDTO.setPatients(booking.getPatients().stream().map(PatientsDTO::form).toList());
+        bookingDTO.setPname(booking.getPatients().getName());
+        bookingDTO.setContact(booking.getPatients().getContact());
+
+        if (booking.getInvestigations() != null) {
+            bookingDTO.setInvestigations(booking.getInvestigations().stream().map(InvestigationDTO::form).toList());
+        } else {
+            bookingDTO.setInvestigations(null); // Handle the case where investigations is null
+        }
         return bookingDTO;
     }
 }

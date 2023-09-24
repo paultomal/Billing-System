@@ -1,5 +1,6 @@
 package com.paul.billing_system.entity;
 
+import com.paul.billing_system.dto.InvestigationDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -27,4 +28,11 @@ public class Investigation {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "sp_id")
     private Specialist specialist;
+
+    public static Investigation form(InvestigationDTO investigationDTO) {
+        Investigation investigation = new Investigation();
+        investigation.setServiceName(investigationDTO.getServiceName());
+        investigation.setServiceCharge(investigationDTO.getServiceCharge());
+        return investigation;
+    }
 }

@@ -16,20 +16,22 @@ public class BookingInvestigation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+/*
+
+    private String pName;
+
+    private String contact;
+*/
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(
-            name = "booking_invastigations",
+            name = "booking_tbl",
             joinColumns = @JoinColumn(name = "booking_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "invastigaion_id")
     )
     private List<Investigation> investigations;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinTable(
-            name = "booking_patients",
-            joinColumns = @JoinColumn(name = "booking_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "patient")
-    )
-    private List<Patients> patients;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "patient_id", referencedColumnName = "id")
+    private Patients patients;
 }
