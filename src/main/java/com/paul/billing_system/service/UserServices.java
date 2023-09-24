@@ -9,8 +9,6 @@ import com.paul.billing_system.repository.OrganizationRepository;
 import com.paul.billing_system.repository.SpecialistRepository;
 import com.paul.billing_system.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -73,10 +71,11 @@ public class UserServices {
 /*
                     UserRoles.getUserRolesByLabel(userInfoDTO.getRoles());
 */
+            Organization organization1 = organizationRepository.findById(userInfoDTO.getOrgId()).orElseThrow(RuntimeException::new);
+            userInfo.setOrganization(organization1);
+
             userInfo.setRoles(userRoles);
             userRepository.save(userInfo);
-            organization.get().getOrgAdmin().add(userInfo);
-            organizationRepository.save(organization.get());
         }
 
         return userInfo;
@@ -85,7 +84,7 @@ public class UserServices {
     public List<UserInfo> getOrgAdmins(Long id) {
         Optional<Organization> organization = organizationRepository.findById(id);
         if (organization.isPresent())
-            return userRepository.findAll();
+            return userRepository.findByOrganization(id);
         return null;
     }
 
@@ -110,9 +109,9 @@ public class UserServices {
     // Staffs
 
     public UserInfo saveAdmin(Long id, UserInfoDTO userInfoDTO) {
-        Optional<Specialist> specialist = specialistRepository.findById(id);
+        Optional<Organization> organization1 = organizationRepository.findById(id);
         UserInfo userInfo = new UserInfo();
-        if (specialist.isPresent()) {
+        if (organization1.isPresent()) {
             userInfoDTO.setPassword(passwordEncoder.encode(userInfoDTO.getPassword()));
             userInfo.setName(userInfoDTO.getName());
             userInfo.setUsername(userInfoDTO.getUsername());
@@ -121,9 +120,13 @@ public class UserServices {
             userInfo.setContact(userInfoDTO.getContact());
             UserRoles userRoles = UserRoles.getUserRolesByLabel("ROLE_ADMIN");
             userInfo.setRoles(userRoles);
+
+            Organization organization = organizationRepository.findById(userInfoDTO.getOrgId()).orElseThrow(RuntimeException::new);
+            userInfo.setOrganization(organization);
+
+            Specialist specialist1 = specialistRepository.findById(userInfoDTO.getSpId()).orElseThrow(RuntimeException::new);
+            userInfo.setSpecialist(specialist1);
             userRepository.save(userInfo);
-            specialist.get().getAdmin().add(userInfo);
-            specialistRepository.save(specialist.get());
         }
 
         return userInfo;
@@ -149,11 +152,13 @@ public class UserServices {
         return new UserInfo();
     }
 
-    public List<UserInfo> getAllAdmins(Long id) {
+    public List<UserInfo> getAllAdmins(Long id, Long spId) {
 
-        Optional<Specialist> specialist = specialistRepository.findById(id);
-        if (specialist.isPresent())
-            return userRepository.findAll();
+        Optional<Organization> organization = organizationRepository.findById(id);
+        Optional<Specialist> specialist = specialistRepository.findById(spId);
+        if (organization.isPresent())
+            if (specialist.isPresent())
+                return userRepository.findByOrganizationAndSpecialist(id,spId);
         return null;
 
     }

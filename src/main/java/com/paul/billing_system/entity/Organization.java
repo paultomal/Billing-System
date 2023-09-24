@@ -49,13 +49,22 @@ public class Organization {
     )
     private List<Specialist> specialists;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinTable(
-            name = "organization_admins",
-            joinColumns = @JoinColumn(name = "organization_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "admin_id")
-    )
-    private List<UserInfo> orgAdmin;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //    @ManyToMany
 //    @MapKeyJoinColumn(name = "specialist_fk")
@@ -64,4 +73,3 @@ public class Organization {
 //            joinColumns = @JoinColumn(name = "org_fk"),
 //            inverseJoinColumns = @JoinColumn(name = "doctor_fk"))
 //    private Map<Specialist, Doctors> specialistDoctorsMap = new HashMap<>();
-}

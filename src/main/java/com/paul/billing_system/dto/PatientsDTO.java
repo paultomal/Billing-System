@@ -1,6 +1,8 @@
 package com.paul.billing_system.dto;
 
+import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.entity.Patients;
+import com.paul.billing_system.entity.Specialist;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,12 +24,20 @@ public class PatientsDTO {
 
     private LocalDate since;
 
+    private Long orgId;
+
+    private Long spId;
+
+
     public static PatientsDTO form(Patients patients){
         PatientsDTO patientsDTO = new PatientsDTO();
         patientsDTO.setId(patients.getId());
         patientsDTO.setName(patients.getName());
         patientsDTO.setAge(patients.getAge());
         patientsDTO.setSince(patients.getSince());
+
+        patientsDTO.setOrgId(patients.getOrganization().getId());
+        patientsDTO.setSpId(patients.getSpecialist().getId());
         return patientsDTO;
     }
 }

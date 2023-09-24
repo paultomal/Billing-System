@@ -34,14 +34,14 @@ public class InvestigationController {
         return new ResponseEntity<>(investigationDTO1, HttpStatus.OK);
     }
 
-    @GetMapping("/getAllInvestigation/{id}/{offset}/{pageSize}")
-    public ResponseEntity<?> getAllServices( @PathVariable Long id, @PathVariable int offset, @PathVariable int pageSize
+    @GetMapping("/getAllInvestigation/{id}/{spId}")
+    public ResponseEntity<?> getAllServices( @PathVariable Long id, @PathVariable Long spId
             , @RequestHeader("Authorization") String token) throws AuthenticationIsNotGivenException {
         if (token == null) {
             throw new AuthenticationIsNotGivenException("No Token");
         }
 
-        Page<Investigation> investigations = investigationServices.getAllServices(id, offset, pageSize);
+        List<Investigation> investigations = investigationServices.getAllServices(id , spId);
         List<InvestigationDTO> investigationDTOList = investigations.stream().map(InvestigationDTO::form).toList();
         return new ResponseEntity<>(investigationDTOList, HttpStatus.OK);
     }

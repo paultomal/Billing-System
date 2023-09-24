@@ -2,8 +2,6 @@ package com.paul.billing_system.dto;
 
 import com.paul.billing_system.entity.Doctors;
 import com.paul.billing_system.enums.DaysOfWeek;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,7 +36,7 @@ public class DoctorDTO {
 
     private Long spId;
 
-    public static DoctorDTO form(Doctors doctors){
+    public static DoctorDTO form(Doctors doctors) {
         DoctorDTO doctorDTO = new DoctorDTO();
         doctorDTO.setId(doctors.getId());
         doctorDTO.setName(doctors.getName());

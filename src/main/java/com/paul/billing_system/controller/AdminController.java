@@ -31,13 +31,13 @@ public class AdminController {
     public ResponseEntity<?> saveAdmin(@Valid @RequestBody UserInfoDTO userInfoDTO, BindingResult bindingResult, @PathVariable Long id) {
         ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
         if (errorDetails != null) return errorDetails;
-        UserInfoDTO userInfoDTO1 = UserInfoDTO.form(userServices.saveAdmin(id, userInfoDTO));
+        UserInfoDTO userInfoDTO1 = UserInfoDTO.form1(userServices.saveAdmin(id, userInfoDTO));
         return new ResponseEntity<>(userInfoDTO1, HttpStatus.OK);
     }
 
-    @GetMapping("/getAdmins/{id}")
-    public ResponseEntity<?> getAllAdmin(@PathVariable Long id){
-        List<UserInfo> userInfos = userServices.getAllAdmins(id);
+    @GetMapping("/getAdmins/{id}/{spId}")
+    public ResponseEntity<?> getAllAdmin(@PathVariable Long id, @PathVariable Long spId){
+        List<UserInfo> userInfos = userServices.getAllAdmins(id, spId);
         List<UserInfoDTO> admin = userInfos.stream()
                 .map(UserInfoDTO::form)
                 .filter(u-> u.getRoles().equals(UserRoles.getLabelByUserRoles(UserRoles.ROLE_ADMIN)))
