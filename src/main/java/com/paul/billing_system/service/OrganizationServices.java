@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,25 +54,24 @@ public class OrganizationServices {
 
     public Organization getOrganizationByid(Long id) {
         Optional<Organization> organization = organizationRepository.findById(id);
-        if (organization.isPresent()) {
-            return organization.get();
-        }
-        return new Organization();
+        return organization.orElse(null);
     }
 
     public Organization updateOrganizationProfile(OrganizationDTO organizationDTO, Long id) {
         Optional<Organization> organization = organizationRepository.findById(id);
+
         if (organization.isPresent()) {
-            Organization organization1 = organization.get();
-            organization1.setName(organizationDTO.getName());
-            organization1.setAddress(organizationDTO.getAddress());
-            organization1.setContact(organizationDTO.getContact());
-            organization1.setEmail(organizationDTO.getEmail());
-            organization1.setEmergencyContact(organizationDTO.getEmergencyContact());
-            organization1.setOperatingHour(organizationDTO.getOperatingHour());
-            return organizationRepository.save(organization1);
+            organization.get().setName(organizationDTO.getName());
+            organization.get().setAddress(organizationDTO.getAddress());
+            organization.get().setContact(organizationDTO.getContact());
+            organization.get().setEmail(organizationDTO.getEmail());
+            organization.get().setEmergencyContact(organizationDTO.getEmergencyContact());
+            organization.get().setOperatingHour(organizationDTO.getOperatingHour());
+            organization.get().setLastUpdateTime(new Date());
+
+            return organizationRepository.save(organization.get());
         }
-        return new Organization();
+        return null;
     }
 
     public List<Organization> searchOrganization(String name, PageRequest pageRequest) {

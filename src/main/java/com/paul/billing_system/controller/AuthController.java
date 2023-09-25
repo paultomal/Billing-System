@@ -3,6 +3,7 @@ package com.paul.billing_system.controller;
 import com.paul.billing_system.component.UserInfoUserDetailsService;
 import com.paul.billing_system.dto.AuthRequestDTO;
 import com.paul.billing_system.dto.ResponseDTO;
+import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.entity.UserInfo;
 import com.paul.billing_system.enums.UserRoles;
 import com.paul.billing_system.exception.ErrorDetails;
@@ -50,25 +51,25 @@ public class AuthController {
             );
             if (authenticate.isAuthenticated()) {
 
+                UserInfo user = userRepository.findByUsername(authRequestDTO.getUsername()).get();
                 ResponseDTO responseDTO = new ResponseDTO();
+
                 responseDTO.setToken(jwtService.generateToken(authRequestDTO.getUsername(),
                         (List) userDetailsService.loadUserByUsername(authRequestDTO.getUsername()).getAuthorities()));
                 responseDTO.setUsername(authRequestDTO.getUsername());
                 responseDTO.setRoles(jwtService.extractRole(responseDTO.getToken()));
                 responseDTO.setExpiredDate(jwtService.extractExpiration(responseDTO.getToken()));
-                responseDTO.setOrgCode(userRepository.findByUsername(authRequestDTO.getUsername()).get().getOrganization().getOrgCode());
-                responseDTO.setOrgId(userRepository.findByUsername(authRequestDTO.getUsername()).get().getOrganization().getId());
+                responseDTO.setOrgCode(user.getOrganization().getOrgCode());
+                responseDTO.setOrgId(user.getOrganization().getId());
 
                 return new ResponseEntity<>(responseDTO,HttpStatus.OK);
-
-            } else {
+            }
+            else {
                 throw new UsernameNotFoundException("Invalid user request!!");
             }
 
         } catch (AuthenticationException e) {
-
-           String errorMessage = "Authentication failed: " + e.getMessage();
-
+            String errorMessage = "Authentication failed: " + e.getMessage();
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorMessage);
         }
     }
@@ -77,9 +78,6 @@ public class AuthController {
     public ResponseEntity<?> getRole(@RequestHeader("Authorization") String token) {
         return new ResponseEntity<>(jwtService.extractRole(token.substring(7)), HttpStatus.OK);
     }
-
-
-    //
 
     static ResponseEntity<?> getErrorDetails(BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -96,31 +94,20 @@ public class AuthController {
         return null;
     }
 
-
-/*    String errorMessage = null;
-
-            if (e instanceof BadCredentialsException) {
-        errorMessage = "Invalid username or password";
-    }*/
-
-    /*@PostMapping("/authenticate")
-    public String authenticateGetToken(@RequestBody AuthRequestDTO authRequestDTO) {
-        Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(authRequestDTO.getUsername(), authRequestDTO.getPassword()));
-        if (authentication.isAuthenticated()) {
-            return jwtService.generateToken(authRequestDTO.getUsername());
-        } else {
-            throw new UsernameNotFoundException("invalid user request!!");
-        }
-    }*/
-
     public void createSysRoot() {
         if(userRepository.findByUsername("root").isEmpty()) {
+            Organization org = new Organization();
+            org.setName("root");
+            org.setOrgCode("root");
+            org.setAddress("Mohakhali");
+            org.setEmail("jotno@gmail.com");
+
             UserInfo user = new UserInfo();
             user.setName("root");
             user.setUsername("root");
             user.setPassword(passwordEncoder.encode("root"));
             user.setRoles(UserRoles.ROLE_ROOT);
+            user.setOrganization(org);
 
             userRepository.save(user);
         }
