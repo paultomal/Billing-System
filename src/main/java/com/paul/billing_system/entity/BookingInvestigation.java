@@ -16,12 +16,6 @@ public class BookingInvestigation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-/*
-
-    private String pName;
-
-    private String contact;
-*/
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(

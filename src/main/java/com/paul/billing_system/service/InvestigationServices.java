@@ -9,6 +9,7 @@ import com.paul.billing_system.repository.OrganizationRepository;
 import com.paul.billing_system.repository.SpecialistRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +26,7 @@ public class InvestigationServices {
         this.specialistRepository = specialistRepository;
     }
 
+    @Transactional
     public Investigation saveInvestigation(Long id, InvestigationDTO investigationDTO) {
         Optional<Organization> organization1 = organizationRepository.findById(id);
         Investigation investigation = new Investigation();

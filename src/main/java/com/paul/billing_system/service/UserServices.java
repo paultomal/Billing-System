@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,7 +47,6 @@ public class UserServices {
         userInfo.setPassword(userInfoDTO.getPassword());
         userInfo.setContact(userInfoDTO.getContact());
         UserRoles userRoles = UserRoles.getUserRolesByLabel("ROLE_ROOT");
-        /*UserRoles.getUserRolesByLabel(userInfoDTO.getRoles());*/
         userInfo.setRoles(userRoles);
         userInfo = userRepository.save(userInfo);
         return userInfo;
@@ -69,9 +69,7 @@ public class UserServices {
             userInfo.setPassword(userInfoDTO.getPassword());
             userInfo.setContact(userInfoDTO.getContact());
             UserRoles userRoles = UserRoles.getUserRolesByLabel("ROLE_ORG_ADMIN");
-/*
-                    UserRoles.getUserRolesByLabel(userInfoDTO.getRoles());
-*/
+
             Organization organization1 = organizationRepository.findById(userInfoDTO.getOrgId()).orElseThrow(RuntimeException::new);
             userInfo.setOrganization(organization1);
 
@@ -109,6 +107,7 @@ public class UserServices {
 
     // Staffs
 
+    @Transactional
     public UserInfo saveAdmin(Long id, UserInfoDTO userInfoDTO) {
         Optional<Organization> organization1 = organizationRepository.findById(id);
         UserInfo userInfo = new UserInfo();

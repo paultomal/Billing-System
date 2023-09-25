@@ -44,7 +44,7 @@ public class DoctorDTO {
         doctorDTO.setContact(doctors.getContact());
         doctorDTO.setEmail(doctors.getEmail());
         doctorDTO.setFollowUp(doctors.getFollowUp());
-        doctorDTO.setConsultation(doctors.getConsultation());
+        doctorDTO.setConsultation(doctors.getConsultationFee());
         doctorDTO.setMinDiscount(doctors.getMinDiscount());
         doctorDTO.setMaxDiscount(doctors.getMaxDiscount());
 

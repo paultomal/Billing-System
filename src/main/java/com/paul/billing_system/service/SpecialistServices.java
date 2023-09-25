@@ -25,9 +25,7 @@ public class SpecialistServices {
 
     public Specialist getMedicalSpecialist(Long id) {
         Optional<Specialist> specialist = specialistRepository.findById(id);
-        if (specialist.isPresent())
-            return specialist.get();
-        return new Specialist();
+        return specialist.orElseGet(Specialist::new);
     }
 
     public List<Specialist> searchSpecialist(String name, PageRequest pageRequest) {

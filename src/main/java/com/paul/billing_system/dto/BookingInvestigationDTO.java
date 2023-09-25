@@ -13,9 +13,9 @@ import java.util.List;
 public class BookingInvestigationDTO {
     private Long id;
 
-    private String pname;
-
     private Long pid;
+
+    private String pname;
 
     private String contact;
 

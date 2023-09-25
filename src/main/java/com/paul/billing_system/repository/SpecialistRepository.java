@@ -13,8 +13,48 @@ public interface SpecialistRepository extends JpaRepository<Specialist,Long> {
     @Query("select s from Specialist s where s.medSpecName like concat( '%',:medSpecName, '%') ")
     List<Specialist> findBySearch(@Param("medSpecName") String medSpecName, Pageable pageable);
 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
     //@Query("SELECT s FROM Specialist s WHERE s.medSpecName IN :medSpecName")
     @Query("select s from Specialist s where s.medSpecName IN :medSpecName")
-    List<Specialist> findByMedSpecName(@Param("medSpecName") List<String> medSpecName);
-
-}
+    List<Specialist> findByMedSpecName(@Param("medSpecName") List<String> medSpecName);*/
