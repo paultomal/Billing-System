@@ -25,7 +25,10 @@ public class SpecialistController {
     @GetMapping("/getAllSpecialist")
     public ResponseEntity<?> getAllSpecialist(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
         Page<Specialist> specialists = specialistServices.getAllSpecialist(PageRequest.of(page, size));
-        List<SpecialistDTO> specialistDTOList = specialists.stream().map(SpecialistDTO::form).toList();
+        List<SpecialistDTO> specialistDTOList = specialists
+                .stream()
+                .map(SpecialistDTO::form)
+                .toList();
         return new ResponseEntity<>(specialistDTOList, HttpStatus.OK);
     }
 

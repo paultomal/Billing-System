@@ -100,7 +100,7 @@ public class UserServices {
             userInfo.get().setUsername(userInfoDTO.getUsername());
             userInfo.get().setEmail(userInfoDTO.getEmail());
             userInfo.get().setContact(userInfoDTO.getContact());
-            userInfo.get().setLastUpdateTime(new Date());
+            userInfo.get().setUpdatedAt(new Date());
 
             return userRepository.save(userInfo.get());
         }
@@ -148,7 +148,7 @@ public class UserServices {
             userInfo.get().setUsername(userInfoDTO.getUsername());
             userInfo.get().setEmail(userInfoDTO.getEmail());
             userInfo.get().setContact(userInfoDTO.getContact());
-            userInfo.get().setLastUpdateTime(new Date());
+            userInfo.get().setUpdatedAt(new Date());
 
             return userRepository.save(userInfo.get());
         }

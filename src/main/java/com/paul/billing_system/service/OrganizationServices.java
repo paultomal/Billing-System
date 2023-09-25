@@ -6,7 +6,6 @@ import com.paul.billing_system.enums.OrganizationTypes;
 import com.paul.billing_system.repository.OrganizationRepository;
 import com.paul.billing_system.repository.SpecialistRepository;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -67,7 +66,7 @@ public class OrganizationServices {
             organization.get().setEmail(organizationDTO.getEmail());
             organization.get().setEmergencyContact(organizationDTO.getEmergencyContact());
             organization.get().setOperatingHour(organizationDTO.getOperatingHour());
-            organization.get().setLastUpdateTime(new Date());
+            organization.get().setUpdatedAt(new Date());
 
             return organizationRepository.save(organization.get());
         }

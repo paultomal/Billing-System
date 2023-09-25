@@ -86,7 +86,7 @@ public class DoctorServices {
             doctor.get().setConsultationFee(doctorDTO.getConsultation());
             doctor.get().setMinDiscount(doctorDTO.getMinDiscount());
             doctor.get().setMaxDiscount(doctorDTO.getMaxDiscount());
-            doctor.get().setLastUpdateTime(new Date());
+            doctor.get().setUpdatedAt(new Date());
 
             DaysOfWeek days = DaysOfWeek.getDaysByLabel(doctorDTO.getDay());
             doctor.get().setDay(days);
