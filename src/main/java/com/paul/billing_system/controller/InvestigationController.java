@@ -62,4 +62,16 @@ public class InvestigationController {
         InvestigationDTO investigationDTO1 = InvestigationDTO.form(investigationServices.updateService(investigationDTO, id));
         return new ResponseEntity<>(investigationDTO1, HttpStatus.OK);
     }
+
+    @GetMapping("/search/{name}")
+    public ResponseEntity<?> searchByName(@PathVariable String name,
+                                          @RequestParam(defaultValue = "0") int page,
+                                          @RequestParam(defaultValue = "10") int size) {
+
+        return new ResponseEntity<>(investigationServices.searchInvestigation(name, PageRequest.of(page, size))
+                .stream()
+                .map(InvestigationDTO::form)
+                .toList(), HttpStatus.OK);
+
+    }
 }

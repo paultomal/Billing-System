@@ -30,7 +30,7 @@ public class SpecialistServices {
         return new Specialist();
     }
 
-    public List<Specialist> searchSpecialist(String name) {
-        return specialistRepository.findBySearch(name);
+    public List<Specialist> searchSpecialist(String name, PageRequest pageRequest) {
+        return specialistRepository.findBySearch(name, pageRequest);
     }
 }

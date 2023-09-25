@@ -54,8 +54,6 @@ public class OrganizationController {
         List<OrganizationDTO> organizationDTOList = organizations.stream()
                 .map(OrganizationDTO::form)
                 .collect(Collectors.toList());
-/*        List<String> organizationName = organizations.stream()
-                .map(Organization::getName).toList();*/
         return new ResponseEntity<>(organizationDTOList, HttpStatus.OK);
     }
 
@@ -72,6 +70,16 @@ public class OrganizationController {
     public ResponseEntity<?> getOrganizationById(@PathVariable Long id) {
         OrganizationDTO organizationDTO = OrganizationDTO.form(organizationServices.getOrganizationByid(id));
         return new ResponseEntity<>(organizationDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/search/{name}")
+    public ResponseEntity<?> searchByName(@PathVariable String name,
+                                          @RequestParam(defaultValue = "0") int page,
+                                          @RequestParam(defaultValue = "10") int size) {
+        return new ResponseEntity<>(organizationServices.searchOrganization(name, PageRequest.of(page,size))
+                .stream()
+                .map(OrganizationDTO::form)
+                .toList(), HttpStatus.OK);
     }
 }
 

@@ -73,4 +73,8 @@ public class PatientsServices {
         }
         return new Patients();
     }
+
+    public List<Patients> searchPatient(String name, PageRequest pageRequest) {
+        return patientsRepository.findByName(name, pageRequest);
+    }
 }

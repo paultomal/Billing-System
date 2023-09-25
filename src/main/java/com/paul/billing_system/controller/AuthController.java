@@ -48,19 +48,27 @@ public class AuthController {
             Authentication authenticate = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authRequestDTO.getUsername(), authRequestDTO.getPassword())
             );
-
-            ResponseDTO responseDTO = new ResponseDTO();
-            responseDTO.setToken(jwtService.generateToken(authRequestDTO.getUsername(),
-                    (List) userDetailsService.loadUserByUsername(authRequestDTO.getUsername()).getAuthorities()));
-
-
             if (authenticate.isAuthenticated()) {
+
+                ResponseDTO responseDTO = new ResponseDTO();
+                responseDTO.setToken(jwtService.generateToken(authRequestDTO.getUsername(),
+                        (List) userDetailsService.loadUserByUsername(authRequestDTO.getUsername()).getAuthorities()));
+                responseDTO.setUsername(authRequestDTO.getUsername());
+                responseDTO.setRoles(jwtService.extractRole(responseDTO.getToken()));
+                responseDTO.setExpiredDate(jwtService.extractExpiration(responseDTO.getToken()));
+                responseDTO.setOrgCode(userRepository.findByUsername(authRequestDTO.getUsername()).get().getOrganization().getOrgCode());
+                responseDTO.setOrgId(userRepository.findByUsername(authRequestDTO.getUsername()).get().getOrganization().getId());
+
                 return new ResponseEntity<>(responseDTO,HttpStatus.OK);
+
             } else {
                 throw new UsernameNotFoundException("Invalid user request!!");
             }
+
         } catch (AuthenticationException e) {
+
            String errorMessage = "Authentication failed: " + e.getMessage();
+
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorMessage);
         }
     }

@@ -96,7 +96,7 @@ public class DoctorServices {
         return new Doctors();
     }
 
-    public List<Doctors> searchDoctor(String name) {
-       return doctorRepository.findByName(name);
+    public List<Doctors> searchDoctor(String name, PageRequest pageRequest) {
+       return doctorRepository.findByName(name, pageRequest);
     }
 }

@@ -74,6 +74,10 @@ public class OrganizationServices {
         return new Organization();
     }
 
+    public List<Organization> searchOrganization(String name, PageRequest pageRequest) {
+        return organizationRepository.searchByName(name, pageRequest);
+    }
+
 /*    public Map<Specialist, List<Doctors>> getSpecialistDoctorsMap(Long orgId, String specialityName) {
         Optional<Organization> organization = organizationRepository.findById(orgId);
 

@@ -61,7 +61,11 @@ public class DoctorController {
     }
 
     @GetMapping("/searchDoctor/{name}")
-    public ResponseEntity<?> searchDoctorByName(@PathVariable String name) {
-        return new ResponseEntity<>(doctorServices.searchDoctor(name), HttpStatus.OK);
+    public ResponseEntity<?> searchDoctorByName(@PathVariable String name, @RequestParam(defaultValue = "0") int page,
+                                                @RequestParam(defaultValue = "10") int size) {
+        return new ResponseEntity<>(doctorServices.searchDoctor(name, PageRequest.of(page,size))
+                .stream()
+                .map(DoctorDTO::form)
+                .toList(), HttpStatus.OK);
     }
 }

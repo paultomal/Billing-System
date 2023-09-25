@@ -28,8 +28,8 @@ public class BookingInvestigationServices {
         this.specialistRepository = specialistRepository;
     }
 
-    public List<Patients> searchPatient(String name) {
-        return patientsRepository.findByName(name);
+    public List<Patients> searchPatient(String name, PageRequest pageRequest) {
+        return patientsRepository.findByName(name, pageRequest);
     }
 
     public Page<Investigation> getInvestigations(Long id, int offset, int pageSize) {

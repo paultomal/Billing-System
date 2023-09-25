@@ -36,8 +36,10 @@ public class SpecialistController {
     }
 
     @GetMapping("/search/{name}")
-    public ResponseEntity<?> searchSpecialist(@PathVariable String name) {
-        List<Specialist> specialists = specialistServices.searchSpecialist(name);
+    public ResponseEntity<?> searchSpecialist(@PathVariable String name,
+                                              @RequestParam(defaultValue = "0") int page,
+                                              @RequestParam(defaultValue = "10") int size) {
+        List<Specialist> specialists = specialistServices.searchSpecialist(name, PageRequest.of(page, size));
         List<SpecialistDTO> specialistDTOList = specialists.stream().map(SpecialistDTO::form).toList();
         return new ResponseEntity<>(specialistDTOList, HttpStatus.OK);
     }

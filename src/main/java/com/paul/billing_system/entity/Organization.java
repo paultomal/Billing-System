@@ -3,6 +3,7 @@ package com.paul.billing_system.entity;
 import com.paul.billing_system.enums.OrganizationTypes;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,6 +24,10 @@ public class Organization {
 
     @NotEmpty(message = "Name should not be empty")
     private String name;
+
+    @NotBlank(message = "OrgCode is mandatory!!!")
+    @Column(unique = true)
+    private String orgCode;
 
     @NotEmpty(message = "Address Should Not Be Empty")
     private String address;

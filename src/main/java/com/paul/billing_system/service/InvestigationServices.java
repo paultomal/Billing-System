@@ -71,4 +71,8 @@ public class InvestigationServices {
         }
         return new Investigation();
     }
+
+    public List<Investigation> searchInvestigation(String name, PageRequest pageRequest) {
+        return investigationRepository.searchByName(name, pageRequest);
+    }
 }
