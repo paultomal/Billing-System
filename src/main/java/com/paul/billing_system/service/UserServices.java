@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -95,14 +96,15 @@ public class UserServices {
     public UserInfo updateOrgAdmin(Long id, UserInfoDTO userInfoDTO) {
         Optional<UserInfo> userInfo = userRepository.findById(id);
         if (userInfo.isPresent()) {
-            UserInfo userInfo1 = userInfo.get();
-            userInfo1.setName(userInfoDTO.getName());
-            userInfo1.setUsername(userInfoDTO.getUsername());
-            userInfo1.setEmail(userInfoDTO.getEmail());
-            userInfo1.setContact(userInfoDTO.getContact());
-            return userRepository.save(userInfo1);
+            userInfo.get().setName(userInfoDTO.getName());
+            userInfo.get().setUsername(userInfoDTO.getUsername());
+            userInfo.get().setEmail(userInfoDTO.getEmail());
+            userInfo.get().setContact(userInfoDTO.getContact());
+            userInfo.get().setLastUpdateTime(new Date());
+
+            return userRepository.save(userInfo.get());
         }
-        return new UserInfo();
+        return null;
     }
 
     // Staffs
@@ -134,22 +136,23 @@ public class UserServices {
 
     public UserInfo getAdminById(Long id) {
         Optional<UserInfo> specialist = userRepository.findById(id);
-        if (specialist.isPresent())
-            return specialist.get();
-        return new UserInfo();
+        return specialist.orElse(null);
     }
 
     public UserInfo updateAdmin(UserInfoDTO userInfoDTO, Long id) {
+
         Optional<UserInfo> userInfo = userRepository.findById(id);
+
         if (userInfo.isPresent()) {
-            UserInfo userInfo1 = new UserInfo();
-            userInfo1.setName(userInfoDTO.getName());
-            userInfo1.setUsername(userInfoDTO.getUsername());
-            userInfo1.setEmail(userInfoDTO.getEmail());
-            userInfo1.setContact(userInfoDTO.getContact());
-            return userRepository.save(userInfo1);
+            userInfo.get().setName(userInfoDTO.getName());
+            userInfo.get().setUsername(userInfoDTO.getUsername());
+            userInfo.get().setEmail(userInfoDTO.getEmail());
+            userInfo.get().setContact(userInfoDTO.getContact());
+            userInfo.get().setLastUpdateTime(new Date());
+
+            return userRepository.save(userInfo.get());
         }
-        return new UserInfo();
+        return null;
     }
 
     public List<UserInfo> getAllAdmins(Long id, Long spId, PageRequest pageRequest) {

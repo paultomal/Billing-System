@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,25 +76,26 @@ public class DoctorServices {
     }
 
     public Doctors updateDoctor(Long id, DoctorDTO doctorDTO) {
-        Optional<Doctors> doctors = doctorRepository.findById(id);
-        if (doctors.isPresent()) {
-            Doctors doctors1 = doctors.get();
-            doctors1.setName(doctorDTO.getName());
-            doctors1.setContact(doctorDTO.getContact());
-            doctors1.setDegrees(doctorDTO.getDegrees());
-            doctors1.setEmail(doctorDTO.getEmail());
-            doctors1.setFollowUp(doctorDTO.getFollowUp());
-            doctors1.setConsultationFee(doctorDTO.getConsultation());
-            doctors1.setMinDiscount(doctorDTO.getMinDiscount());
-            doctors1.setMaxDiscount(doctorDTO.getMaxDiscount());
+        Optional<Doctors> doctor = doctorRepository.findById(id);
+        if (doctor.isPresent()) {
+            doctor.get().setName(doctorDTO.getName());
+            doctor.get().setContact(doctorDTO.getContact());
+            doctor.get().setDegrees(doctorDTO.getDegrees());
+            doctor.get().setEmail(doctorDTO.getEmail());
+            doctor.get().setFollowUp(doctorDTO.getFollowUp());
+            doctor.get().setConsultationFee(doctorDTO.getConsultation());
+            doctor.get().setMinDiscount(doctorDTO.getMinDiscount());
+            doctor.get().setMaxDiscount(doctorDTO.getMaxDiscount());
+            doctor.get().setLastUpdateTime(new Date());
 
             DaysOfWeek days = DaysOfWeek.getDaysByLabel(doctorDTO.getDay());
-            doctors1.setDay(days);
+            doctor.get().setDay(days);
 
-            doctors1.setTime(doctorDTO.getTime());
-            return doctorRepository.save(doctors1);
+            doctor.get().setTime(doctorDTO.getTime());
+
+            return doctorRepository.save(doctor.get());
         }
-        return new Doctors();
+        return null;
     }
 
     public List<Doctors> searchDoctor(String name, PageRequest pageRequest) {

@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,21 +58,22 @@ public class InvestigationServices {
 
     public Investigation getServiceById(Long id) {
         Optional<Investigation> servicesInfo = investigationRepository.findById(id);
-        if (servicesInfo.isPresent()) {
-            return servicesInfo.get();
-        }
-        return new Investigation();
+        return servicesInfo.orElse(null);
     }
 
     public Investigation updateService(InvestigationDTO investigationDTO, Long id) {
-        Optional<Investigation> servicesInfo = investigationRepository.findById(id);
-        if (servicesInfo.isPresent()) {
-            Investigation investigation1 = new Investigation();
-            investigation1.setServiceName(investigationDTO.getServiceName());
-            investigation1.setServiceCharge(investigationDTO.getServiceCharge());
-            return investigationRepository.save(investigation1);
+
+        Optional<Investigation> investigation = investigationRepository.findById(id);
+
+        if (investigation.isPresent()) {
+            investigation.get().setServiceName(investigationDTO.getServiceName());
+            investigation.get().setServiceCharge(investigationDTO.getServiceCharge());
+            investigation.get().setLastUpdateTime(new Date());
+
+            return investigationRepository.save(investigation.get());
         }
-        return new Investigation();
+
+        return null;
     }
 
     public List<Investigation> searchInvestigation(String name, PageRequest pageRequest) {

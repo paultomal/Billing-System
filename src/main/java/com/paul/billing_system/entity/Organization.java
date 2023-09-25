@@ -7,17 +7,19 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Organization {
+public class Organization extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -55,26 +57,3 @@ public class Organization {
     private List<Specialist> specialists;
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    @ManyToMany
-//    @MapKeyJoinColumn(name = "specialist_fk")
-//    @JoinTable(
-//            name = "org_specialist_doctor",
-//            joinColumns = @JoinColumn(name = "org_fk"),
-//            inverseJoinColumns = @JoinColumn(name = "doctor_fk"))
-//    private Map<Specialist, Doctors> specialistDoctorsMap = new HashMap<>();

@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,13 +68,16 @@ public class PatientsServices {
 
     public Patients updatePatient(PatientsDTO patientsDTO, Long id) {
         Optional<Patients> patients = patientsRepository.findById(id);
+
         if (patients.isPresent()) {
-            Patients patients1 = new Patients();
-            patients1.setName(patientsDTO.getName());
-            patients1.setContact(patientsDTO.getContact());
-            return patientsRepository.save(patients1);
+            patients.get().setName(patientsDTO.getName());
+            patients.get().setContact(patientsDTO.getContact());
+            patients.get().setLastUpdateTime(new Date());
+
+            return patientsRepository.save(patients.get());
         }
-        return new Patients();
+
+        return null;
     }
 
     public List<Patients> searchPatient(String name, PageRequest pageRequest) {
