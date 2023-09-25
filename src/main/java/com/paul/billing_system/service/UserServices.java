@@ -9,6 +9,7 @@ import com.paul.billing_system.repository.OrganizationRepository;
 import com.paul.billing_system.repository.SpecialistRepository;
 import com.paul.billing_system.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -81,10 +82,10 @@ public class UserServices {
         return userInfo;
     }
 
-    public List<UserInfo> getOrgAdmins(Long id) {
+    public List<UserInfo> getOrgAdmins(Long id, PageRequest pageRequest) {
         Optional<Organization> organization = organizationRepository.findById(id);
         if (organization.isPresent())
-            return userRepository.findByOrganization(id);
+            return userRepository.findByOrganization(id, pageRequest);
         return null;
     }
 
@@ -152,13 +153,13 @@ public class UserServices {
         return new UserInfo();
     }
 
-    public List<UserInfo> getAllAdmins(Long id, Long spId) {
+    public List<UserInfo> getAllAdmins(Long id, Long spId, PageRequest pageRequest) {
 
         Optional<Organization> organization = organizationRepository.findById(id);
         Optional<Specialist> specialist = specialistRepository.findById(spId);
         if (organization.isPresent())
             if (specialist.isPresent())
-                return userRepository.findByOrganizationAndSpecialist(id,spId);
+                return userRepository.findByOrganizationAndSpecialist(id,spId, pageRequest);
         return null;
 
     }

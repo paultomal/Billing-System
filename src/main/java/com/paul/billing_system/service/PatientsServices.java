@@ -7,6 +7,7 @@ import com.paul.billing_system.entity.Specialist;
 import com.paul.billing_system.repository.OrganizationRepository;
 import com.paul.billing_system.repository.PatientsRepository;
 import com.paul.billing_system.repository.SpecialistRepository;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -47,12 +48,12 @@ public class PatientsServices {
         return patients;
     }
 
-    public List<Patients> getAllPatients(Long id, Long spId) {
+    public List<Patients> getAllPatients(Long id, Long spId, PageRequest pageRequest) {
         Optional<Organization> organization = organizationRepository.findById(id);
         Optional<Specialist> specialist = specialistRepository.findById(spId);
         if (organization.isPresent())
             if (specialist.isPresent()) {
-                return patientsRepository.findByOrganizationAndSpecialist(id,spId);
+                return patientsRepository.findByOrganizationAndSpecialist(id,spId,pageRequest);
             }
         return null;
     }
@@ -71,5 +72,9 @@ public class PatientsServices {
             return patientsRepository.save(patients1);
         }
         return new Patients();
+    }
+
+    public List<Patients> searchPatient(String name, PageRequest pageRequest) {
+        return patientsRepository.findByName(name, pageRequest);
     }
 }

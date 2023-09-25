@@ -8,6 +8,7 @@ import com.paul.billing_system.entity.Patients;
 import com.paul.billing_system.service.BookingInvestigationServices;
 import com.paul.billing_system.service.PatientsServices;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,8 +28,9 @@ public class BookingInvestigationController {
     }
 
     @GetMapping("/searchPatient/{name}")
-    public ResponseEntity<?> getPatients(@PathVariable String name){
-        List<Patients> patients = bookingServices.searchPatient(name);
+    public ResponseEntity<?> getPatients(@PathVariable String name, @RequestParam(defaultValue = "0") int page,
+                                         @RequestParam(defaultValue = "10") int size){
+        List<Patients> patients = bookingServices.searchPatient(name, PageRequest.of(page, size));
         List<PatientsDTO> patientsDTOList = patients.stream().map(PatientsDTO::form).toList();
         return new ResponseEntity<>(patientsDTOList, HttpStatus.OK);
     }

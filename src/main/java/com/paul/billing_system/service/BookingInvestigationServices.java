@@ -29,8 +29,8 @@ public class BookingInvestigationServices {
         this.userDetailsService = userDetailsService;
     }
 
-    public List<Patients> searchPatient(String name) {
-        return patientsRepository.findByName(name);
+    public List<Patients> searchPatient(String name, PageRequest pageRequest) {
+        return patientsRepository.findByName(name, pageRequest);
     }
 
     public List<Investigation> getInvestigations(Long id, Long spId) {

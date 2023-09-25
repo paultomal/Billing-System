@@ -1,6 +1,7 @@
 package com.paul.billing_system.repository;
 
 import com.paul.billing_system.entity.UserInfo;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -12,8 +13,8 @@ public interface UserRepository extends JpaRepository<UserInfo, Long> {
     //Optional<UserInfo> findByEmail(String username);
 
     @Query("SELECT a FROM UserInfo a where a.organization.id = :id")
-    List<UserInfo> findByOrganization(Long id);
+    List<UserInfo> findByOrganization(Long id, Pageable pageable);
 
     @Query("SELECT a FROM UserInfo a WHERE a.organization.id = :id AND a.specialist.id = :spId")
-    List<UserInfo> findByOrganizationAndSpecialist(Long id, Long spId);
+    List<UserInfo> findByOrganizationAndSpecialist(Long id, Long spId, Pageable pageable);
 }

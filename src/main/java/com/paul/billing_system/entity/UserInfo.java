@@ -20,6 +20,7 @@ public class UserInfo {
     @NotEmpty(message = "Name should not be empty")
     private String name;
 
+    @Column(unique = true)
     private String username;
 
     @Email(message = "Email should be valid")

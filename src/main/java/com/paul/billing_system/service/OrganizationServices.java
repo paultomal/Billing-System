@@ -5,6 +5,8 @@ import com.paul.billing_system.entity.*;
 import com.paul.billing_system.enums.OrganizationTypes;
 import com.paul.billing_system.repository.OrganizationRepository;
 import com.paul.billing_system.repository.SpecialistRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,8 +47,8 @@ public class OrganizationServices {
     }
 
 
-    public List<Organization> getAllOrganization(OrganizationTypes type) {
-        return organizationRepository.findByType(type);
+    public List<Organization> getAllOrganization(OrganizationTypes type, PageRequest pageRequest) {
+        return organizationRepository.findByType(type, pageRequest);
     }
 
     public Organization getOrganizationByid(Long id) {
@@ -70,6 +72,10 @@ public class OrganizationServices {
             return organizationRepository.save(organization1);
         }
         return new Organization();
+    }
+
+    public List<Organization> searchOrganization(String name, PageRequest pageRequest) {
+        return organizationRepository.searchByName(name, pageRequest);
     }
 
 /*    public Map<Specialist, List<Doctors>> getSpecialistDoctorsMap(Long orgId, String specialityName) {

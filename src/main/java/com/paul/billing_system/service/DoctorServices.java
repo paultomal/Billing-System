@@ -8,6 +8,7 @@ import com.paul.billing_system.enums.DaysOfWeek;
 import com.paul.billing_system.repository.DoctorRepository;
 import com.paul.billing_system.repository.OrganizationRepository;
 import com.paul.billing_system.repository.SpecialistRepository;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,12 +65,12 @@ public class DoctorServices {
         return doctors.orElseGet(Doctors::new);
     }
 
-    public List<Doctors> getAllDoctors(Long id, Long sId) {
+    public List<Doctors> getAllDoctors(Long id, Long sId, PageRequest pageRequest) {
         Optional<Organization> organization = organizationRepository.findById(id);
         Optional<Specialist> specialist = specialistRepository.findById(sId);
         if (organization.isPresent())
             if (specialist.isPresent())
-                return doctorRepository.findByOrganizationAndSpecialist(id,sId);
+                return doctorRepository.findByOrganizationAndSpecialist(id,sId,pageRequest);
         return null;
     }
 
@@ -93,5 +94,9 @@ public class DoctorServices {
             return doctorRepository.save(doctors1);
         }
         return new Doctors();
+    }
+
+    public List<Doctors> searchDoctor(String name, PageRequest pageRequest) {
+       return doctorRepository.findByName(name, pageRequest);
     }
 }

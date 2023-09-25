@@ -3,9 +3,11 @@ package com.paul.billing_system.controller;
 import com.paul.billing_system.component.UserInfoUserDetailsService;
 import com.paul.billing_system.dto.AuthRequestDTO;
 import com.paul.billing_system.dto.ResponseDTO;
+import com.paul.billing_system.entity.UserInfo;
+import com.paul.billing_system.enums.UserRoles;
 import com.paul.billing_system.exception.ErrorDetails;
+import com.paul.billing_system.repository.UserRepository;
 import com.paul.billing_system.security.JwtService;
-import io.micrometer.common.util.internal.logging.InternalLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,41 +15,60 @@ import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 public class AuthController {
     @Autowired
     private JwtService jwtService;
     @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
     private UserInfoUserDetailsService userDetailsService;
 
+    private final UserRepository userRepository;
+
+    public AuthController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     @PostMapping("/authenticate")
     public ResponseEntity<?> authenticateGetToken(@RequestBody AuthRequestDTO authRequestDTO) {
+
+        createSysRoot();
+
         try {
             Authentication authenticate = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authRequestDTO.getUsername(), authRequestDTO.getPassword())
             );
-
-            ResponseDTO responseDTO = new ResponseDTO();
-            responseDTO.setToken(jwtService.generateToken(authRequestDTO.getUsername(),
-                    (List) userDetailsService.loadUserByUsername(authRequestDTO.getUsername()).getAuthorities()));
-
-
             if (authenticate.isAuthenticated()) {
+
+                ResponseDTO responseDTO = new ResponseDTO();
+                responseDTO.setToken(jwtService.generateToken(authRequestDTO.getUsername(),
+                        (List) userDetailsService.loadUserByUsername(authRequestDTO.getUsername()).getAuthorities()));
+                responseDTO.setUsername(authRequestDTO.getUsername());
+                responseDTO.setRoles(jwtService.extractRole(responseDTO.getToken()));
+                responseDTO.setExpiredDate(jwtService.extractExpiration(responseDTO.getToken()));
+                responseDTO.setOrgCode(userRepository.findByUsername(authRequestDTO.getUsername()).get().getOrganization().getOrgCode());
+                responseDTO.setOrgId(userRepository.findByUsername(authRequestDTO.getUsername()).get().getOrganization().getId());
+
                 return new ResponseEntity<>(responseDTO,HttpStatus.OK);
+
             } else {
                 throw new UsernameNotFoundException("Invalid user request!!");
             }
+
         } catch (AuthenticationException e) {
+
            String errorMessage = "Authentication failed: " + e.getMessage();
+
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorMessage);
         }
     }
@@ -92,4 +113,16 @@ public class AuthController {
             throw new UsernameNotFoundException("invalid user request!!");
         }
     }*/
+
+    public void createSysRoot() {
+        if(userRepository.findByUsername("root").isEmpty()) {
+            UserInfo user = new UserInfo();
+            user.setName("root");
+            user.setUsername("root");
+            user.setPassword(passwordEncoder.encode("root"));
+            user.setRoles(UserRoles.ROLE_ROOT);
+
+            userRepository.save(user);
+        }
+    }
 }

@@ -5,6 +5,7 @@ import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.entity.Patients;
 import com.paul.billing_system.service.PatientsServices;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -35,8 +36,10 @@ public class PatientsController {
     }
 
     @GetMapping("/getAllPatients/{id}/{spId}")
-    public ResponseEntity<?> getAllPatients(@PathVariable Long id , @PathVariable Long spId){
-        List<Patients> patients = patientsServices.getAllPatients(id,spId);
+    public ResponseEntity<?> getAllPatients(@PathVariable Long id , @PathVariable Long spId,
+                                            @RequestParam(defaultValue = "0") int page,
+                                            @RequestParam(defaultValue = "10") int size) {
+        List<Patients> patients = patientsServices.getAllPatients(id,spId, PageRequest.of(page,size));
         List<PatientsDTO> patientsDTOList = patients.stream().map(PatientsDTO::form).toList();
         return new ResponseEntity<>(patientsDTOList,HttpStatus.OK);
     }
@@ -54,5 +57,16 @@ public class PatientsController {
         }
         PatientsDTO patientsDTO1 = PatientsDTO.form(patientsServices.updatePatient(patientsDTO,id));
         return new ResponseEntity<>(patientsDTO1,HttpStatus.OK);
+    }
+
+    @GetMapping("search/{name}")
+    public ResponseEntity<?> searchPatient(@PathVariable String name,
+                                           @RequestParam(defaultValue = "0") int page,
+                                           @RequestParam(defaultValue = "10") int size) {
+
+        return new ResponseEntity<>(patientsServices.searchPatient(name, PageRequest.of(page, size))
+                .stream()
+                .map(PatientsDTO::form)
+                .toList(), HttpStatus.OK);
     }
 }

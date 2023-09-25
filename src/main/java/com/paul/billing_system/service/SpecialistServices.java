@@ -19,8 +19,8 @@ public class SpecialistServices {
         this.specialistRepository = specialistRepository;
     }
 
-    public Page<Specialist> getAllSpecialist(int offset, int pageSize) {
-        return specialistRepository.findAll(PageRequest.of(offset, pageSize));
+    public Page<Specialist> getAllSpecialist(PageRequest pageRequest) {
+        return specialistRepository.findAll(pageRequest);
     }
 
     public Specialist getMedicalSpecialist(Long id) {
@@ -30,7 +30,7 @@ public class SpecialistServices {
         return new Specialist();
     }
 
-    public List<Specialist> searchSpecialist(String name) {
-        return specialistRepository.findBySearch(name);
+    public List<Specialist> searchSpecialist(String name, PageRequest pageRequest) {
+        return specialistRepository.findBySearch(name, pageRequest);
     }
 }

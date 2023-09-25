@@ -6,6 +6,7 @@ import com.paul.billing_system.exception.AuthenticationIsNotGivenException;
 import com.paul.billing_system.service.InvestigationServices;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -35,13 +36,15 @@ public class InvestigationController {
     }
 
     @GetMapping("/getAllInvestigation/{id}/{spId}")
-    public ResponseEntity<?> getAllServices( @PathVariable Long id, @PathVariable Long spId
-            , @RequestHeader("Authorization") String token) throws AuthenticationIsNotGivenException {
+    public ResponseEntity<?> getAllServices( @PathVariable Long id, @PathVariable Long spId,
+                                             @RequestParam(defaultValue = "0") int page,
+                                             @RequestParam(defaultValue = "10") int size,
+                                             @RequestHeader("Authorization") String token) throws AuthenticationIsNotGivenException {
         if (token == null) {
             throw new AuthenticationIsNotGivenException("No Token");
         }
 
-        List<Investigation> investigations = investigationServices.getAllServices(id , spId);
+        List<Investigation> investigations = investigationServices.getAllServices(id , spId, PageRequest.of(page, size));
         List<InvestigationDTO> investigationDTOList = investigations.stream().map(InvestigationDTO::form).toList();
         return new ResponseEntity<>(investigationDTOList, HttpStatus.OK);
     }
@@ -58,5 +61,17 @@ public class InvestigationController {
         if (errorDetails != null) return errorDetails;
         InvestigationDTO investigationDTO1 = InvestigationDTO.form(investigationServices.updateService(investigationDTO, id));
         return new ResponseEntity<>(investigationDTO1, HttpStatus.OK);
+    }
+
+    @GetMapping("/search/{name}")
+    public ResponseEntity<?> searchByName(@PathVariable String name,
+                                          @RequestParam(defaultValue = "0") int page,
+                                          @RequestParam(defaultValue = "10") int size) {
+
+        return new ResponseEntity<>(investigationServices.searchInvestigation(name, PageRequest.of(page, size))
+                .stream()
+                .map(InvestigationDTO::form)
+                .toList(), HttpStatus.OK);
+
     }
 }
