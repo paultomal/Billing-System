@@ -19,15 +19,14 @@ public class BookingInvestigationServices {
     private final SpecialistRepository specialistRepository;
     private final OrganizationRepository organizationRepository;
 
-    private final UserDetailsService userDetailsService;
-
-    public BookingInvestigationServices(BookingInvestigationRepository bookingRepository, PatientsRepository patientsRepository, InvestigationRepository investigationRepository, SpecialistRepository specialistRepository, OrganizationRepository organizationRepository, UserDetailsService userDetailsService) {
+    public BookingInvestigationServices(BookingInvestigationRepository bookingRepository, PatientsRepository patientsRepository,
+                                        InvestigationRepository investigationRepository, SpecialistRepository specialistRepository,
+                                        OrganizationRepository organizationRepository) {
         this.bookingRepository = bookingRepository;
         this.patientsRepository = patientsRepository;
         this.investigationRepository = investigationRepository;
         this.specialistRepository = specialistRepository;
         this.organizationRepository = organizationRepository;
-        this.userDetailsService = userDetailsService;
     }
 
     public List<Patients> searchPatient(String name, PageRequest pageRequest) {

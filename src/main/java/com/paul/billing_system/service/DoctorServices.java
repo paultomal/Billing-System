@@ -39,7 +39,7 @@ public class DoctorServices {
             doctors.setDegrees(doctorDTO.getDegrees());
             doctors.setEmail(doctorDTO.getEmail());
             doctors.setFollowUp(doctorDTO.getFollowUp());
-            doctors.setConsultation(doctorDTO.getConsultation());
+            doctors.setConsultationFee(doctorDTO.getConsultation());
             doctors.setMinDiscount(doctorDTO.getMinDiscount());
             doctors.setMaxDiscount(doctorDTO.getMaxDiscount());
 
@@ -83,7 +83,7 @@ public class DoctorServices {
             doctors1.setDegrees(doctorDTO.getDegrees());
             doctors1.setEmail(doctorDTO.getEmail());
             doctors1.setFollowUp(doctorDTO.getFollowUp());
-            doctors1.setConsultation(doctorDTO.getConsultation());
+            doctors1.setConsultationFee(doctorDTO.getConsultation());
             doctors1.setMinDiscount(doctorDTO.getMinDiscount());
             doctors1.setMaxDiscount(doctorDTO.getMaxDiscount());
 

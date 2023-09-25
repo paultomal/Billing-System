@@ -69,9 +69,7 @@ public class UserServices {
             userInfo.setPassword(userInfoDTO.getPassword());
             userInfo.setContact(userInfoDTO.getContact());
             UserRoles userRoles = UserRoles.getUserRolesByLabel("ROLE_ORG_ADMIN");
-/*
-                    UserRoles.getUserRolesByLabel(userInfoDTO.getRoles());
-*/
+
             Organization organization1 = organizationRepository.findById(userInfoDTO.getOrgId()).orElseThrow(RuntimeException::new);
             userInfo.setOrganization(organization1);
 

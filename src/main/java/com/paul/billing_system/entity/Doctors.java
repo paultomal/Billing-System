@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,7 +25,7 @@ public class Doctors {
 
     private String followUp;
 
-    private String consultation;
+    private String consultationFee;
 
     private String minDiscount;
 

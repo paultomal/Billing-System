@@ -9,6 +9,7 @@ import com.paul.billing_system.repository.PatientsRepository;
 import com.paul.billing_system.repository.SpecialistRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +27,7 @@ public class PatientsServices {
         this.specialistRepository = specialistRepository;
     }
 
+    @Transactional
     public Patients savePatients(Long id, PatientsDTO patientsDTO) {
 
         Patients patients = new Patients();
