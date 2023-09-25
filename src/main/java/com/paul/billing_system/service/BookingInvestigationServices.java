@@ -4,6 +4,7 @@ import com.paul.billing_system.dto.BookingInvestigationDTO;
 import com.paul.billing_system.dto.InvestigationDTO;
 import com.paul.billing_system.entity.*;
 import com.paul.billing_system.repository.*;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
@@ -33,12 +34,12 @@ public class BookingInvestigationServices {
         return patientsRepository.findByName(name, pageRequest);
     }
 
-    public List<Investigation> getInvestigations(Long id, Long spId) {
+    public List<Investigation> getInvestigations(Long id, Long spId, PageRequest pageRequest) {
         Optional<Organization> organization = organizationRepository.findById(id);
         Optional<Specialist> specialist = specialistRepository.findById(spId);
         if (organization.isPresent())
             if (specialist.isPresent())
-                return investigationRepository.findByOrganizationAndSpecialist(id, spId);
+                return investigationRepository.findByOrganizationAndSpecialist(id, spId, pageRequest);
         return null;
     }
 

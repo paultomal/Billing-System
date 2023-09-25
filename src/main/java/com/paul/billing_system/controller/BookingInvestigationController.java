@@ -36,8 +36,9 @@ public class BookingInvestigationController {
     }
 
     @GetMapping("/getInvestigationList/{id}/{spId}")
-    public ResponseEntity<?> getInvestigation( @PathVariable Long id,@PathVariable Long spId){
-        List<Investigation> investigations = bookingServices.getInvestigations(id,spId);
+    public ResponseEntity<?> getInvestigation( @PathVariable Long id,@PathVariable Long spId, @RequestParam(defaultValue = "0") int page,
+                                               @RequestParam(defaultValue = "10") int size){
+        List<Investigation> investigations = bookingServices.getInvestigations(id,spId, PageRequest.of(page, size));
         List<InvestigationDTO> investigationDTOList = investigations
                 .stream()
                 .map(InvestigationDTO::form)
