@@ -5,6 +5,7 @@ import com.paul.billing_system.dto.AuthRequestDTO;
 import com.paul.billing_system.dto.ResponseDTO;
 import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.entity.UserInfo;
+import com.paul.billing_system.enums.OrganizationTypes;
 import com.paul.billing_system.enums.UserRoles;
 import com.paul.billing_system.exception.ErrorDetails;
 import com.paul.billing_system.repository.UserRepository;
@@ -61,6 +62,7 @@ public class AuthController {
                 responseDTO.setExpiredDate(jwtService.extractExpiration(responseDTO.getToken()));
                 responseDTO.setOrgCode(user.getOrganization().getOrgCode());
                 responseDTO.setOrgId(user.getOrganization().getId());
+                responseDTO.setOrgType(OrganizationTypes.getLabelByOrganizationType(user.getOrganization().getType()));
 
                 return new ResponseEntity<>(responseDTO,HttpStatus.OK);
             }

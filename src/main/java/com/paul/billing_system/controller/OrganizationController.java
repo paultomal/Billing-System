@@ -1,12 +1,7 @@
 package com.paul.billing_system.controller;
 
-import com.paul.billing_system.dto.DoctorDTO;
 import com.paul.billing_system.dto.OrganizationDTO;
-import com.paul.billing_system.dto.PatientsDTO;
-import com.paul.billing_system.entity.Doctors;
 import com.paul.billing_system.entity.Organization;
-import com.paul.billing_system.entity.Patients;
-import com.paul.billing_system.entity.Specialist;
 import com.paul.billing_system.enums.OrganizationTypes;
 import com.paul.billing_system.service.OrganizationServices;
 import jakarta.validation.Valid;
@@ -18,7 +13,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.paul.billing_system.controller.AuthController.getErrorDetails;
@@ -68,7 +62,7 @@ public class OrganizationController {
 
     @GetMapping("/getOrganizationById/{id}")
     public ResponseEntity<?> getOrganizationById(@PathVariable Long id) {
-        OrganizationDTO organizationDTO = OrganizationDTO.form(organizationServices.getOrganizationByid(id));
+        OrganizationDTO organizationDTO = OrganizationDTO.form(organizationServices.getOrganizationById(id));
         return new ResponseEntity<>(organizationDTO, HttpStatus.OK);
     }
 
@@ -76,17 +70,14 @@ public class OrganizationController {
     public ResponseEntity<?> searchByName(@PathVariable String name,
                                           @RequestParam(defaultValue = "0") int page,
                                           @RequestParam(defaultValue = "10") int size) {
-        return new ResponseEntity<>(organizationServices.searchOrganization(name, PageRequest.of(page,size))
+        return new ResponseEntity<>(organizationServices.searchOrgByName(name, PageRequest.of(page,size))
                 .stream()
                 .map(OrganizationDTO::form)
                 .toList(), HttpStatus.OK);
     }
+
+    @GetMapping("/getCreationTime/{id}")
+    public ResponseEntity<?> getCreationTime(@PathVariable Long id) {
+        return new ResponseEntity<>(organizationServices.getCreationTime(id).toString(), HttpStatus.OK);
+    }
 }
-
-
-
-        /*    @PostMapping("/createDoctor/{orgId}/{specialityName}")
-    public ResponseEntity<?> createDoctor(@PathVariable Long orgId, @PathVariable String specialityName) {
-        Map<Specialist, List<Doctors>> specialistDoctorsMap = organizationServices.getSpecialistDoctorsMap(orgId,specialityName);
-        return new ResponseEntity<>(specialistDoctorsMap, HttpStatus.OK);
-    }*/

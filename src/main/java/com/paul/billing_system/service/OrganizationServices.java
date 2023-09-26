@@ -30,15 +30,14 @@ public class OrganizationServices {
         organization.setContact(organizationDTO.getContact());
         OrganizationTypes organizationType = OrganizationTypes.getOrganizationTypeByLabel(organizationDTO.getType());
         organization.setType(organizationType);
+        organization.setOrgCode(organizationDTO.getOrgCode());
         organization.setEmail(organizationDTO.getEmail());
         organization.setEmergencyContact(organizationDTO.getEmergencyContact());
         organization.setOperatingHour(organizationDTO.getOperatingHour());
+        organization.setCreatedAt(new Date());
 
         List<Specialist> specialists = specialistRepository.findAll();
 
-/*        List<Specialist> specialistList = organization.getSpecialists();
-
-        List<String> list = specialistList.stream().map(Specialist::getMedSpecName).toList();*/
         organization.setSpecialists(specialists);
         organization =organizationRepository.save(organization);
 
@@ -51,7 +50,7 @@ public class OrganizationServices {
         return organizationRepository.findByType(type, pageRequest);
     }
 
-    public Organization getOrganizationByid(Long id) {
+    public Organization getOrganizationById(Long id) {
         Optional<Organization> organization = organizationRepository.findById(id);
         return organization.orElse(null);
     }
@@ -73,12 +72,11 @@ public class OrganizationServices {
         return null;
     }
 
-    public List<Organization> searchOrganization(String name, PageRequest pageRequest) {
+    public List<Organization> searchOrgByName(String name, PageRequest pageRequest) {
         return organizationRepository.searchByName(name, pageRequest);
     }
 
-/*    public Map<Specialist, List<Doctors>> getSpecialistDoctorsMap(Long orgId, String specialityName) {
-        Optional<Organization> organization = organizationRepository.findById(orgId);
-
-    }*/
+    public Object getCreationTime(Long id) {
+        return organizationRepository.findById(id).get().getCreatedAt();
+    }
 }

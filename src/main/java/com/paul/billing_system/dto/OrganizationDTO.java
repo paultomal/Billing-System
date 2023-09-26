@@ -26,6 +26,9 @@ public class OrganizationDTO {
 
     private String contact;
 
+    @NotEmpty(message = "OrgCode should not be empty")
+    private String orgCode;
+
     private String type;
 
     @Email(message = "Email should be valid")
@@ -50,27 +53,8 @@ public class OrganizationDTO {
         organizationDTO.setEmail(organization.getEmail());
         organizationDTO.setEmergencyContact(organization.getEmergencyContact());
         organizationDTO.setOperatingHour(organization.getOperatingHour());
+        organizationDTO.setOrgCode(organization.getOrgCode());
         organizationDTO.setSpecialist(organization.getSpecialists() != null ? organization.getSpecialists().stream().map(SpecialistDTO::form).toList() : null);
         return organizationDTO;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*        organizationDTO.setOrgAdmin(organization.getOrgAdmin()!=null ? organization.getOrgAdmin().stream()
-                .filter(adminDTO -> UserRoles.getUserRolesByLabel("ROLE_ORG_ADMIN").equals(adminDTO.getRoles()))
-                .map(UserInfoDTO::form).toList() : null);
- */
