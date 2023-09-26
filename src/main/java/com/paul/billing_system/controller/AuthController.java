@@ -52,7 +52,7 @@ public class AuthController {
             );
             if (authenticate.isAuthenticated()) {
 
-                UserInfo user = userRepository.findByUsername(authRequestDTO.getUsername()).get();
+                UserInfo user = userRepository.findByUsername(authRequestDTO.getUsername()).orElse(null);
                 ResponseDTO responseDTO = new ResponseDTO();
 
                 responseDTO.setToken(jwtService.generateToken(authRequestDTO.getUsername(),
@@ -60,6 +60,7 @@ public class AuthController {
                 responseDTO.setUsername(authRequestDTO.getUsername());
                 responseDTO.setRoles(jwtService.extractRole(responseDTO.getToken()));
                 responseDTO.setExpiredDate(jwtService.extractExpiration(responseDTO.getToken()));
+                assert user != null;
                 responseDTO.setOrgCode(user.getOrganization().getOrgCode());
                 responseDTO.setOrgId(user.getOrganization().getId());
                 responseDTO.setOrgType(OrganizationTypes.getLabelByOrganizationType(user.getOrganization().getType()));

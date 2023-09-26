@@ -14,7 +14,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/specialist")
-@PreAuthorize("hasAuthority('ROLE_ROOT')")
 public class SpecialistController {
     private final SpecialistServices specialistServices;
 

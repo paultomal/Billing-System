@@ -19,12 +19,15 @@ public class DrugOrder extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty
     private String patientName;
 
+    @NotEmpty
     private String patientContact;
 
     @ManyToOne
     @JoinColumn(name = "org_id")
+    @NotEmpty
     private Organization organization;
 
     @ManyToMany
@@ -36,5 +39,6 @@ public class DrugOrder extends BaseEntity {
     @NotEmpty
     private List<Drug> drugList;
 
+    @NotEmpty
     private double total;
 }
