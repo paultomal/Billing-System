@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum OrganizationTypes {
+    ROOT("Root"),
     HOSPITAL("Hospital"),
     DIAGNOSTIC_CENTER("Diagnostic Center"),
     CHAMBER("Chamber"),

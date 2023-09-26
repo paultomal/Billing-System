@@ -101,6 +101,7 @@ public class AuthController {
             Organization org = new Organization();
             org.setName("root");
             org.setOrgCode("root");
+            org.setType(OrganizationTypes.ROOT);
             org.setAddress("Mohakhali");
             org.setEmail("jotno@gmail.com");
 
