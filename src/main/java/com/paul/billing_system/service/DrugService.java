@@ -59,8 +59,36 @@ public class DrugService {
         return "Drug doesn't exist of ID: " + id;
     }
 
-    public List<DrugDTO> searchDrug(String name, PageRequest pageRequest) {
+    public List<DrugDTO> searchDrugByBrandName(String name, PageRequest pageRequest) {
         return drugRepository.searchByName(name, pageRequest)
+                .stream()
+                .map(DrugDTO::form)
+                .toList();
+    }
+
+    public List<DrugDTO> searchDrugByVendor(String name, PageRequest pageRequest) {
+        return drugRepository.searchByVendor(name, pageRequest)
+                .stream()
+                .map(DrugDTO::form)
+                .toList();
+    }
+
+    public List<DrugDTO> searchDrugByGeneric(String name, PageRequest pageRequest) {
+        return drugRepository.searchByGeneric(name, pageRequest)
+                .stream()
+                .map(DrugDTO::form)
+                .toList();
+    }
+
+    public List<DrugDTO> searchDrugByFormation(String name, PageRequest pageRequest) {
+        return drugRepository.searchByFormation(name, pageRequest)
+                .stream()
+                .map(DrugDTO::form)
+                .toList();
+    }
+
+    public List<DrugDTO> searchDrugByStrength(String name, PageRequest pageRequest) {
+        return drugRepository.searchByStrength(name, pageRequest)
                 .stream()
                 .map(DrugDTO::form)
                 .toList();

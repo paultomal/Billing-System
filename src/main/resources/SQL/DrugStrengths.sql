@@ -1,0 +1,10 @@
+INSERT INTO `billing_system`.`drug_strength` (`id`, `name`) VALUES ( 1,'(0.5mg+5mg+1laciu)/gm');
+INSERT INTO `billing_system`.`drug_strength` (`id`, `name`) VALUES ( 2,'(100mg+1.1mg+14mg)/5ml');
+INSERT INTO `billing_system`.`drug_strength` (`id`, `name`) VALUES ( 3,'(100mg+100mg+1mg)/3ml');
+INSERT INTO `billing_system`.`drug_strength` (`id`, `name`) VALUES ( 4,'(13.125gm+350.7mg+178.5mg+46.6mg)/25ml');
+INSERT INTO `billing_system`.`drug_strength` (`id`, `name`) VALUES ( 5,'(1500mg+250mg)/5ml');
+INSERT INTO `billing_system`.`drug_strength` (`id`, `name`) VALUES ( 6,'(175mg+225mg)/5ml');
+INSERT INTO `billing_system`.`drug_strength` (`id`, `name`) VALUES ( 7,'(1gm+1.3gm)/50gm');
+INSERT INTO `billing_system`.`drug_strength` (`id`, `name`) VALUES ( 8,'(1gm+200mg)/100ml');
+INSERT INTO `billing_system`.`drug_strength` (`id`, `name`) VALUES ( 9,'(1gm+500mg)/100ml');
+INSERT INTO `billing_system`.`drug_strength` (`id`, `name`) VALUES ( 10,'(2.6gm+25mg)/100ml');

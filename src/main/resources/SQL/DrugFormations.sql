@@ -1,0 +1,10 @@
+INSERT INTO `billing_system`.`drug_formation` (`id`, `name`) VALUES ( 1,'CAP');
+INSERT INTO `billing_system`.`drug_formation` (`id`, `name`) VALUES ( 2,'CREAM');
+INSERT INTO `billing_system`.`drug_formation` (`id`, `name`) VALUES ( 3,'DROP');
+INSERT INTO `billing_system`.`drug_formation` (`id`, `name`) VALUES ( 4,'EYE DROP');
+INSERT INTO `billing_system`.`drug_formation` (`id`, `name`) VALUES ( 5,'EYE DRP');
+INSERT INTO `billing_system`.`drug_formation` (`id`, `name`) VALUES ( 6,'GEL');
+INSERT INTO `billing_system`.`drug_formation` (`id`, `name`) VALUES ( 7,'INFUSION');
+INSERT INTO `billing_system`.`drug_formation` (`id`, `name`) VALUES ( 8,'INHALATION CAPSULE');
+INSERT INTO `billing_system`.`drug_formation` (`id`, `name`) VALUES ( 9,'INHALER');
+INSERT INTO `billing_system`.`drug_formation` (`id`, `name`) VALUES ( 10,'INJ');

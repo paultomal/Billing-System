@@ -1,0 +1,10 @@
+INSERT INTO `billing_system`.`generic` (`id`, `name`) VALUES ( 1,'0.4 ML SALTOLIN+0.5 ML IPREX+2.1 ML NORMAL SALINE');
+INSERT INTO `billing_system`.`generic` (`id`, `name`) VALUES ( 2,'0.6ML SALTOLIN+0.5ML IPREX+1.9ML NORMAL SALINE');
+INSERT INTO `billing_system`.`generic` (`id`, `name`) VALUES ( 3,'5-AMINOSACYLIC ACID');
+INSERT INTO `billing_system`.`generic` (`id`, `name`) VALUES ( 4,'50+ SILICONE SUNSCREEN GEL WITH VITAMIN C & E');
+INSERT INTO `billing_system`.`generic` (`id`, `name`) VALUES ( 5,'70% DHA WITH MULTIVITAMIN');
+INSERT INTO `billing_system`.`generic` (`id`, `name`) VALUES ( 6,'ACALABRUTINIB');
+INSERT INTO `billing_system`.`generic` (`id`, `name`) VALUES ( 7,'ACARBOSE');
+INSERT INTO `billing_system`.`generic` (`id`, `name`) VALUES ( 8,'ACECLOFENAC');
+INSERT INTO `billing_system`.`generic` (`id`, `name`) VALUES ( 9,'ACEMETACIN');
+INSERT INTO `billing_system`.`generic` (`id`, `name`) VALUES ( 10,'ACENOCOUMAROL');

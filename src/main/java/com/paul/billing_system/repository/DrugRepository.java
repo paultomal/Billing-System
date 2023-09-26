@@ -14,4 +14,13 @@ public interface DrugRepository extends JpaRepository<Drug, Long> {
 
     @Query("select d from Drug d where d.vendor.name like concat('%', :name, '%') ")
     List<Drug> searchByVendor(@Param("name") String name, Pageable pageable);
+
+    @Query("select d from Drug d where d.generic.name like concat('%', :name, '%') ")
+    List<Drug> searchByGeneric(@Param("name") String name, Pageable pageable);
+
+    @Query("select d from Drug d where d.formation.name like concat('%', :name, '%') ")
+    List<Drug> searchByFormation(@Param("name") String name, Pageable pageable);
+
+    @Query("select d from Drug d where d.strength.name like concat('%', :name, '%') ")
+    List<Drug> searchByStrength(@Param("name") String name, Pageable pageable);
 }
