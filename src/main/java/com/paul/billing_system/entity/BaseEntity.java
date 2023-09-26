@@ -10,6 +10,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BaseEntity {
-    private Date creationTime;
-    private Date lastUpdateTime;
+    private Date createdAt;
+    private Date updatedAt;
+    private UserInfo updatedBy;
+    private UserInfo createdBy;
 }

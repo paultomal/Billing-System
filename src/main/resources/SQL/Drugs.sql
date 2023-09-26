@@ -1,0 +1,11 @@
+use billing_system;
+INSERT INTO `billing_system`.`drug` (`id`, `brand_name`, `price`, `vendor_id`, `formation_id`, `generic_id`, `strength_id`) VALUES ( 1,'Abacavir (ABC)', 100.0, 1,1,1,1);
+INSERT INTO `billing_system`.`drug` (`id`, `brand_name`, `price`, `vendor_id`, `formation_id`, `generic_id`, `strength_id`) VALUES ( 2,'Acetazolamide', 120.0, 2,2,2,2);
+INSERT INTO `billing_system`.`drug` (`id`, `brand_name`, `price`, `vendor_id`, `formation_id`, `generic_id`, `strength_id`) VALUES ( 3,'Acetylsalicylic acid', 90.0, 3,3,3,3);
+INSERT INTO `billing_system`.`drug` (`id`, `brand_name`, `price`, `vendor_id`, `formation_id`, `generic_id`, `strength_id`) VALUES ( 4,'Aciclovir', 110.0, 4,4,4,4);
+INSERT INTO `billing_system`.`drug` (`id`, `brand_name`, `price`, `vendor_id`, `formation_id`, `generic_id`, `strength_id`) VALUES ( 5,'Allopurinol', 180.0, 5,5,5,5);
+INSERT INTO `billing_system`.`drug` (`id`, `brand_name`, `price`, `vendor_id`, `formation_id`, `generic_id`, `strength_id`) VALUES ( 6,'Amoxicillin', 170.0, 6,6,6,6);
+INSERT INTO `billing_system`.`drug` (`id`, `brand_name`, `price`, `vendor_id`, `formation_id`, `generic_id`, `strength_id`) VALUES ( 7,'Ampicillin', 140.0, 7,7,7,7);
+INSERT INTO `billing_system`.`drug` (`id`, `brand_name`, `price`, `vendor_id`, `formation_id`, `generic_id`, `strength_id`) VALUES ( 8,'Atenolol', 130.0, 8,8,8,8);
+INSERT INTO `billing_system`.`drug` (`id`, `brand_name`, `price`, `vendor_id`, `formation_id`, `generic_id`, `strength_id`) VALUES ( 9,'Barium Sulfate', 150.0, 9,9,9,9);
+INSERT INTO `billing_system`.`drug` (`id`, `brand_name`, `price`, `vendor_id`, `formation_id`, `generic_id`, `strength_id`) VALUES ( 10,'BCG vaccine', 500.0, 10,10,10,10);

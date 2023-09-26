@@ -5,6 +5,7 @@ import com.paul.billing_system.dto.AuthRequestDTO;
 import com.paul.billing_system.dto.ResponseDTO;
 import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.entity.UserInfo;
+import com.paul.billing_system.enums.OrganizationTypes;
 import com.paul.billing_system.enums.UserRoles;
 import com.paul.billing_system.exception.ErrorDetails;
 import com.paul.billing_system.repository.UserRepository;
@@ -51,7 +52,7 @@ public class AuthController {
             );
             if (authenticate.isAuthenticated()) {
 
-                UserInfo user = userRepository.findByUsername(authRequestDTO.getUsername()).get();
+                UserInfo user = userRepository.findByUsername(authRequestDTO.getUsername()).orElse(null);
                 ResponseDTO responseDTO = new ResponseDTO();
 
                 responseDTO.setToken(jwtService.generateToken(authRequestDTO.getUsername(),
@@ -59,8 +60,10 @@ public class AuthController {
                 responseDTO.setUsername(authRequestDTO.getUsername());
                 responseDTO.setRoles(jwtService.extractRole(responseDTO.getToken()));
                 responseDTO.setExpiredDate(jwtService.extractExpiration(responseDTO.getToken()));
+                assert user != null;
                 responseDTO.setOrgCode(user.getOrganization().getOrgCode());
                 responseDTO.setOrgId(user.getOrganization().getId());
+                responseDTO.setOrgType(OrganizationTypes.getLabelByOrganizationType(user.getOrganization().getType()));
 
                 return new ResponseEntity<>(responseDTO,HttpStatus.OK);
             }
@@ -99,6 +102,7 @@ public class AuthController {
             Organization org = new Organization();
             org.setName("root");
             org.setOrgCode("root");
+            org.setType(OrganizationTypes.ROOT);
             org.setAddress("Mohakhali");
             org.setEmail("jotno@gmail.com");
 

@@ -72,7 +72,7 @@ public class PatientsServices {
         if (patients.isPresent()) {
             patients.get().setName(patientsDTO.getName());
             patients.get().setContact(patientsDTO.getContact());
-            patients.get().setLastUpdateTime(new Date());
+            patients.get().setUpdatedAt(new Date());
 
             return patientsRepository.save(patients.get());
         }

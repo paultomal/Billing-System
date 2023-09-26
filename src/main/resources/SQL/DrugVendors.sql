@@ -1,0 +1,10 @@
+INSERT INTO `billing_system`.`drug_vendor` (`id`, `name`) VALUES ( 1,'A P C PHARMA');
+INSERT INTO `billing_system`.`drug_vendor` (`id`, `name`) VALUES ( 2,'A.K.A Chemicals');
+INSERT INTO `billing_system`.`drug_vendor` (`id`, `name`) VALUES ( 3,'ABBOTT');
+INSERT INTO `billing_system`.`drug_vendor` (`id`, `name`) VALUES ( 4,'ABLATION PHARMACEUTICALS LTD.');
+INSERT INTO `billing_system`.`drug_vendor` (`id`, `name`) VALUES ( 5,'ACI');
+INSERT INTO `billing_system`.`drug_vendor` (`id`, `name`) VALUES ( 6,'ACM Laboratoire');
+INSERT INTO `billing_system`.`drug_vendor` (`id`, `name`) VALUES ( 7,'ACME');
+INSERT INTO `billing_system`.`drug_vendor` (`id`, `name`) VALUES ( 8,'ACTIZA');
+INSERT INTO `billing_system`.`drug_vendor` (`id`, `name`) VALUES ( 9,'AD-DIN PHARMA');
+INSERT INTO `billing_system`.`drug_vendor` (`id`, `name`) VALUES ( 10,'ADCCO');

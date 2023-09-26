@@ -45,7 +45,8 @@ public class DoctorController {
     }
 
     @GetMapping("/getAllDoctors/{id}/{sId}")
-    public ResponseEntity<?> getAllDoctors(@PathVariable Long id, @PathVariable Long sId, @RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<?> getAllDoctors(@PathVariable Long id, @PathVariable Long sId,
+                                           @RequestParam(defaultValue = "0") int page,
                                            @RequestParam(defaultValue = "10") int size) {
         List<Doctors> doctors = doctorServices.getAllDoctors(id, sId, PageRequest.of(page,size));
         List<DoctorDTO> doctorDTOList = doctors.stream().map(DoctorDTO::form).toList();

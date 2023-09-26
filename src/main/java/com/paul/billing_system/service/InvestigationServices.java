@@ -68,7 +68,7 @@ public class InvestigationServices {
         if (investigation.isPresent()) {
             investigation.get().setServiceName(investigationDTO.getServiceName());
             investigation.get().setServiceCharge(investigationDTO.getServiceCharge());
-            investigation.get().setLastUpdateTime(new Date());
+            investigation.get().setUpdatedAt(new Date());
 
             return investigationRepository.save(investigation.get());
         }

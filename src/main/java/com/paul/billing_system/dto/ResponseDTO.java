@@ -17,4 +17,5 @@ public class ResponseDTO {
     private List roles;
     private String orgCode;
     private long orgId;
+    private String orgType;
 }
