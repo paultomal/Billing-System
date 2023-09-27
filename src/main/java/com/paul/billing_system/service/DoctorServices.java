@@ -49,11 +49,11 @@ public class DoctorServices {
 
             doctors.setTime(doctorDTO.getTime());
 
-            Organization organization = organizationRepository.findById(doctorDTO.getOrgId()).orElseThrow(RuntimeException::new);
+            List<Organization> organizationList = doctorDTO.getOrgId().stream().map(o-> organizationRepository.findById(o).orElseThrow()).toList();
 
             List<Speciality> specialityList = doctorDTO.getSpId().stream().map(s -> specialityRepository.findById(s).orElseThrow()).toList();
 
-            doctors.setOrganization(organization);
+            doctors.setOrganization(organizationList);
             doctors.setSpeciality(specialityList);
 
             doctorRepository.save(doctors);
@@ -68,11 +68,8 @@ public class DoctorServices {
 
     public List<Doctors> getAllDoctors(Long id, Long sId, PageRequest pageRequest) {
         Optional<Organization> organization = organizationRepository.findById(id);
-        Optional<Speciality> specialist = specialityRepository.findById(sId);
-        if (organization.isPresent())
-            if (specialist.isPresent())
-                return doctorRepository.findByOrganizationAndSpecialist(id,sId,pageRequest);
-        return null;
+
+        return organization.map(value -> doctorRepository.findAllByOrganization(value, pageRequest)).orElse(null);
     }
 
     public Doctors updateDoctor(Long id, DoctorDTO doctorDTO) {
