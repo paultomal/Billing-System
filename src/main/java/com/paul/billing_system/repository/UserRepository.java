@@ -15,6 +15,6 @@ public interface UserRepository extends JpaRepository<UserInfo, Long> {
     @Query("SELECT a FROM UserInfo a where a.organization.id = :id")
     List<UserInfo> findByOrganization(Long id, Pageable pageable);
 
-    @Query("SELECT a FROM UserInfo a WHERE a.organization.id = :id AND a.specialist.id = :spId")
-    List<UserInfo> findByOrganizationAndSpecialist(Long id, Long spId, Pageable pageable);
+    @Query("SELECT a FROM UserInfo a WHERE a.organization.id = :id")
+    List<UserInfo> findByOrganizationAndSpecialist(Long id, Pageable pageable);
 }

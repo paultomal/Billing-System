@@ -3,10 +3,8 @@ package com.paul.billing_system.service;
 import com.paul.billing_system.dto.PatientsDTO;
 import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.entity.Patients;
-import com.paul.billing_system.entity.Specialist;
 import com.paul.billing_system.repository.OrganizationRepository;
 import com.paul.billing_system.repository.PatientsRepository;
-import com.paul.billing_system.repository.SpecialistRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,12 +18,10 @@ public class PatientsServices {
     private final PatientsRepository patientsRepository;
     private final OrganizationRepository organizationRepository;
 
-    private final SpecialistRepository specialistRepository;
 
-    public PatientsServices(PatientsRepository patientsRepository, OrganizationRepository organizationRepository, SpecialistRepository specialistRepository) {
+    public PatientsServices(PatientsRepository patientsRepository, OrganizationRepository organizationRepository) {
         this.patientsRepository = patientsRepository;
         this.organizationRepository = organizationRepository;
-        this.specialistRepository = specialistRepository;
     }
 
     @Transactional
@@ -43,21 +39,15 @@ public class PatientsServices {
             Organization organization = organizationRepository.findById(patientsDTO.getOrgId()).orElseThrow(RuntimeException::new);
             patients.setOrganization(organization);
 
-            Specialist specialist1 = specialistRepository.findById(patientsDTO.getSpId()).orElseThrow(RuntimeException::new);
-            patients.setSpecialist(specialist1);
-
             patientsRepository.save(patients);
         }
         return patients;
     }
 
-    public List<Patients> getAllPatients(Long id, Long spId, PageRequest pageRequest) {
+    public List<Patients> getAllPatients(Long id, PageRequest pageRequest) {
         Optional<Organization> organization = organizationRepository.findById(id);
-        Optional<Specialist> specialist = specialistRepository.findById(spId);
         if (organization.isPresent())
-            if (specialist.isPresent()) {
-                return patientsRepository.findByOrganizationAndSpecialist(id,spId,pageRequest);
-            }
+            return patientsRepository.findByOrganization(id, pageRequest);
         return null;
     }
 

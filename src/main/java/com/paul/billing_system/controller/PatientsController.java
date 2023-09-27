@@ -28,18 +28,19 @@ public class PatientsController {
     }
 
     @PostMapping("/addPatients/{id}")
-    public ResponseEntity<?> savePatients(@Valid @RequestBody PatientsDTO patientsDTO ,@PathVariable Long id, BindingResult bindingResult){
+    public ResponseEntity<?> savePatients(@Valid @RequestBody PatientsDTO patientsDTO ,
+                                          @PathVariable Long id, BindingResult bindingResult){
         ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
         if (errorDetails != null) return errorDetails;
         PatientsDTO patientsDTO1 = PatientsDTO.form(patientsServices.savePatients(id,patientsDTO));
         return new ResponseEntity<>(patientsDTO1, HttpStatus.OK);
     }
 
-    @GetMapping("/getAllPatients/{id}/{spId}")
-    public ResponseEntity<?> getAllPatients(@PathVariable Long id , @PathVariable Long spId,
+    @GetMapping("/getAllPatients/{id}")
+    public ResponseEntity<?> getAllPatients(@PathVariable Long id ,
                                             @RequestParam(defaultValue = "0") int page,
                                             @RequestParam(defaultValue = "10") int size) {
-        List<Patients> patients = patientsServices.getAllPatients(id,spId, PageRequest.of(page,size));
+        List<Patients> patients = patientsServices.getAllPatients(id,PageRequest.of(page,size));
         List<PatientsDTO> patientsDTOList = patients.stream().map(PatientsDTO::form).toList();
         return new ResponseEntity<>(patientsDTOList,HttpStatus.OK);
     }

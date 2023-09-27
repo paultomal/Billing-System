@@ -15,17 +15,12 @@ public class InvestigationDTO {
 
     private Double serviceCharge;
 
-    private Long orgId;
-
-    private Long spId;
 
     public static InvestigationDTO form(Investigation investigation) {
         InvestigationDTO investigationDTO = new InvestigationDTO();
         investigationDTO.setId(investigation.getId());
         investigationDTO.setServiceName(investigation.getServiceName());
         investigationDTO.setServiceCharge(investigation.getServiceCharge());
-        investigationDTO.setOrgId(investigation.getOrganization().getId());
-        investigationDTO.setSpId(investigation.getSpecialist().getId());
         return investigationDTO;
     }
 }

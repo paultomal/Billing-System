@@ -1,7 +1,10 @@
 package com.paul.billing_system.entity;
 
 import com.paul.billing_system.dto.InvestigationDTO;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Investigation  extends BaseEntity {
+public class Investigation extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,14 +25,6 @@ public class Investigation  extends BaseEntity {
     private String serviceName;
 
     private Double serviceCharge;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "org_id")
-    private Organization organization;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "sp_id")
-    private Specialist specialist;
 
     public static Investigation form(InvestigationDTO investigationDTO) {
         Investigation investigation = new Investigation();

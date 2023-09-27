@@ -26,16 +26,17 @@ public class OrgAdminController {
         this.userServices = userServices;
     }
 
-    @PostMapping("/addOrgAdmin/{id}")
-    public ResponseEntity<?> save(@Valid @RequestBody UserInfoDTO userInfoDTO, BindingResult bindingResult, @PathVariable Long id) {
+    @PostMapping("/addOrgAdmin")
+    public ResponseEntity<?> save(@Valid @RequestBody UserInfoDTO userInfoDTO, BindingResult bindingResult) {
         ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
         if (errorDetails != null) return errorDetails;
-        UserInfoDTO userInfoDTO1 = UserInfoDTO.form(userServices.saveOrgAdmin(id, userInfoDTO));
+        UserInfoDTO userInfoDTO1 = UserInfoDTO.form(userServices.saveOrgAdmin( userInfoDTO));
         return new ResponseEntity<>(userInfoDTO1, HttpStatus.OK);
     }
 
     @GetMapping("/getOrgAdmins/{id}")
-    public ResponseEntity<?> getOrgAdmins(@PathVariable Long id, @RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<?> getOrgAdmins(@PathVariable Long id,
+                                          @RequestParam(defaultValue = "0") int page,
                                           @RequestParam(defaultValue = "10") int size) {
         List<UserInfo> userInfos = userServices.getOrgAdmins(id, PageRequest.of(page, size));
         List<UserInfoDTO> orgAdmin = userInfos.stream()
@@ -49,6 +50,15 @@ public class OrgAdminController {
     public ResponseEntity<?> getAdminById(@PathVariable Long id) {
         UserInfoDTO userInfoDTO = UserInfoDTO.form(userServices.getOrgAdminById(id));
         return new ResponseEntity<>(userInfoDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/getAdminLengthOfOrgAdmin/{orgId}")
+    public ResponseEntity<?> getAdminLengthOfOrgAdmin(@PathVariable Long orgId,
+                                                      @RequestParam(defaultValue = "0") int page,
+                                                      @RequestParam(defaultValue = "10") int size ){
+        long lengthOfAdmins = userServices.getOrgAdmins(orgId, PageRequest.of(page, size)).size();
+
+        return new ResponseEntity<>(lengthOfAdmins, HttpStatus.OK);
     }
 
     @PutMapping("/updateOrgAdmin/{id}")

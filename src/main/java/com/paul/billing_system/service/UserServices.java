@@ -2,11 +2,10 @@ package com.paul.billing_system.service;
 
 import com.paul.billing_system.dto.UserInfoDTO;
 import com.paul.billing_system.entity.Organization;
-import com.paul.billing_system.entity.Specialist;
 import com.paul.billing_system.entity.UserInfo;
 import com.paul.billing_system.enums.UserRoles;
 import com.paul.billing_system.repository.OrganizationRepository;
-import com.paul.billing_system.repository.SpecialistRepository;
+import com.paul.billing_system.repository.SpecialityRepository;
 import com.paul.billing_system.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -28,13 +27,11 @@ public class UserServices {
 
     private final OrganizationRepository organizationRepository;
 
-    private final SpecialistRepository specialistRepository;
 
 
-    public UserServices(UserRepository userRepository, OrganizationRepository organizationRepository, SpecialistRepository specialistRepository) {
+    public UserServices(UserRepository userRepository, OrganizationRepository organizationRepository) {
         this.userRepository = userRepository;
         this.organizationRepository = organizationRepository;
-        this.specialistRepository = specialistRepository;
     }
 
     //Super Admin
@@ -57,9 +54,9 @@ public class UserServices {
 
     //Org Admin
 
-    public UserInfo saveOrgAdmin(Long id, UserInfoDTO userInfoDTO) {
+    public UserInfo saveOrgAdmin(UserInfoDTO userInfoDTO) {
 
-        Optional<Organization> organization = organizationRepository.findById(id);
+        Optional<Organization> organization = organizationRepository.findById(userInfoDTO.getOrgId());
         UserInfo userInfo = new UserInfo();
 
         if (organization.isPresent()) {
@@ -110,8 +107,8 @@ public class UserServices {
     // Staffs
 
     @Transactional
-    public UserInfo saveAdmin(Long id, UserInfoDTO userInfoDTO) {
-        Optional<Organization> organization1 = organizationRepository.findById(id);
+    public UserInfo saveAdmin( UserInfoDTO userInfoDTO) {
+        Optional<Organization> organization1 = organizationRepository.findById(userInfoDTO.getOrgId());
         UserInfo userInfo = new UserInfo();
         if (organization1.isPresent()) {
             userInfoDTO.setPassword(passwordEncoder.encode(userInfoDTO.getPassword()));
@@ -126,8 +123,6 @@ public class UserServices {
             Organization organization = organizationRepository.findById(userInfoDTO.getOrgId()).orElseThrow(RuntimeException::new);
             userInfo.setOrganization(organization);
 
-            Specialist specialist1 = specialistRepository.findById(userInfoDTO.getSpId()).orElseThrow(RuntimeException::new);
-            userInfo.setSpecialist(specialist1);
             userRepository.save(userInfo);
         }
 
@@ -155,13 +150,11 @@ public class UserServices {
         return null;
     }
 
-    public List<UserInfo> getAllAdmins(Long id, Long spId, PageRequest pageRequest) {
+    public List<UserInfo> getAllAdmins(Long id,  PageRequest pageRequest) {
 
         Optional<Organization> organization = organizationRepository.findById(id);
-        Optional<Specialist> specialist = specialistRepository.findById(spId);
         if (organization.isPresent())
-            if (specialist.isPresent())
-                return userRepository.findByOrganizationAndSpecialist(id,spId, pageRequest);
+                return userRepository.findByOrganizationAndSpecialist(id, pageRequest);
         return null;
 
     }

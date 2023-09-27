@@ -1,10 +1,15 @@
 package com.paul.billing_system.dto;
 
 import com.paul.billing_system.entity.Doctors;
+import com.paul.billing_system.entity.Organization;
+import com.paul.billing_system.entity.Speciality;
 import com.paul.billing_system.enums.DaysOfWeek;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor
@@ -32,9 +37,9 @@ public class DoctorDTO {
 
     private String time;
 
-    private Long orgId;
+    private List<Long> orgId;
 
-    private Long spId;
+    private List<Long> spId;
 
     public static DoctorDTO form(Doctors doctors) {
         DoctorDTO doctorDTO = new DoctorDTO();
@@ -53,8 +58,11 @@ public class DoctorDTO {
 
         doctorDTO.setTime(doctors.getTime());
 
-        doctorDTO.setOrgId(doctors.getOrganization().getId());
-        doctorDTO.setSpId(doctors.getSpecialist().getId());
+        doctorDTO.setOrgId(doctors.getOrganization().stream().map(Organization::getId)
+                .toList());
+        doctorDTO.setSpId(doctors.getSpeciality().stream()
+                .map(Speciality::getId)
+                .toList());
 
         return doctorDTO;
     }

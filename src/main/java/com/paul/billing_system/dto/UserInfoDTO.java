@@ -32,7 +32,6 @@ public class UserInfoDTO {
 
     private Long orgId;
 
-    private Long spId;
 
 
     public static UserInfoDTO form(UserInfo userInfo){
@@ -50,22 +49,4 @@ public class UserInfoDTO {
         return userInfoDTO;
     }
 
-
-    public static UserInfoDTO form1(UserInfo userInfo){
-        UserInfoDTO userInfoDTO = new UserInfoDTO();
-        userInfoDTO.setId(userInfo.getId());
-        userInfoDTO.setName(userInfo.getName());
-        userInfoDTO.setUsername(userInfo.getUsername());
-        userInfoDTO.setEmail(userInfo.getEmail());
-        userInfoDTO.setContact(userInfo.getContact());
-        String userRoles =
-                UserRoles.getLabelByUserRoles(userInfo.getRoles());
-        userInfoDTO.setRoles(userRoles);
-
-        userInfoDTO.setOrgId(userInfo.getOrganization().getId());
-        userInfoDTO.setSpId(userInfo.getSpecialist().getId());
-        return userInfoDTO;
-    }
 }
-/*        String organizationTypes = OrganizationTypes.getLabelByOrganizationType(organization.getType());
-        organizationDTO.setType(organizationTypes);*/

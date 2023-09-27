@@ -25,11 +25,11 @@ public class DoctorController {
         this.doctorServices = doctorServices;
     }
 
-    @PostMapping("/addDoctor/{id}")
-    public ResponseEntity<?> save(@RequestBody DoctorDTO doctorDTO, @PathVariable Long id, BindingResult bindingResult) {
+    @PostMapping("/addDoctor/{orgId}")
+    public ResponseEntity<?> save(@RequestBody DoctorDTO doctorDTO, @PathVariable Long orgId, BindingResult bindingResult) {
         ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
         if (errorDetails != null) return errorDetails;
-        DoctorDTO doctorDTO1 = DoctorDTO.form(doctorServices.save(id, doctorDTO));
+        DoctorDTO doctorDTO1 = DoctorDTO.form(doctorServices.save(orgId, doctorDTO));
         return new ResponseEntity<>(doctorDTO1, HttpStatus.OK);
     }
 

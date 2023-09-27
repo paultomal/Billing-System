@@ -19,7 +19,6 @@ import static com.paul.billing_system.controller.AuthController.getErrorDetails;
 
 @RestController
 @RequestMapping("/investigation")
-@PreAuthorize("hasAuthority('ROLE_ORG_ADMIN')")
 public class InvestigationController {
     private final InvestigationServices investigationServices;
 
@@ -27,24 +26,23 @@ public class InvestigationController {
         this.investigationServices = investigationServices;
     }
 
-    @PostMapping("/addInvestigation/{id}")
-    public ResponseEntity<?> save(@Valid @RequestBody InvestigationDTO investigationDTO, BindingResult bindingResult, @PathVariable Long id) {
+    @PostMapping("/addInvestigation")
+    public ResponseEntity<?> save(@Valid @RequestBody InvestigationDTO investigationDTO, BindingResult bindingResult) {
         ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
         if (errorDetails != null) return errorDetails;
-        InvestigationDTO investigationDTO1 = InvestigationDTO.form(investigationServices.saveInvestigation(id, investigationDTO));
+        InvestigationDTO investigationDTO1 = InvestigationDTO.form(investigationServices.saveInvestigation(investigationDTO));
         return new ResponseEntity<>(investigationDTO1, HttpStatus.OK);
     }
 
-    @GetMapping("/getAllInvestigation/{id}/{spId}")
-    public ResponseEntity<?> getAllServices( @PathVariable Long id, @PathVariable Long spId,
-                                             @RequestParam(defaultValue = "0") int page,
-                                             @RequestParam(defaultValue = "10") int size,
-                                             @RequestHeader("Authorization") String token) throws AuthenticationIsNotGivenException {
+    @GetMapping("/getAllInvestigation")
+    public ResponseEntity<?> getAllServices(@RequestParam(defaultValue = "0") int page,
+                                            @RequestParam(defaultValue = "10") int size,
+                                            @RequestHeader("Authorization") String token) throws AuthenticationIsNotGivenException {
         if (token == null) {
             throw new AuthenticationIsNotGivenException("No Token");
         }
 
-        List<Investigation> investigations = investigationServices.getAllServices(id , spId, PageRequest.of(page, size));
+        List<Investigation> investigations = investigationServices.getAllServices(PageRequest.of(page, size));
         List<InvestigationDTO> investigationDTOList = investigations.stream().map(InvestigationDTO::form).toList();
         return new ResponseEntity<>(investigationDTOList, HttpStatus.OK);
     }
