@@ -1,6 +1,7 @@
 package com.paul.billing_system.dto;
 
 import com.paul.billing_system.entity.Drug;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

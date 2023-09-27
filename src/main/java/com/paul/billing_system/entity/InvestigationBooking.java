@@ -33,7 +33,7 @@ public class InvestigationBooking extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "patient_id", referencedColumnName = "id")
-    private Patients patients;
+    private Patient patient;
 
     private Double total;
 }

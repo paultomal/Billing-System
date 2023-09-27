@@ -10,6 +10,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface DrugFormationRepository extends JpaRepository<DrugFormation, Long> {
+    DrugFormation findByName(String name);
+
     @Query("select d from DrugFormation d where d.name like concat('%', :name, '%') ")
     List<DrugFormation> searchByName(@Param("name") String name, Pageable pageable);
 }

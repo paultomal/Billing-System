@@ -1,7 +1,7 @@
 package com.paul.billing_system.dto;
 
 import com.paul.billing_system.entity.DrugOrder;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,19 +14,19 @@ import java.util.List;
 public class DrugOrderDTO {
     private Long id;
 
-    @NotEmpty
+    @NotNull
     private String patientName;
 
-    @NotEmpty
+    @NotNull
     private String patientContact;
 
-    @NotEmpty
+    @NotNull
     private Long orgId;
 
-    @NotEmpty
+    @NotNull
     private List<DrugDTO> drugList;
 
-    @NotEmpty
+    @NotNull
     private double total;
 
     public static DrugOrderDTO form(DrugOrder drugOrder) {

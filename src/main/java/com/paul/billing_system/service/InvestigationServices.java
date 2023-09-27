@@ -2,11 +2,7 @@ package com.paul.billing_system.service;
 
 import com.paul.billing_system.dto.InvestigationDTO;
 import com.paul.billing_system.entity.Investigation;
-import com.paul.billing_system.entity.Organization;
-import com.paul.billing_system.entity.Speciality;
 import com.paul.billing_system.repository.InvestigationRepository;
-import com.paul.billing_system.repository.OrganizationRepository;
-import com.paul.billing_system.repository.SpecialityRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

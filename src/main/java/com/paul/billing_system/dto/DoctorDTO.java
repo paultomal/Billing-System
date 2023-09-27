@@ -1,6 +1,6 @@
 package com.paul.billing_system.dto;
 
-import com.paul.billing_system.entity.Doctors;
+import com.paul.billing_system.entity.Doctor;
 import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.entity.Speciality;
 import com.paul.billing_system.enums.DaysOfWeek;
@@ -9,7 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor
@@ -41,26 +40,26 @@ public class DoctorDTO {
 
     private List<Long> spId;
 
-    public static DoctorDTO form(Doctors doctors) {
+    public static DoctorDTO form(Doctor doctor) {
         DoctorDTO doctorDTO = new DoctorDTO();
-        doctorDTO.setId(doctors.getId());
-        doctorDTO.setName(doctors.getName());
-        doctorDTO.setDegrees(doctors.getDegrees());
-        doctorDTO.setContact(doctors.getContact());
-        doctorDTO.setEmail(doctors.getEmail());
-        doctorDTO.setFollowUp(doctors.getFollowUp());
-        doctorDTO.setConsultation(doctors.getConsultationFee());
-        doctorDTO.setMinDiscount(doctors.getMinDiscount());
-        doctorDTO.setMaxDiscount(doctors.getMaxDiscount());
+        doctorDTO.setId(doctor.getId());
+        doctorDTO.setName(doctor.getName());
+        doctorDTO.setDegrees(doctor.getDegrees());
+        doctorDTO.setContact(doctor.getContact());
+        doctorDTO.setEmail(doctor.getEmail());
+        doctorDTO.setFollowUp(doctor.getFollowUp());
+        doctorDTO.setConsultation(doctor.getConsultationFee());
+        doctorDTO.setMinDiscount(doctor.getMinDiscount());
+        doctorDTO.setMaxDiscount(doctor.getMaxDiscount());
 
-        String days = DaysOfWeek.getLabelByDays(doctors.getDay());
+        String days = DaysOfWeek.getLabelByDays(doctor.getDay());
         doctorDTO.setDay(days);
 
-        doctorDTO.setTime(doctors.getTime());
+        doctorDTO.setTime(doctor.getTime());
 
-        doctorDTO.setOrgId(doctors.getOrganization().stream().map(Organization::getId)
+        doctorDTO.setOrgId(doctor.getOrganizationList().stream().map(Organization::getId)
                 .toList());
-        doctorDTO.setSpId(doctors.getSpeciality().stream()
+        doctorDTO.setSpId(doctor.getSpecialityList().stream()
                 .map(Speciality::getId)
                 .toList());
 

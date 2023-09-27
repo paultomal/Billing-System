@@ -5,6 +5,7 @@ import com.paul.billing_system.entity.DrugOrder;
 import com.paul.billing_system.repository.DrugOrderRepository;
 import com.paul.billing_system.repository.DrugRepository;
 import com.paul.billing_system.repository.OrganizationRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +23,12 @@ public class DrugOrderService {
         this.drugRepository = drugRepository;
     }
 
+    @Transactional
     public DrugOrderDTO saveOrder(DrugOrderDTO drugOrderDTO) {
         DrugOrder drugOrder = new DrugOrder();
         drugOrder.setPatientName(drugOrderDTO.getPatientName());
         drugOrder.setPatientContact(drugOrderDTO.getPatientContact());
-        drugOrder.setOrganization(organizationRepository.findById(drugOrderDTO.getOrgId()).orElse(null));
+        drugOrder.setOrganization(organizationRepository.findById(drugOrderDTO.getOrgId()).orElseThrow());
         drugOrder.setDrugList(drugOrderDTO.getDrugList()
                 .stream()
                 .map(drugDTO -> drugRepository.findById(drugDTO.getId()).orElse(null))

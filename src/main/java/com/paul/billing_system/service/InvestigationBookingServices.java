@@ -13,21 +13,19 @@ import java.util.Optional;
 @Service
 public class InvestigationBookingServices {
     private final InvestigationBookingRepository bookingRepository;
-    private final PatientsRepository patientsRepository;
+    private final PatientRepository patientRepository;
     private final InvestigationRepository investigationRepository;
-    private final SpecialityRepository specialityRepository;
     private final OrganizationRepository organizationRepository;
 
-    public InvestigationBookingServices(InvestigationBookingRepository investigationBookingRepository, PatientsRepository patientsRepository, InvestigationRepository investigationRepository, SpecialityRepository specialityRepository, OrganizationRepository organizationRepository) {
+    public InvestigationBookingServices(InvestigationBookingRepository investigationBookingRepository, PatientRepository patientRepository, InvestigationRepository investigationRepository, SpecialityRepository specialityRepository, OrganizationRepository organizationRepository) {
         this.bookingRepository = investigationBookingRepository;
-        this.patientsRepository = patientsRepository;
+        this.patientRepository = patientRepository;
         this.investigationRepository = investigationRepository;
-        this.specialityRepository = specialityRepository;
         this.organizationRepository = organizationRepository;
     }
 
-    public List<Patients> searchPatient(String name, PageRequest pageRequest) {
-        return patientsRepository.findByName(name, pageRequest);
+    public List<Patient> searchPatient(String name, PageRequest pageRequest) {
+        return patientRepository.findByName(name, pageRequest);
     }
 
     public List<Investigation> getInvestigations( PageRequest pageRequest) {
@@ -38,15 +36,15 @@ public class InvestigationBookingServices {
 
         InvestigationBooking book = new InvestigationBooking();
 
-        Optional<Patients> patient = patientsRepository.findById(investigationBookingDTO.getPid());
+        Optional<Patient> patient = patientRepository.findById(investigationBookingDTO.getPid());
         if (patient.isEmpty()) {
-            Patients patients1 = new Patients();
+            Patient patients1 = new Patient();
             patients1.setName(investigationBookingDTO.getP_name());
             patients1.setContact(investigationBookingDTO.getContact());
-            patients1 = patientsRepository.save(patients1);
-            book.setPatients(patients1);
+            patients1 = patientRepository.save(patients1);
+            book.setPatient(patients1);
         } else {
-            book.setPatients(patient.get());
+            book.setPatient(patient.get());
         }
 
         book.setOrganization(organizationRepository.findById(investigationBookingDTO.getOrg_id()).orElse(null));

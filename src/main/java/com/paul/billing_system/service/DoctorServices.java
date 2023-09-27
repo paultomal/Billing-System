@@ -1,7 +1,7 @@
 package com.paul.billing_system.service;
 
 import com.paul.billing_system.dto.DoctorDTO;
-import com.paul.billing_system.entity.Doctors;
+import com.paul.billing_system.entity.Doctor;
 import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.entity.Speciality;
 import com.paul.billing_system.enums.DaysOfWeek;
@@ -29,51 +29,52 @@ public class DoctorServices {
     }
 
     @Transactional
-    public Doctors save(Long orgId, DoctorDTO doctorDTO) {
-        Optional<Organization> organization1 = organizationRepository.findById(orgId);
-        Doctors doctors = new Doctors();
+    public Doctor save(Long id, DoctorDTO doctorDTO) {
+        Optional<Organization> organization1 = organizationRepository.findById(id);
+        Doctor doctor = new Doctor();
         if (organization1.isPresent()) {
 
-            doctors.setName(doctorDTO.getName());
+            doctor.setName(doctorDTO.getName());
 
-            doctors.setContact(doctorDTO.getContact());
-            doctors.setDegrees(doctorDTO.getDegrees());
-            doctors.setEmail(doctorDTO.getEmail());
-            doctors.setFollowUp(doctorDTO.getFollowUp());
-            doctors.setConsultationFee(doctorDTO.getConsultation());
-            doctors.setMinDiscount(doctorDTO.getMinDiscount());
-            doctors.setMaxDiscount(doctorDTO.getMaxDiscount());
+            doctor.setContact(doctorDTO.getContact());
+            doctor.setDegrees(doctorDTO.getDegrees());
+            doctor.setEmail(doctorDTO.getEmail());
+            doctor.setFollowUp(doctorDTO.getFollowUp());
+            doctor.setConsultationFee(doctorDTO.getConsultation());
+            doctor.setMinDiscount(doctorDTO.getMinDiscount());
+            doctor.setMaxDiscount(doctorDTO.getMaxDiscount());
 
             DaysOfWeek days = DaysOfWeek.getDaysByLabel(doctorDTO.getDay());
-            doctors.setDay(days);
+            doctor.setDay(days);
 
-            doctors.setTime(doctorDTO.getTime());
+            doctor.setTime(doctorDTO.getTime());
 
             List<Organization> organizationList = doctorDTO.getOrgId().stream().map(o-> organizationRepository.findById(o).orElseThrow()).toList();
 
             List<Speciality> specialityList = doctorDTO.getSpId().stream().map(s -> specialityRepository.findById(s).orElseThrow()).toList();
 
-            doctors.setOrganization(organizationList);
-            doctors.setSpeciality(specialityList);
+            doctor.setOrganizationList(organizationList);
+            doctor.setSpecialityList(specialityList);
 
-            doctorRepository.save(doctors);
+            doctorRepository.save(doctor);
         }
-        return doctors;
+        return doctor;
     }
 
-    public Doctors getDoctorById(Long id) {
-        Optional<Doctors> doctors = doctorRepository.findById(id);
-        return doctors.orElseGet(Doctors::new);
+    public Doctor getDoctorById(Long id) {
+        Optional<Doctor> doctors = doctorRepository.findById(id);
+        return doctors.orElseGet(Doctor::new);
     }
 
-    public List<Doctors> getAllDoctors(Long id, Long sId, PageRequest pageRequest) {
+    public List<Doctor> getAllDoctors(Long id, Long sId, PageRequest pageRequest) {
         Optional<Organization> organization = organizationRepository.findById(id);
+        Optional<Speciality> speciality = specialityRepository.findById(sId);
 
-        return organization.map(value -> doctorRepository.findAllByOrganization(value, pageRequest)).orElse(null);
+        return doctorRepository.findAllByOrganizationListContainsAndSpecialityListContains(organization.orElse(null), speciality.orElse(null), pageRequest);
     }
 
-    public Doctors updateDoctor(Long id, DoctorDTO doctorDTO) {
-        Optional<Doctors> doctor = doctorRepository.findById(id);
+    public Doctor updateDoctor(Long id, DoctorDTO doctorDTO) {
+        Optional<Doctor> doctor = doctorRepository.findById(id);
         if (doctor.isPresent()) {
             doctor.get().setName(doctorDTO.getName());
             doctor.get().setContact(doctorDTO.getContact());
@@ -95,7 +96,7 @@ public class DoctorServices {
         return null;
     }
 
-    public List<Doctors> searchDoctor(String name, PageRequest pageRequest) {
+    public List<Doctor> searchDoctor(String name, PageRequest pageRequest) {
        return doctorRepository.findByName(name, pageRequest);
     }
 }
