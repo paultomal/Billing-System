@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Doctors extends BaseEntity {
+public class Doctor extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -47,7 +47,7 @@ public class Doctors extends BaseEntity {
             joinColumns = @JoinColumn(name = "doctor_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "organization_id")
     )
-    private List<Organization> organization;
+    private List<Organization> organizationList;
 
     @ManyToMany
     @JoinTable(
@@ -56,5 +56,5 @@ public class Doctors extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "speciality_id")
     )
     @NotEmpty
-    private List<Speciality> speciality;
+    private List<Speciality> specialityList;
 }

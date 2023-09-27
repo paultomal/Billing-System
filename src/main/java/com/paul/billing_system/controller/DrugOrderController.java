@@ -23,7 +23,7 @@ public class DrugOrderController {
 
     @PostMapping("/saveOrder")
     public ResponseEntity<?> saveOrder(@Valid @RequestBody DrugOrderDTO drugOrderDTO) {
-        return new ResponseEntity<>(drugOrderService.saveOrder(drugOrderDTO), HttpStatus.OK);
+        return new ResponseEntity<>(drugOrderService.saveOrder(drugOrderDTO), HttpStatus.CREATED);
     }
 
     @GetMapping("/getAllDrugOrders")

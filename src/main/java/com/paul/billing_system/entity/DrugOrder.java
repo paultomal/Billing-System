@@ -2,6 +2,7 @@ package com.paul.billing_system.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,10 +20,10 @@ public class DrugOrder extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
+    @NotNull
     private String patientName;
 
-    @NotEmpty
+    @NotNull
     private String patientContact;
 
     @ManyToOne
@@ -36,9 +37,9 @@ public class DrugOrder extends BaseEntity {
             joinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "drug_id")
     )
-    @NotEmpty
+    @NotNull
     private List<Drug> drugList;
 
-    @NotEmpty
+    @NotNull
     private double total;
 }

@@ -30,9 +30,9 @@ public class InvestigationBookingDTO {
 
         bookingDTO.setId(booking.getId());
         bookingDTO.setOrg_id(booking.getOrganization().getId());
-        bookingDTO.setPid(booking.getPatients().getId());
-        bookingDTO.setP_name(booking.getPatients().getName());
-        bookingDTO.setContact(booking.getPatients().getContact());
+        bookingDTO.setPid(booking.getPatient().getId());
+        bookingDTO.setP_name(booking.getPatient().getName());
+        bookingDTO.setContact(booking.getPatient().getContact());
 
         if (booking.getInvestigations() != null) {
             bookingDTO.setInvestigations(booking.getInvestigations().stream().map(InvestigationDTO::form).toList());

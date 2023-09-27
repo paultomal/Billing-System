@@ -2,7 +2,8 @@ package com.paul.billing_system.service;
 
 import com.paul.billing_system.dto.DrugDTO;
 import com.paul.billing_system.entity.Drug;
-import com.paul.billing_system.repository.DrugRepository;
+import com.paul.billing_system.repository.*;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -12,14 +13,28 @@ import java.util.Optional;
 @Service
 public class DrugService {
     private final DrugRepository drugRepository;
+    private final DrugFormationRepository drugFormationRepository;
+    private final DrugStrengthRepository drugStrengthRepository;
+    private final GenericRepository genericRepository;
+    private final DrugVendorRepository drugVendorRepository;
 
-    public DrugService(DrugRepository drugRepository) {
+    public DrugService(DrugRepository drugRepository, DrugFormationRepository drugFormationRepository, DrugStrengthRepository drugStrengthRepository, GenericRepository genericRepository, DrugVendorRepository drugVendorRepository) {
         this.drugRepository = drugRepository;
+        this.drugFormationRepository = drugFormationRepository;
+        this.drugStrengthRepository = drugStrengthRepository;
+        this.genericRepository = genericRepository;
+        this.drugVendorRepository = drugVendorRepository;
     }
 
+    @Transactional
     public DrugDTO addDrug(DrugDTO drugDTO) {
         Drug drug = new Drug();
         drug.setBrandName(drugDTO.getBrandName());
+        drug.setPrice(drugDTO.getPrice());
+        drug.setGeneric(genericRepository.findByName(drugDTO.getGenericName()));
+        drug.setFormation(drugFormationRepository.findByName(drugDTO.getFormationName()));
+        drug.setVendor(drugVendorRepository.findByName(drugDTO.getVendorName()));
+        drug.setStrength(drugStrengthRepository.findByName(drugDTO.getStrengthName()));
 
         return DrugDTO.form(drugRepository.save(drug));
     }
@@ -42,6 +57,11 @@ public class DrugService {
 
         if(drug.isPresent()) {
             drug.get().setBrandName(drugDTO.getBrandName());
+            drug.get().setPrice(drugDTO.getPrice());
+            drug.get().setGeneric(genericRepository.findByName(drugDTO.getGenericName()));
+            drug.get().setFormation(drugFormationRepository.findByName(drugDTO.getFormationName()));
+            drug.get().setVendor(drugVendorRepository.findByName(drugDTO.getVendorName()));
+            drug.get().setStrength(drugStrengthRepository.findByName(drugDTO.getStrengthName()));
 
             return DrugDTO.form(drugRepository.save(drug.get()));
         }

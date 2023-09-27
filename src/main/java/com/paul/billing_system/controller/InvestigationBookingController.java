@@ -2,10 +2,10 @@ package com.paul.billing_system.controller;
 
 import com.paul.billing_system.dto.InvestigationBookingDTO;
 import com.paul.billing_system.dto.InvestigationDTO;
-import com.paul.billing_system.dto.PatientsDTO;
+import com.paul.billing_system.dto.PatientDTO;
 import com.paul.billing_system.entity.Investigation;
 import com.paul.billing_system.entity.InvestigationBooking;
-import com.paul.billing_system.entity.Patients;
+import com.paul.billing_system.entity.Patient;
 import com.paul.billing_system.service.InvestigationBookingServices;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -51,9 +51,9 @@ public class InvestigationBookingController {
     @GetMapping("/searchPatient/{name}")
     public ResponseEntity<?> getPatients(@PathVariable String name, @RequestParam(defaultValue = "0") int page,
                                          @RequestParam(defaultValue = "10") int size){
-        List<Patients> patients = bookingServices.searchPatient(name, PageRequest.of(page, size));
-        List<PatientsDTO> patientsDTOList = patients.stream().map(PatientsDTO::form).toList();
-        return new ResponseEntity<>(patientsDTOList, HttpStatus.OK);
+        List<Patient> patients = bookingServices.searchPatient(name, PageRequest.of(page, size));
+        List<PatientDTO> patientDTOList = patients.stream().map(PatientDTO::form).toList();
+        return new ResponseEntity<>(patientDTOList, HttpStatus.OK);
     }
 
     @GetMapping("/getInvestigationList")

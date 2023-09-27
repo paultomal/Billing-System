@@ -42,7 +42,8 @@ public class OrganizationController {
     }
 
     @GetMapping("/{type}")
-    public ResponseEntity<?> getAllOrganization(@PathVariable String type, @RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<?> getAllOrganization(@PathVariable String type,
+                                                @RequestParam(defaultValue = "0") int page,
                                                 @RequestParam(defaultValue = "10") int size) {
         List<Organization> organizations = organizationServices.getAllOrganization(OrganizationTypes.getOrganizationTypeByLabel(type), PageRequest.of(page, size));
         List<OrganizationDTO> organizationDTOList = organizations.stream()

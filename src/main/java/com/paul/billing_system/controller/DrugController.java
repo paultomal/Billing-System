@@ -2,7 +2,10 @@ package com.paul.billing_system.controller;
 
 import com.paul.billing_system.dto.DrugDTO;
 import com.paul.billing_system.service.DrugService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,9 +21,9 @@ public class DrugController {
         this.drugService = drugService;
     }
 
-    @PostMapping("/add/drug")
-    public DrugDTO addDrug(@RequestBody DrugDTO drugDTO) {
-        return drugService.addDrug(drugDTO);
+    @PostMapping("/addDrug")
+    public ResponseEntity<?> addDrug(@Valid @RequestBody DrugDTO drugDTO) {
+        return new ResponseEntity<>(drugService.addDrug(drugDTO), HttpStatus.CREATED);
     }
 
     @GetMapping("/getAllDrugs")

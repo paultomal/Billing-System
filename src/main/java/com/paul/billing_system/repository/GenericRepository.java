@@ -10,6 +10,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface GenericRepository extends JpaRepository<Generic, Long> {
+    Generic findByName(String name);
+
     @Query("select g from Generic g where g.name like concat('%', :name, '%') ")
     List<Generic> searchByName(@Param("name") String name, Pageable pageable);
 }

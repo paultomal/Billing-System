@@ -43,7 +43,7 @@ CREATE TABLE billing_system.base_entity
 );
 
 -- Create the Doctors table
-CREATE TABLE billing_system.doctors
+CREATE TABLE billing_system.doctor
 (
     id              BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name            VARCHAR(255),
@@ -75,9 +75,16 @@ CREATE TABLE billing_system.investigation
     CONSTRAINT fk_org_inv FOREIGN KEY (org_id) REFERENCES organization (id),
     CONSTRAINT fk_sp_inv FOREIGN KEY (sp_id) REFERENCES speciality (id)
 );
-
--- Create the Patients table
-CREATE TABLE billing_system.patients
+/*create department table*/
+CREATE TABLE department
+(
+    id           BIGINT AUTO_INCREMENT PRIMARY KEY,
+    deptName     VARCHAR(255),
+    noOfPatients BIGINT,
+    service_id   BIGINT
+)
+/*create patient table*/
+CREATE TABLE patient
 (
     id             BIGINT       NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name           VARCHAR(255) NOT NULL,

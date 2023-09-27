@@ -1,9 +1,8 @@
 package com.paul.billing_system.controller;
 
-import com.paul.billing_system.dto.PatientsDTO;
-import com.paul.billing_system.entity.Organization;
-import com.paul.billing_system.entity.Patients;
-import com.paul.billing_system.service.PatientsServices;
+import com.paul.billing_system.dto.PatientDTO;
+import com.paul.billing_system.entity.Patient;
+import com.paul.billing_system.service.PatientServices;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -13,7 +12,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 import static com.paul.billing_system.controller.AuthController.getErrorDetails;
 
@@ -21,43 +19,43 @@ import static com.paul.billing_system.controller.AuthController.getErrorDetails;
 @RequestMapping("/patient")
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class PatientsController {
-    private final PatientsServices patientsServices;
+    private final PatientServices patientServices;
 
-    public PatientsController(PatientsServices patientsServices) {
-        this.patientsServices = patientsServices;
+    public PatientsController(PatientServices patientServices) {
+        this.patientServices = patientServices;
     }
 
     @PostMapping("/addPatients/{id}")
-    public ResponseEntity<?> savePatients(@Valid @RequestBody PatientsDTO patientsDTO ,
+    public ResponseEntity<?> savePatients(@Valid @RequestBody PatientDTO patientDTO,
                                           @PathVariable Long id, BindingResult bindingResult){
         ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
         if (errorDetails != null) return errorDetails;
-        PatientsDTO patientsDTO1 = PatientsDTO.form(patientsServices.savePatients(id,patientsDTO));
-        return new ResponseEntity<>(patientsDTO1, HttpStatus.OK);
+        PatientDTO patientDTO1 = PatientDTO.form(patientServices.savePatients(id, patientDTO));
+        return new ResponseEntity<>(patientDTO1, HttpStatus.OK);
     }
 
     @GetMapping("/getAllPatients/{id}")
     public ResponseEntity<?> getAllPatients(@PathVariable Long id ,
                                             @RequestParam(defaultValue = "0") int page,
                                             @RequestParam(defaultValue = "10") int size) {
-        List<Patients> patients = patientsServices.getAllPatients(id,PageRequest.of(page,size));
-        List<PatientsDTO> patientsDTOList = patients.stream().map(PatientsDTO::form).toList();
-        return new ResponseEntity<>(patientsDTOList,HttpStatus.OK);
+        List<Patient> patients = patientServices.getAllPatients(id, PageRequest.of(page,size));
+        List<PatientDTO> patientDTOList = patients.stream().map(PatientDTO::form).toList();
+        return new ResponseEntity<>(patientDTOList,HttpStatus.OK);
     }
 
     @GetMapping("/getPatient/{id}")
     public ResponseEntity<?> getPatientById(@PathVariable Long id){
-        PatientsDTO patientsDTO = PatientsDTO.form(patientsServices.getPatientById(id));
-        return new ResponseEntity<>(patientsDTO,HttpStatus.OK);
+        PatientDTO patientDTO = PatientDTO.form(patientServices.getPatientById(id));
+        return new ResponseEntity<>(patientDTO,HttpStatus.OK);
     }
 
     @PutMapping("/updatePatient/{id}")
-    public ResponseEntity<?> updatePatient(@Valid @PathVariable Long id, @RequestBody PatientsDTO patientsDTO, BindingResult bindingResult){
+    public ResponseEntity<?> updatePatient(@Valid @PathVariable Long id, @RequestBody PatientDTO patientDTO, BindingResult bindingResult){
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>("Validation errors: " + bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
         }
-        PatientsDTO patientsDTO1 = PatientsDTO.form(patientsServices.updatePatient(patientsDTO,id));
-        return new ResponseEntity<>(patientsDTO1,HttpStatus.OK);
+        PatientDTO patientDTO1 = PatientDTO.form(patientServices.updatePatient(patientDTO,id));
+        return new ResponseEntity<>(patientDTO1,HttpStatus.OK);
     }
 
     @GetMapping("search/{name}")
@@ -65,9 +63,9 @@ public class PatientsController {
                                            @RequestParam(defaultValue = "0") int page,
                                            @RequestParam(defaultValue = "10") int size) {
 
-        return new ResponseEntity<>(patientsServices.searchPatient(name, PageRequest.of(page, size))
+        return new ResponseEntity<>(patientServices.searchPatient(name, PageRequest.of(page, size))
                 .stream()
-                .map(PatientsDTO::form)
+                .map(PatientDTO::form)
                 .toList(), HttpStatus.OK);
     }
 }
