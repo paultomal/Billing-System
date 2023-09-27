@@ -28,7 +28,7 @@ public class DrugOrder extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "org_id")
-    @NotEmpty
+    @NotNull
     private Organization organization;
 
     @ManyToMany
