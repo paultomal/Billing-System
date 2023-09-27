@@ -1,7 +1,6 @@
 package com.paul.billing_system.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,7 +27,7 @@ public class DrugOrder extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "org_id")
-    @NotEmpty
+    @NotNull
     private Organization organization;
 
     @ManyToMany

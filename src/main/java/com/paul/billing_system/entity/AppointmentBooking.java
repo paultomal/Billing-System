@@ -1,7 +1,6 @@
 package com.paul.billing_system.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,17 +17,17 @@ public class AppointmentBooking {
 
     @ManyToOne
     @JoinColumn(name = "org_id")
-    @NotEmpty
+    @NotNull
     private Organization organization;
 
     @ManyToOne
     @JoinColumn(name = "patient_id")
-    @NotEmpty
+    @NotNull
     private Patient patient;
 
     @ManyToOne
     @JoinColumn(name = "doctor_id")
-    @NotEmpty
+    @NotNull
     private Doctor doctor;
 
     private String consultationFee;

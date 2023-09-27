@@ -2,7 +2,7 @@ package com.paul.billing_system.entity;
 
 import com.paul.billing_system.enums.DaysOfWeek;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -47,6 +47,7 @@ public class Doctor extends BaseEntity {
             joinColumns = @JoinColumn(name = "doctor_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "organization_id")
     )
+    @NotNull
     private List<Organization> organizationList;
 
     @ManyToMany
@@ -55,6 +56,6 @@ public class Doctor extends BaseEntity {
             joinColumns = @JoinColumn(name = "doctor_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "speciality_id")
     )
-    @NotEmpty
+    @NotNull
     private List<Speciality> specialityList;
 }
