@@ -1,7 +1,5 @@
 package com.paul.billing_system.component;
 
-import com.paul.billing_system.entity.Organization;
-import com.paul.billing_system.entity.Specialist;
 import com.paul.billing_system.entity.UserInfo;
 import com.paul.billing_system.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

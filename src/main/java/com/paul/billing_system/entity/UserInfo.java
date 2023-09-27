@@ -39,9 +39,4 @@ public class UserInfo extends BaseEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "org_id")
     private Organization organization;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "sp_id")
-    private Specialist specialist;
-
 }

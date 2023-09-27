@@ -5,7 +5,6 @@ import com.paul.billing_system.entity.UserInfo;
 import com.paul.billing_system.enums.UserRoles;
 import com.paul.billing_system.service.UserServices;
 import jakarta.validation.Valid;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,18 +27,19 @@ public class AdminController {
         this.userServices = userServices;
     }
 
-    @PostMapping("/addAdmin/{id}")
-    public ResponseEntity<?> saveAdmin(@Valid @RequestBody UserInfoDTO userInfoDTO, BindingResult bindingResult, @PathVariable Long id) {
+    @PostMapping("/addAdmin")
+    public ResponseEntity<?> saveAdmin(@Valid @RequestBody UserInfoDTO userInfoDTO, BindingResult bindingResult) {
         ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
         if (errorDetails != null) return errorDetails;
-        UserInfoDTO userInfoDTO1 = UserInfoDTO.form1(userServices.saveAdmin(id, userInfoDTO));
+        UserInfoDTO userInfoDTO1 = UserInfoDTO.form(userServices.saveAdmin(userInfoDTO));
         return new ResponseEntity<>(userInfoDTO1, HttpStatus.OK);
     }
 
-    @GetMapping("/getAdmins/{id}/{spId}")
-    public ResponseEntity<?> getAllAdmin(@PathVariable Long id, @PathVariable Long spId, @RequestParam(defaultValue = "0") int page,
+    @GetMapping("/getAdmins/{org_Id}")
+    public ResponseEntity<?> getAllAdmin(@PathVariable Long org_Id,
+                                         @RequestParam(defaultValue = "0") int page,
                                          @RequestParam(defaultValue = "10") int size){
-        List<UserInfo> userInfos = userServices.getAllAdmins(id, spId, PageRequest.of(page,size));
+        List<UserInfo> userInfos = userServices.getAllAdmins(org_Id, PageRequest.of(page,size));
         List<UserInfoDTO> admin = userInfos.stream()
                 .map(UserInfoDTO::form)
                 .filter(u-> u.getRoles().equals(UserRoles.getLabelByUserRoles(UserRoles.ROLE_ADMIN)))

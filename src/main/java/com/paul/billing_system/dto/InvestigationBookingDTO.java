@@ -1,6 +1,6 @@
 package com.paul.billing_system.dto;
 
-import com.paul.billing_system.entity.BookingInvestigation;
+import com.paul.billing_system.entity.InvestigationBooking;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,22 +10,28 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookingInvestigationDTO {
+public class InvestigationBookingDTO {
     private Long id;
+
+    private Long org_id;
 
     private Long pid;
 
-    private String pname;
+    private String p_name;
 
     private String contact;
 
     private List<InvestigationDTO> investigations;
 
+    private Double total;
 
-    public static BookingInvestigationDTO form(BookingInvestigation booking){
-        BookingInvestigationDTO bookingDTO = new BookingInvestigationDTO();
+    public static InvestigationBookingDTO form(InvestigationBooking booking){
+        InvestigationBookingDTO bookingDTO = new InvestigationBookingDTO();
+
         bookingDTO.setId(booking.getId());
-        bookingDTO.setPname(booking.getPatients().getName());
+        bookingDTO.setOrg_id(booking.getOrganization().getId());
+        bookingDTO.setPid(booking.getPatients().getId());
+        bookingDTO.setP_name(booking.getPatients().getName());
         bookingDTO.setContact(booking.getPatients().getContact());
 
         if (booking.getInvestigations() != null) {
@@ -33,6 +39,8 @@ public class BookingInvestigationDTO {
         } else {
             bookingDTO.setInvestigations(null); // Handle the case where investigations is null
         }
+
+        bookingDTO.setTotal(booking.getTotal());
         return bookingDTO;
     }
 }

@@ -3,11 +3,11 @@ package com.paul.billing_system.service;
 import com.paul.billing_system.dto.DoctorDTO;
 import com.paul.billing_system.entity.Doctors;
 import com.paul.billing_system.entity.Organization;
-import com.paul.billing_system.entity.Specialist;
+import com.paul.billing_system.entity.Speciality;
 import com.paul.billing_system.enums.DaysOfWeek;
 import com.paul.billing_system.repository.DoctorRepository;
 import com.paul.billing_system.repository.OrganizationRepository;
-import com.paul.billing_system.repository.SpecialistRepository;
+import com.paul.billing_system.repository.SpecialityRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,18 +19,18 @@ import java.util.Optional;
 @Service
 public class DoctorServices {
     private final DoctorRepository doctorRepository;
-    private final SpecialistRepository specialistRepository;
+    private final SpecialityRepository specialityRepository;
     private final OrganizationRepository organizationRepository;
 
-    public DoctorServices(DoctorRepository doctorRepository, SpecialistRepository specialistRepository, OrganizationRepository organizationRepository) {
+    public DoctorServices(DoctorRepository doctorRepository, SpecialityRepository specialityRepository, OrganizationRepository organizationRepository) {
         this.doctorRepository = doctorRepository;
-        this.specialistRepository = specialistRepository;
+        this.specialityRepository = specialityRepository;
         this.organizationRepository = organizationRepository;
     }
 
     @Transactional
-    public Doctors save(Long id, DoctorDTO doctorDTO) {
-        Optional<Organization> organization1 = organizationRepository.findById(id);
+    public Doctors save(Long orgId, DoctorDTO doctorDTO) {
+        Optional<Organization> organization1 = organizationRepository.findById(orgId);
         Doctors doctors = new Doctors();
         if (organization1.isPresent()) {
 
@@ -51,10 +51,10 @@ public class DoctorServices {
 
             Organization organization = organizationRepository.findById(doctorDTO.getOrgId()).orElseThrow(RuntimeException::new);
 
-            Specialist specialist1 = specialistRepository.findById(doctorDTO.getSpId()).orElseThrow(RuntimeException::new);
+            List<Speciality> specialityList = doctorDTO.getSpId().stream().map(s -> specialityRepository.findById(s).orElseThrow()).toList();
 
             doctors.setOrganization(organization);
-            doctors.setSpecialist(specialist1);
+            doctors.setSpeciality(specialityList);
 
             doctorRepository.save(doctors);
         }
@@ -68,7 +68,7 @@ public class DoctorServices {
 
     public List<Doctors> getAllDoctors(Long id, Long sId, PageRequest pageRequest) {
         Optional<Organization> organization = organizationRepository.findById(id);
-        Optional<Specialist> specialist = specialistRepository.findById(sId);
+        Optional<Speciality> specialist = specialityRepository.findById(sId);
         if (organization.isPresent())
             if (specialist.isPresent())
                 return doctorRepository.findByOrganizationAndSpecialist(id,sId,pageRequest);

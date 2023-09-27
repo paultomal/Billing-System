@@ -1,6 +1,6 @@
 package com.paul.billing_system.repository;
 
-import com.paul.billing_system.entity.Specialist;
+import com.paul.billing_system.entity.Speciality;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -8,10 +8,10 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface SpecialistRepository extends JpaRepository<Specialist,Long> {
+public interface SpecialityRepository extends JpaRepository<Speciality,Long> {
 
-    @Query("select s from Specialist s where s.medSpecName like concat( '%',:medSpecName, '%') ")
-    List<Specialist> findBySearch(@Param("medSpecName") String medSpecName, Pageable pageable);
+    @Query("select s from Speciality s where s.medSpecName like concat( '%',:medSpecName, '%') ")
+    List<Speciality> findBySearch(@Param("medSpecName") String medSpecName, Pageable pageable);
 
 }
 

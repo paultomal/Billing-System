@@ -13,21 +13,27 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class BookingInvestigation extends BaseEntity {
+public class InvestigationBooking extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "org_id", referencedColumnName = "id")
+    private Organization organization;
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(
-            name = "booking_tbl",
+            name = "booking_investigation",
             joinColumns = @JoinColumn(name = "booking_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "invastigaion_id")
     )
     private List<Investigation> investigations;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToOne
     @JoinColumn(name = "patient_id", referencedColumnName = "id")
     private Patients patients;
+
+    private Double total;
 }

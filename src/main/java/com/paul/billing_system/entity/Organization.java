@@ -52,6 +52,6 @@ public class Organization extends BaseEntity {
             joinColumns = @JoinColumn(name = "organization_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "specialists_id")
     )
-    private List<Specialist> specialists;
+    private List<Speciality> specialities;
 
 }
