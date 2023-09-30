@@ -32,10 +32,9 @@ public class AppointmentBookingService {
         AppointmentBooking appointmentBooking = new AppointmentBooking();
         appointmentBooking.setOrganization(organizationRepository.findById(appointmentBookingDTO.getOrgId()).orElseThrow());
 
-        if(patientRepository.findById(appointmentBookingDTO.getP_id()).isPresent()) {
+        if (patientRepository.findById(appointmentBookingDTO.getP_id()).isPresent()) {
             appointmentBooking.setPatient(patientRepository.findById(appointmentBookingDTO.getP_id()).get());
-        }
-        else {
+        } else {
             Patient patient = new Patient();
             patient.setName(appointmentBookingDTO.getP_name());
             patient.setContact(appointmentBookingDTO.getContact());
@@ -43,7 +42,7 @@ public class AppointmentBookingService {
 
             appointmentBooking.setPatient(patientRepository.save(patient));
         }
-        
+
         appointmentBooking.setDoctor(doctorRepository.findById(appointmentBookingDTO.getDoc_id()).orElseThrow());
         appointmentBooking.setConsultationFee(appointmentBookingDTO.getConsultationFee());
         appointmentBooking.setDiscount(appointmentBookingDTO.getDiscount());

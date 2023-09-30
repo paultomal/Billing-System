@@ -3,13 +3,11 @@ package com.paul.billing_system.controller;
 import com.paul.billing_system.dto.InvestigationDTO;
 import com.paul.billing_system.entity.Investigation;
 import com.paul.billing_system.exception.AuthenticationIsNotGivenException;
-import com.paul.billing_system.service.InvestigationServices;
+import com.paul.billing_system.service.InvestigationService;
 import jakarta.validation.Valid;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,17 +18,17 @@ import static com.paul.billing_system.controller.AuthController.getErrorDetails;
 @RestController
 @RequestMapping("/investigation")
 public class InvestigationController {
-    private final InvestigationServices investigationServices;
+    private final InvestigationService investigationService;
 
-    public InvestigationController(InvestigationServices investigationServices) {
-        this.investigationServices = investigationServices;
+    public InvestigationController(InvestigationService investigationService) {
+        this.investigationService = investigationService;
     }
 
     @PostMapping("/addInvestigation")
     public ResponseEntity<?> save(@Valid @RequestBody InvestigationDTO investigationDTO, BindingResult bindingResult) {
         ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
         if (errorDetails != null) return errorDetails;
-        InvestigationDTO investigationDTO1 = InvestigationDTO.form(investigationServices.saveInvestigation(investigationDTO));
+        InvestigationDTO investigationDTO1 = InvestigationDTO.form(investigationService.saveInvestigation(investigationDTO));
         return new ResponseEntity<>(investigationDTO1, HttpStatus.OK);
     }
 
@@ -42,14 +40,14 @@ public class InvestigationController {
             throw new AuthenticationIsNotGivenException("No Token");
         }
 
-        List<Investigation> investigations = investigationServices.getAllServices(PageRequest.of(page, size));
+        List<Investigation> investigations = investigationService.getAllServices(PageRequest.of(page, size));
         List<InvestigationDTO> investigationDTOList = investigations.stream().map(InvestigationDTO::form).toList();
         return new ResponseEntity<>(investigationDTOList, HttpStatus.OK);
     }
 
     @GetMapping("/getInvestigation/{id}")
     public ResponseEntity<?> getServiceById(@PathVariable Long id) {
-        InvestigationDTO investigationDTO = InvestigationDTO.form(investigationServices.getServiceById(id));
+        InvestigationDTO investigationDTO = InvestigationDTO.form(investigationService.getServiceById(id));
         return new ResponseEntity<>(investigationDTO, HttpStatus.OK);
     }
 
@@ -57,7 +55,7 @@ public class InvestigationController {
     public ResponseEntity<?> updateService(@Valid @RequestBody InvestigationDTO investigationDTO, @PathVariable Long id, BindingResult bindingResult) {
         ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
         if (errorDetails != null) return errorDetails;
-        InvestigationDTO investigationDTO1 = InvestigationDTO.form(investigationServices.updateService(investigationDTO, id));
+        InvestigationDTO investigationDTO1 = InvestigationDTO.form(investigationService.updateService(investigationDTO, id));
         return new ResponseEntity<>(investigationDTO1, HttpStatus.OK);
     }
 
@@ -66,7 +64,7 @@ public class InvestigationController {
                                           @RequestParam(defaultValue = "0") int page,
                                           @RequestParam(defaultValue = "10") int size) {
 
-        return new ResponseEntity<>(investigationServices.searchInvestigation(name, PageRequest.of(page, size))
+        return new ResponseEntity<>(investigationService.searchInvestigation(name, PageRequest.of(page, size))
                 .stream()
                 .map(InvestigationDTO::form)
                 .toList(), HttpStatus.OK);

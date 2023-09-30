@@ -2,7 +2,7 @@ package com.paul.billing_system.controller;
 
 import com.paul.billing_system.dto.SpecialityDTO;
 import com.paul.billing_system.entity.Speciality;
-import com.paul.billing_system.service.SpecialityServices;
+import com.paul.billing_system.service.SpecialityService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -14,15 +14,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/specialist")
 public class SpecialityController {
-    private final SpecialityServices specialityServices;
+    private final SpecialityService specialityService;
 
-    public SpecialityController(SpecialityServices specialityServices) {
-        this.specialityServices = specialityServices;
+    public SpecialityController(SpecialityService specialityService) {
+        this.specialityService = specialityService;
     }
 
     @GetMapping("/getAllSpecialist")
     public ResponseEntity<?> getAllSpecialist(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
-        Page<Speciality> specialists = specialityServices.getAllSpecialist(PageRequest.of(page, size));
+        Page<Speciality> specialists = specialityService.getAllSpecialist(PageRequest.of(page, size));
         List<SpecialityDTO> specialityDTOList = specialists
                 .stream()
                 .map(SpecialityDTO::form)
@@ -32,7 +32,7 @@ public class SpecialityController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getMedicalSpecialist(@PathVariable Long id) {
-        SpecialityDTO specialityDTO = SpecialityDTO.form(specialityServices.getMedicalSpecialist(id));
+        SpecialityDTO specialityDTO = SpecialityDTO.form(specialityService.getMedicalSpecialist(id));
         return new ResponseEntity<>(specialityDTO, HttpStatus.OK);
     }
 
@@ -40,7 +40,7 @@ public class SpecialityController {
     public ResponseEntity<?> searchSpecialist(@PathVariable String name,
                                               @RequestParam(defaultValue = "0") int page,
                                               @RequestParam(defaultValue = "10") int size) {
-        List<Speciality> specialities = specialityServices.searchSpecialist(name, PageRequest.of(page, size));
+        List<Speciality> specialities = specialityService.searchSpecialist(name, PageRequest.of(page, size));
         List<SpecialityDTO> specialityDTOList = specialities.stream().map(SpecialityDTO::form).toList();
         return new ResponseEntity<>(specialityDTOList, HttpStatus.OK);
     }

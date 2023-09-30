@@ -11,13 +11,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class InvestigationBookingServices {
+public class InvestigationBookingService {
     private final InvestigationBookingRepository bookingRepository;
     private final PatientRepository patientRepository;
     private final InvestigationRepository investigationRepository;
     private final OrganizationRepository organizationRepository;
 
-    public InvestigationBookingServices(InvestigationBookingRepository investigationBookingRepository, PatientRepository patientRepository, InvestigationRepository investigationRepository, SpecialityRepository specialityRepository, OrganizationRepository organizationRepository) {
+    public InvestigationBookingService(InvestigationBookingRepository investigationBookingRepository, PatientRepository patientRepository, InvestigationRepository investigationRepository, SpecialityRepository specialityRepository, OrganizationRepository organizationRepository) {
         this.bookingRepository = investigationBookingRepository;
         this.patientRepository = patientRepository;
         this.investigationRepository = investigationRepository;
