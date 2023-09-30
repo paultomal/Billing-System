@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class SpecialityServices {
+public class SpecialityService {
     private final SpecialityRepository specialityRepository;
 
 
-    public SpecialityServices(SpecialityRepository specialityRepository) {
+    public SpecialityService(SpecialityRepository specialityRepository) {
         this.specialityRepository = specialityRepository;
     }
 

@@ -13,11 +13,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class OrganizationServices {
+public class OrganizationService {
     private final OrganizationRepository organizationRepository;
     private final SpecialityRepository specialityRepository;
 
-    public OrganizationServices(OrganizationRepository organizationRepository, SpecialityRepository specialityRepository) {
+    public OrganizationService(OrganizationRepository organizationRepository, SpecialityRepository specialityRepository) {
         this.organizationRepository = organizationRepository;
         this.specialityRepository = specialityRepository;
     }
