@@ -19,7 +19,6 @@ import static com.paul.billing_system.controller.AuthController.getErrorDetails;
 
 @RestController
 @RequestMapping("/organization")
-@PreAuthorize("hasAuthority('ROLE_ROOT')")
 public class OrganizationController {
     private final OrganizationService organizationService;
 
@@ -27,6 +26,7 @@ public class OrganizationController {
         this.organizationService = organizationService;
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ROOT')")
     @PostMapping("/create")
     public ResponseEntity<?> save(@Valid @RequestBody OrganizationDTO organizationDTO, BindingResult bindingResult) {
         ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
@@ -35,12 +35,13 @@ public class OrganizationController {
         return new ResponseEntity<>(organizationDTO1, HttpStatus.CREATED);
     }
 
-
+    @PreAuthorize("hasAuthority('ROLE_ROOT')")
     @GetMapping("/OrganizationType")
     public List<String> getAllOrganizationTypesList() {
         return OrganizationTypes.getAllOrganizationTypesList();
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ROOT')")
     @GetMapping("/{type}")
     public ResponseEntity<?> getAllOrganization(@PathVariable String type,
                                                 @RequestParam(defaultValue = "0") int page,
@@ -52,6 +53,7 @@ public class OrganizationController {
         return new ResponseEntity<>(organizationDTOList, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ROOT')")
     @PutMapping("/updateOrganizationProfile/{id}")
     public ResponseEntity<?> updateOrganizationProfile(@Valid @PathVariable Long id, @RequestBody OrganizationDTO organizationDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -61,12 +63,14 @@ public class OrganizationController {
         return new ResponseEntity<>(organizationDTO1, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyAuthority('ROLE_ROOT','ROLE_ADMIN')")
     @GetMapping("/getOrganizationById/{id}")
     public ResponseEntity<?> getOrganizationById(@PathVariable Long id) {
         OrganizationDTO organizationDTO = OrganizationDTO.form(organizationService.getOrganizationById(id));
         return new ResponseEntity<>(organizationDTO, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyAuthority('ROLE_ROOT','ROLE_ADMIN')")
     @GetMapping("/search/{name}")
     public ResponseEntity<?> searchByName(@PathVariable String name,
                                           @RequestParam(defaultValue = "0") int page,
