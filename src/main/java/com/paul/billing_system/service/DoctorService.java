@@ -1,7 +1,9 @@
 package com.paul.billing_system.service;
 
 import com.paul.billing_system.dto.DoctorDTO;
+import com.paul.billing_system.dto.DoctorSlotDTO;
 import com.paul.billing_system.entity.Doctor;
+import com.paul.billing_system.entity.DoctorSlot;
 import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.entity.Speciality;
 import com.paul.billing_system.enums.DaysOfWeek;
@@ -44,10 +46,8 @@ public class DoctorService {
             doctor.setMinDiscount(doctorDTO.getMinDiscount());
             doctor.setMaxDiscount(doctorDTO.getMaxDiscount());
 
-            DaysOfWeek days = DaysOfWeek.getDaysByLabel(doctorDTO.getDay());
-            doctor.setDay(days);
-
-            doctor.setTime(doctorDTO.getTime());
+            List<DoctorSlot> doctorSlotList = doctorDTO.getDoctorSlotDTOList().stream().map(this::form).toList();
+            doctor.setDoctorSlots(doctorSlotList);
 
             List<Organization> organizationList = doctorDTO.getOrgId().stream().map(o-> organizationRepository.findById(o).orElseThrow()).toList();
 
@@ -59,6 +59,12 @@ public class DoctorService {
             doctorRepository.save(doctor);
         }
         return doctor;
+    }
+    public DoctorSlot form(DoctorSlotDTO doctorSlotDTO) {
+        DoctorSlot doctorSlot = new DoctorSlot();
+        doctorSlot.setDay(DaysOfWeek.getDaysByLabel(doctorSlotDTO.getDay()));
+        doctorSlot.setTime(doctorSlotDTO.getTime());
+        return doctorSlot;
     }
 
     public Doctor getDoctorById(Long id) {
@@ -85,11 +91,6 @@ public class DoctorService {
             doctor.get().setMinDiscount(doctorDTO.getMinDiscount());
             doctor.get().setMaxDiscount(doctorDTO.getMaxDiscount());
             doctor.get().setUpdatedAt(new Date());
-
-            DaysOfWeek days = DaysOfWeek.getDaysByLabel(doctorDTO.getDay());
-            doctor.get().setDay(days);
-
-            doctor.get().setTime(doctorDTO.getTime());
 
             return doctorRepository.save(doctor.get());
         }

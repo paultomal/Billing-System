@@ -36,10 +36,13 @@ public class Doctor extends BaseEntity {
 
     private String maxDiscount;
 
-    @Enumerated(EnumType.STRING)
-    private DaysOfWeek day;
-
-    private String time;
+    @OneToMany
+    @JoinTable(
+            name = "doctor_available_slots",
+            joinColumns = @JoinColumn(name = "doctor_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "doctor_slot_id")
+    )
+    private List<DoctorSlot> doctorSlots;
 
     @OneToMany
     @JoinTable(

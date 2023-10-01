@@ -32,9 +32,7 @@ public class DoctorDTO {
 
     private String maxDiscount;
 
-    private String day;
-
-    private String time;
+    private List<DoctorSlotDTO> doctorSlotDTOList;
 
     private List<Long> orgId;
 
@@ -52,10 +50,7 @@ public class DoctorDTO {
         doctorDTO.setMinDiscount(doctor.getMinDiscount());
         doctorDTO.setMaxDiscount(doctor.getMaxDiscount());
 
-        String days = DaysOfWeek.getLabelByDays(doctor.getDay());
-        doctorDTO.setDay(days);
-
-        doctorDTO.setTime(doctor.getTime());
+        doctorDTO.setDoctorSlotDTOList(doctor.getDoctorSlots().stream().map(DoctorSlotDTO::form).toList());
 
         doctorDTO.setOrgId(doctor.getOrganizationList().stream().map(Organization::getId)
                 .toList());
