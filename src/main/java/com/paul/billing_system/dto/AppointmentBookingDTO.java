@@ -15,11 +15,11 @@ public class AppointmentBookingDTO {
     @NotNull
     private Long orgId;
 
-    private Long p_id;
+    private Long patientId;
 
-    private String p_name;
+    private String patientName;
 
-    private String contact;
+    private String patientContact;
 
     @NotNull
     private Long doc_id;
@@ -40,9 +40,9 @@ public class AppointmentBookingDTO {
         AppointmentBookingDTO appointmentBookingDTO = new AppointmentBookingDTO();
         appointmentBookingDTO.setId(appointmentBooking.getId());
         appointmentBookingDTO.setOrgId(appointmentBooking.getOrganization().getId());
-        appointmentBookingDTO.setP_id(appointmentBooking.getPatient().getId());
-        appointmentBookingDTO.setP_name(appointmentBooking.getPatient().getName());
-        appointmentBookingDTO.setContact(appointmentBooking.getPatient().getContact());
+        appointmentBookingDTO.setPatientId(appointmentBooking.getPatient().getId());
+        appointmentBookingDTO.setPatientName(appointmentBooking.getPatient().getName());
+        appointmentBookingDTO.setPatientContact(appointmentBooking.getPatient().getContact());
         appointmentBookingDTO.setDoc_id(appointmentBooking.getDoctor().getId());
         appointmentBookingDTO.setDoc_name(appointmentBooking.getDoctor().getName());
         appointmentBookingDTO.setConsultationFee(appointmentBooking.getDoctor().getConsultationFee());

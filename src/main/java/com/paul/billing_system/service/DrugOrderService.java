@@ -31,7 +31,7 @@ public class DrugOrderService {
     public DrugOrderDTO saveOrder(DrugOrderDTO drugOrderDTO) {
         DrugOrder drugOrder = new DrugOrder();
 
-        if(patientRepository.findById(drugOrderDTO.getPatientId()).isPresent()) {
+        if(drugOrderDTO.getPatientId() != null && patientRepository.findById(drugOrderDTO.getPatientId()).isPresent()) {
             drugOrder.setPatient(patientRepository.findById(drugOrderDTO.getPatientId()).get());
         }
         else {
