@@ -24,7 +24,7 @@ public class OrgDrugPriceQuantity extends BaseEntity {
     @JoinColumn(name = "drug_id")
     private Drug drug;
 
-    private double price;
+    private Double price;
 
-    private long quantity;
+    private Long quantity;
 }

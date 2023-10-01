@@ -2,6 +2,7 @@ package com.paul.billing_system.service;
 
 import com.paul.billing_system.dto.DrugDTO;
 import com.paul.billing_system.entity.Drug;
+import com.paul.billing_system.entity.OrgDrugPriceQuantity;
 import com.paul.billing_system.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.PageRequest;
@@ -17,13 +18,15 @@ public class DrugService {
     private final DrugStrengthRepository drugStrengthRepository;
     private final GenericRepository genericRepository;
     private final DrugVendorRepository drugVendorRepository;
+    private final OrgDrugPriceQuantityRepository priceQuantityRepository;
 
-    public DrugService(DrugRepository drugRepository, DrugFormationRepository drugFormationRepository, DrugStrengthRepository drugStrengthRepository, GenericRepository genericRepository, DrugVendorRepository drugVendorRepository) {
+    public DrugService(DrugRepository drugRepository, DrugFormationRepository drugFormationRepository, DrugStrengthRepository drugStrengthRepository, GenericRepository genericRepository, DrugVendorRepository drugVendorRepository, OrgDrugPriceQuantityRepository priceQuantityRepository) {
         this.drugRepository = drugRepository;
         this.drugFormationRepository = drugFormationRepository;
         this.drugStrengthRepository = drugStrengthRepository;
         this.genericRepository = genericRepository;
         this.drugVendorRepository = drugVendorRepository;
+        this.priceQuantityRepository = priceQuantityRepository;
     }
 
     @Transactional
@@ -46,10 +49,46 @@ public class DrugService {
                 .toList();
     }
 
+    public List<DrugDTO> getAllDrugsOfOrg(Long orgId, PageRequest pageRequest) {
+        List<DrugDTO> drugs = drugRepository.findAll(pageRequest).getContent()
+                .stream()
+                .map(DrugDTO::form)
+                .toList();
+
+        return drugs.stream()
+                .peek(drugDTO -> {
+            OrgDrugPriceQuantity orgDrugPriceQuantity = priceQuantityRepository.findByOrganizationIdAndDrugId(orgId, drugDTO.getId());
+            if(orgDrugPriceQuantity.getPrice() != null) {
+                drugDTO.setPrice(orgDrugPriceQuantity.getPrice());
+            }
+            if(orgDrugPriceQuantity.getQuantity() != null) {
+                drugDTO.setQuantity(orgDrugPriceQuantity.getQuantity());
+            }
+                })
+                .toList();
+    }
+
     public DrugDTO getDrugById(Long id) {
         Optional<Drug> drug = drugRepository.findById(id);
 
         return drug.map(DrugDTO::form).orElse(null);
+    }
+
+    public DrugDTO getDrugOfOrg(Long id, Long orgId) {
+        Optional<Drug> drug = drugRepository.findById(id);
+
+        OrgDrugPriceQuantity orgDrugPriceQuantity = null;
+        if(drug.isPresent()) {
+            orgDrugPriceQuantity = priceQuantityRepository.findByOrganizationIdAndDrugId(orgId, drug.get().getId());
+        }
+        DrugDTO drugDTO = drug.map(DrugDTO::form).orElse(null);
+        assert drugDTO != null;
+        if(orgDrugPriceQuantity.getPrice() != null)
+            drugDTO.setPrice(orgDrugPriceQuantity.getPrice());
+        if(orgDrugPriceQuantity.getQuantity() != null)
+            drugDTO.setQuantity(orgDrugPriceQuantity.getQuantity());
+
+        return drugDTO;
     }
 
     public DrugDTO updateDrug(Long id, DrugDTO drugDTO) {

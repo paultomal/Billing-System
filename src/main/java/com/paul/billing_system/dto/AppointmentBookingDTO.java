@@ -31,7 +31,7 @@ public class AppointmentBookingDTO {
     private String discount;
 
     @NotNull
-    private double totalFees;
+    private Double totalFees;
 
     public static AppointmentBookingDTO form(AppointmentBooking appointmentBooking){
         if(appointmentBooking == null)

@@ -14,7 +14,7 @@ import java.util.List;
 public class DrugOrderDTO {
     private Long id;
 
-    private long patientId;
+    private Long patientId;
 
     private String patientName;
 
@@ -27,7 +27,7 @@ public class DrugOrderDTO {
     private List<DrugDTO> drugList;
 
     @NotNull
-    private double total;
+    private Double total;
 
     public static DrugOrderDTO form(DrugOrder drugOrder) {
         DrugOrderDTO drugOrderDTO = new DrugOrderDTO();

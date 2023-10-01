@@ -39,5 +39,5 @@ public class DrugOrder extends BaseEntity {
     private List<Drug> drugList;
 
     @NotNull
-    private double total;
+    private Double total;
 }

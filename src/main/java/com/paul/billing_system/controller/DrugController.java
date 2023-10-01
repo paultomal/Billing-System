@@ -1,7 +1,9 @@
 package com.paul.billing_system.controller;
 
 import com.paul.billing_system.dto.DrugDTO;
+import com.paul.billing_system.dto.OrgDrugPriceQuantityDTO;
 import com.paul.billing_system.service.DrugService;
+import com.paul.billing_system.service.OrgDrugPriceQuantityService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -16,9 +18,11 @@ import java.util.List;
 @PreAuthorize("hasAnyAuthority('ROLE_ORG_ADMIN','ROLE_ADMIN','ROLE_ROOT')")
 public class DrugController {
     private final DrugService drugService;
+    private final OrgDrugPriceQuantityService orgDrugPriceQuantityService;
 
-    public DrugController(DrugService drugService) {
+    public DrugController(DrugService drugService, OrgDrugPriceQuantityService orgDrugPriceQuantityService) {
         this.drugService = drugService;
+        this.orgDrugPriceQuantityService = orgDrugPriceQuantityService;
     }
 
     @PreAuthorize("hasAuthority('ROLE_ROOT')")
@@ -33,14 +37,33 @@ public class DrugController {
         return drugService.getAllDrugs(PageRequest.of(page,size));
     }
 
+    @GetMapping("/getAllDrugs/{orgId}")
+    public List<DrugDTO> getDrugsByOrgId(@PathVariable Long orgId,
+                                         @RequestParam(defaultValue = "0") int page,
+                                         @RequestParam(defaultValue = "10") int size) {
+        return drugService.getAllDrugsOfOrg(orgId, PageRequest.of(page,size));
+    }
+
     @GetMapping("/getDrug/{id}")
     public DrugDTO getDrug(@PathVariable Long id) {
         return drugService.getDrugById(id);
     }
 
+    @GetMapping("/getDrug/{id}/{orgId}")
+    public DrugDTO getDrugByIdAndOrgId(@PathVariable Long id, @PathVariable Long orgId) {
+        return drugService.getDrugOfOrg(id, orgId);
+    }
+
+    @PreAuthorize("hasAuthority('ROLE_ROOT')")
     @PutMapping("/updateDrug/{id}")
     public DrugDTO updateDrug(@PathVariable Long id, @RequestBody DrugDTO drugDTO) {
         return drugService.updateDrug(id, drugDTO);
+    }
+
+    @PreAuthorize("hasAuthority('ROLE_ORG_ADMIN')")
+    @PutMapping("/updatePriceAndQuantity")
+    public OrgDrugPriceQuantityDTO updatePriceQuantity(@RequestBody OrgDrugPriceQuantityDTO priceQuantityDTO) {
+        return orgDrugPriceQuantityService.updatePriceQuantity(priceQuantityDTO);
     }
 
     @DeleteMapping("/deleteDrug/{id}")
