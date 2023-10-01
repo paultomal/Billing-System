@@ -8,6 +8,7 @@ import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.entity.Speciality;
 import com.paul.billing_system.enums.DaysOfWeek;
 import com.paul.billing_system.repository.DoctorRepository;
+import com.paul.billing_system.repository.DoctorSlotRepository;
 import com.paul.billing_system.repository.OrganizationRepository;
 import com.paul.billing_system.repository.SpecialityRepository;
 import org.springframework.data.domain.PageRequest;
@@ -23,11 +24,13 @@ public class DoctorService {
     private final DoctorRepository doctorRepository;
     private final SpecialityRepository specialityRepository;
     private final OrganizationRepository organizationRepository;
+    private final DoctorSlotRepository doctorSlotRepository;
 
-    public DoctorService(DoctorRepository doctorRepository, SpecialityRepository specialityRepository, OrganizationRepository organizationRepository) {
+    public DoctorService(DoctorRepository doctorRepository, SpecialityRepository specialityRepository, OrganizationRepository organizationRepository, DoctorSlotRepository doctorSlotRepository) {
         this.doctorRepository = doctorRepository;
         this.specialityRepository = specialityRepository;
         this.organizationRepository = organizationRepository;
+        this.doctorSlotRepository = doctorSlotRepository;
     }
 
     @Transactional
@@ -47,6 +50,7 @@ public class DoctorService {
             doctor.setMaxDiscount(doctorDTO.getMaxDiscount());
 
             List<DoctorSlot> doctorSlotList = doctorDTO.getDoctorSlotDTOList().stream().map(this::form).toList();
+            doctorSlotList = doctorSlotRepository.saveAll(doctorSlotList);
             doctor.setDoctorSlots(doctorSlotList);
 
             List<Organization> organizationList = doctorDTO.getOrgId().stream().map(o-> organizationRepository.findById(o).orElseThrow()).toList();
