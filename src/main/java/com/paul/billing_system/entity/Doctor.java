@@ -44,13 +44,12 @@ public class Doctor extends BaseEntity {
     )
     private List<DoctorSlot> doctorSlots;
 
-    @OneToMany
+    @ManyToMany
     @JoinTable(
             name = "doctor_organization",
             joinColumns = @JoinColumn(name = "doctor_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "organization_id")
     )
-    @NotNull
     private List<Organization> organizationList;
 
     @ManyToMany
@@ -59,6 +58,5 @@ public class Doctor extends BaseEntity {
             joinColumns = @JoinColumn(name = "doctor_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "speciality_id")
     )
-    @NotNull
     private List<Speciality> specialityList;
 }
