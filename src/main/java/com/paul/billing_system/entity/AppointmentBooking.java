@@ -35,6 +35,6 @@ public class AppointmentBooking {
     private String discount;
 
     @NotNull
-    private double totalFees;
+    private Double totalFees;
 
 }

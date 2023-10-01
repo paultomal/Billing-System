@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AppointmentBookingService {
@@ -32,16 +33,20 @@ public class AppointmentBookingService {
         AppointmentBooking appointmentBooking = new AppointmentBooking();
         appointmentBooking.setOrganization(organizationRepository.findById(appointmentBookingDTO.getOrgId()).orElseThrow());
 
-        if(patientRepository.findById(appointmentBookingDTO.getP_id()).isPresent()) {
-            appointmentBooking.setPatient(patientRepository.findById(appointmentBookingDTO.getP_id()).get());
+        Optional<Patient> patient = Optional.empty();
+        if(appointmentBookingDTO.getPatientId() != null)
+            patient = patientRepository.findById(appointmentBookingDTO.getPatientId());
+
+        if(patient.isPresent()) {
+            appointmentBooking.setPatient(patient.get());
         }
         else {
-            Patient patient = new Patient();
-            patient.setName(appointmentBookingDTO.getP_name());
-            patient.setContact(appointmentBookingDTO.getContact());
-            patient.setOrganization(organizationRepository.findById(appointmentBookingDTO.getOrgId()).orElseThrow());
+            Patient newPatient = new Patient();
+            newPatient.setName(appointmentBookingDTO.getPatientName());
+            newPatient.setContact(appointmentBookingDTO.getPatientContact());
+            newPatient.setOrganization(organizationRepository.findById(appointmentBookingDTO.getOrgId()).orElseThrow());
 
-            appointmentBooking.setPatient(patientRepository.save(patient));
+            appointmentBooking.setPatient(patientRepository.save(newPatient));
         }
         
         appointmentBooking.setDoctor(doctorRepository.findById(appointmentBookingDTO.getDoc_id()).orElseThrow());

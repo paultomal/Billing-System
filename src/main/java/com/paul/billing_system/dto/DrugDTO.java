@@ -1,7 +1,6 @@
 package com.paul.billing_system.dto;
 
 import com.paul.billing_system.entity.Drug;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,8 +13,6 @@ public class DrugDTO {
 
     private String brandName;
 
-    private double price;
-
     private String vendorName;
 
     private String genericName;
@@ -23,6 +20,10 @@ public class DrugDTO {
     private String formationName;
 
     private String strengthName;
+
+    private Double price;
+
+    private Long quantity;
 
     public static DrugDTO form(Drug drug) {
         DrugDTO drugDTO = new DrugDTO();

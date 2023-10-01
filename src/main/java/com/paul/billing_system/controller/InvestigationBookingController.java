@@ -47,15 +47,6 @@ public class InvestigationBookingController {
         return new ResponseEntity<>(investigationBookingDTOList,HttpStatus.OK);
     }
 
-
-    @GetMapping("/searchPatient/{name}")
-    public ResponseEntity<?> getPatients(@PathVariable String name, @RequestParam(defaultValue = "0") int page,
-                                         @RequestParam(defaultValue = "10") int size){
-        List<Patient> patients = bookingServices.searchPatient(name, PageRequest.of(page, size));
-        List<PatientDTO> patientDTOList = patients.stream().map(PatientDTO::form).toList();
-        return new ResponseEntity<>(patientDTOList, HttpStatus.OK);
-    }
-
     @GetMapping("/getInvestigationList")
     public ResponseEntity<?> getInvestigation(  @RequestParam(defaultValue = "0") int page,
                                                @RequestParam(defaultValue = "10") int size){

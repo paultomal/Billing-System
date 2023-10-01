@@ -10,8 +10,8 @@ import java.util.List;
 
 public interface PatientRepository extends JpaRepository<Patient, Long> {
 
-    @Query("select p from Patient p where p.name like concat('%', :name, '%') ")
-    List<Patient> findByName(@Param("name") String name, Pageable pageable);
+    @Query("select p from Patient p where p.name like concat('%', :name, '%') and p.organization.id = :orgId")
+    List<Patient> findByName(@Param("orgId") Long orgId, @Param("name") String name, Pageable pageable);
 
     @Query("SELECT p from  Patient p where p.organization.id = :id")
     List<Patient> findByOrganization(Long id, Pageable pageable);

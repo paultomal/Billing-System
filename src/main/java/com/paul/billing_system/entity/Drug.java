@@ -21,7 +21,7 @@ public class Drug extends BaseEntity {
     private String brandName;
 
     @NotNull
-    private double price;
+    private Double price;
 
     @ManyToOne
     @JoinColumn(name = "vendor_id")
