@@ -19,11 +19,10 @@ public class DrugOrder extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "patient_id")
     @NotNull
-    private String patientName;
-
-    @NotNull
-    private String patientContact;
+    private Patient patient;
 
     @ManyToOne
     @JoinColumn(name = "org_id")

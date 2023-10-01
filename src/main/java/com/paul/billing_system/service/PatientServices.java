@@ -70,7 +70,7 @@ public class PatientServices {
         return null;
     }
 
-    public List<Patient> searchPatient(String name, PageRequest pageRequest) {
-        return patientRepository.findByName(name, pageRequest);
+    public List<Patient> searchPatient(Long orgId, String name, PageRequest pageRequest) {
+        return patientRepository.findByName(orgId, name, pageRequest);
     }
 }

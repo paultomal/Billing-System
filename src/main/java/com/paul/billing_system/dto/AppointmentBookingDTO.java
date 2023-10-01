@@ -15,7 +15,6 @@ public class AppointmentBookingDTO {
     @NotNull
     private Long orgId;
 
-    @NotNull
     private Long p_id;
 
     private String p_name;

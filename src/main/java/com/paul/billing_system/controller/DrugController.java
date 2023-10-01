@@ -21,6 +21,7 @@ public class DrugController {
         this.drugService = drugService;
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ROOT')")
     @PostMapping("/addDrug")
     public ResponseEntity<?> addDrug(@Valid @RequestBody DrugDTO drugDTO) {
         return new ResponseEntity<>(drugService.addDrug(drugDTO), HttpStatus.CREATED);

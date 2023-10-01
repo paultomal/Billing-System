@@ -58,12 +58,13 @@ public class PatientsController {
         return new ResponseEntity<>(patientDTO1,HttpStatus.OK);
     }
 
-    @GetMapping("search/{name}")
-    public ResponseEntity<?> searchPatient(@PathVariable String name,
+    @GetMapping("search/{orgId}/{name}")
+    public ResponseEntity<?> searchPatient(@PathVariable Long orgId,
+                                           @PathVariable String name,
                                            @RequestParam(defaultValue = "0") int page,
                                            @RequestParam(defaultValue = "10") int size) {
 
-        return new ResponseEntity<>(patientServices.searchPatient(name, PageRequest.of(page, size))
+        return new ResponseEntity<>(patientServices.searchPatient(orgId, name, PageRequest.of(page, size))
                 .stream()
                 .map(PatientDTO::form)
                 .toList(), HttpStatus.OK);
