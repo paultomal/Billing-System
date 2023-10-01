@@ -1,7 +1,7 @@
 package com.paul.billing_system.entity;
 
+import com.paul.billing_system.dto.OrgBasedInvestigationDTO;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,15 +15,14 @@ public class OrgBasedInvestigation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Name should not be empty")
-    private String serviceName;
-
-    private Double serviceCharge;
-
-    private Double orgServiceCharge;
+    private Double orgInvestigationCharge;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "org_id")
     private Organization organization;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "investigation_id")
+    private Investigation investigation;
 
 }

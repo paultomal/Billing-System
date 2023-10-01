@@ -40,8 +40,6 @@ public class OrganizationDTO {
 
     private String operatingHour;
 
-    private List<SpecialityDTO> specialist;
-
     public static OrganizationDTO form(Organization organization) {
         OrganizationDTO organizationDTO = new OrganizationDTO();
         organizationDTO.setId(organization.getId());
@@ -54,7 +52,6 @@ public class OrganizationDTO {
         organizationDTO.setEmergencyContact(organization.getEmergencyContact());
         organizationDTO.setOperatingHour(organization.getOperatingHour());
         organizationDTO.setOrgCode(organization.getOrgCode());
-        organizationDTO.setSpecialist(organization.getSpecialities() != null ? organization.getSpecialities().stream().map(SpecialityDTO::form).toList() : null);
         return organizationDTO;
     }
 }
