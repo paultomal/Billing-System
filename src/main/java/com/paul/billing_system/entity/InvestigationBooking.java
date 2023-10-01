@@ -29,7 +29,7 @@ public class InvestigationBooking extends BaseEntity {
             joinColumns = @JoinColumn(name = "booking_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "invastigaion_id")
     )
-    private List<Investigation> investigations;
+    private List<OrgBasedInvestigation> orgBasedInvestigationList;
 
     @ManyToOne
     @JoinColumn(name = "patient_id", referencedColumnName = "id")

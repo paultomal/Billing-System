@@ -21,7 +21,7 @@ public class InvestigationBookingDTO {
 
     private String contact;
 
-    private List<InvestigationDTO> investigations;
+    private List<OrgBasedInvestigationDTO> investigationDTOList;
 
     private Double total;
 
@@ -34,10 +34,10 @@ public class InvestigationBookingDTO {
         bookingDTO.setP_name(booking.getPatient().getName());
         bookingDTO.setContact(booking.getPatient().getContact());
 
-        if (booking.getInvestigations() != null) {
-            bookingDTO.setInvestigations(booking.getInvestigations().stream().map(InvestigationDTO::form).toList());
+        if (booking.getOrgBasedInvestigationList() != null) {
+            bookingDTO.setInvestigationDTOList(booking.getOrgBasedInvestigationList().stream().map(OrgBasedInvestigationDTO::form).toList());
         } else {
-            bookingDTO.setInvestigations(null); // Handle the case where investigations is null
+            bookingDTO.setInvestigationDTOList(null); // Handle the case where investigations is null
         }
 
         bookingDTO.setTotal(booking.getTotal());

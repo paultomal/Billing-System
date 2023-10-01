@@ -14,12 +14,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class PatientServices {
+public class PatientService {
     private final PatientRepository patientRepository;
     private final OrganizationRepository organizationRepository;
 
 
-    public PatientServices(PatientRepository patientRepository, OrganizationRepository organizationRepository) {
+    public PatientService(PatientRepository patientRepository, OrganizationRepository organizationRepository) {
         this.patientRepository = patientRepository;
         this.organizationRepository = organizationRepository;
     }

@@ -1,7 +1,7 @@
 package com.paul.billing_system.service;
 
 import com.paul.billing_system.dto.OrganizationDTO;
-import com.paul.billing_system.entity.*;
+import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.enums.OrganizationTypes;
 import com.paul.billing_system.repository.OrganizationRepository;
 import com.paul.billing_system.repository.SpecialityRepository;
@@ -13,13 +13,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class OrganizationServices {
+public class OrganizationService {
     private final OrganizationRepository organizationRepository;
-    private final SpecialityRepository specialityRepository;
 
-    public OrganizationServices(OrganizationRepository organizationRepository, SpecialityRepository specialityRepository) {
+    public OrganizationService(OrganizationRepository organizationRepository) {
         this.organizationRepository = organizationRepository;
-        this.specialityRepository = specialityRepository;
     }
 
     public Organization save(OrganizationDTO organizationDTO) {
@@ -36,9 +34,9 @@ public class OrganizationServices {
         organization.setOperatingHour(organizationDTO.getOperatingHour());
         organization.setCreatedAt(new Date());
 
-        List<Speciality> specialities = specialityRepository.findAll();
+/*        List<Speciality> specialities = specialityRepository.findAll();
 
-        organization.setSpecialities(specialities);
+        organization.setSpecialities(specialities);*/
         organization =organizationRepository.save(organization);
 
         return organization;

@@ -12,11 +12,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class InvestigationServices {
+public class InvestigationService {
     private final InvestigationRepository investigationRepository;
 
 
-    public InvestigationServices(InvestigationRepository investigationRepository) {
+    public InvestigationService(InvestigationRepository investigationRepository) {
         this.investigationRepository = investigationRepository;
 
     }

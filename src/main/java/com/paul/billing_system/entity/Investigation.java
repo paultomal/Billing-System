@@ -25,11 +25,4 @@ public class Investigation extends BaseEntity {
     private String serviceName;
 
     private Double serviceCharge;
-
-    public static Investigation form(InvestigationDTO investigationDTO) {
-        Investigation investigation = new Investigation();
-        investigation.setServiceName(investigationDTO.getServiceName());
-        investigation.setServiceCharge(investigationDTO.getServiceCharge());
-        return investigation;
-    }
 }

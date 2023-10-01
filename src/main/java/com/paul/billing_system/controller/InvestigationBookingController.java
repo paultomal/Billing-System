@@ -6,7 +6,7 @@ import com.paul.billing_system.dto.PatientDTO;
 import com.paul.billing_system.entity.Investigation;
 import com.paul.billing_system.entity.InvestigationBooking;
 import com.paul.billing_system.entity.Patient;
-import com.paul.billing_system.service.InvestigationBookingServices;
+import com.paul.billing_system.service.InvestigationBookingService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 @RequestMapping("/bookInvestigation")
 public class InvestigationBookingController {
 
-    private final InvestigationBookingServices bookingServices;
+    private final InvestigationBookingService bookingServices;
 
-    public InvestigationBookingController(InvestigationBookingServices bookingServices) {
+    public InvestigationBookingController(InvestigationBookingService bookingServices) {
         this.bookingServices = bookingServices;
     }
 

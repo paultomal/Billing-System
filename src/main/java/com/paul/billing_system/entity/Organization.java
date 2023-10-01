@@ -45,13 +45,4 @@ public class Organization extends BaseEntity {
     private String emergencyContact;
 
     private String operatingHour;
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "organization_specialists",
-            joinColumns = @JoinColumn(name = "organization_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "specialists_id")
-    )
-    private List<Speciality> specialities;
-
 }

@@ -17,12 +17,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class DoctorServices {
+public class DoctorService {
     private final DoctorRepository doctorRepository;
     private final SpecialityRepository specialityRepository;
     private final OrganizationRepository organizationRepository;
 
-    public DoctorServices(DoctorRepository doctorRepository, SpecialityRepository specialityRepository, OrganizationRepository organizationRepository) {
+    public DoctorService(DoctorRepository doctorRepository, SpecialityRepository specialityRepository, OrganizationRepository organizationRepository) {
         this.doctorRepository = doctorRepository;
         this.specialityRepository = specialityRepository;
         this.organizationRepository = organizationRepository;

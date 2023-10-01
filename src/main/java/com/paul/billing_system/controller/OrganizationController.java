@@ -3,7 +3,7 @@ package com.paul.billing_system.controller;
 import com.paul.billing_system.dto.OrganizationDTO;
 import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.enums.OrganizationTypes;
-import com.paul.billing_system.service.OrganizationServices;
+import com.paul.billing_system.service.OrganizationService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -21,17 +21,17 @@ import static com.paul.billing_system.controller.AuthController.getErrorDetails;
 @RequestMapping("/organization")
 @PreAuthorize("hasAuthority('ROLE_ROOT')")
 public class OrganizationController {
-    private final OrganizationServices organizationServices;
+    private final OrganizationService organizationService;
 
-    public OrganizationController(OrganizationServices organizationServices) {
-        this.organizationServices = organizationServices;
+    public OrganizationController(OrganizationService organizationService) {
+        this.organizationService = organizationService;
     }
 
     @PostMapping("/create")
     public ResponseEntity<?> save(@Valid @RequestBody OrganizationDTO organizationDTO, BindingResult bindingResult) {
         ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
         if (errorDetails != null) return errorDetails;
-        OrganizationDTO organizationDTO1 = OrganizationDTO.form(organizationServices.save(organizationDTO));
+        OrganizationDTO organizationDTO1 = OrganizationDTO.form(organizationService.save(organizationDTO));
         return new ResponseEntity<>(organizationDTO1, HttpStatus.CREATED);
     }
 
@@ -45,7 +45,7 @@ public class OrganizationController {
     public ResponseEntity<?> getAllOrganization(@PathVariable String type,
                                                 @RequestParam(defaultValue = "0") int page,
                                                 @RequestParam(defaultValue = "10") int size) {
-        List<Organization> organizations = organizationServices.getAllOrganization(OrganizationTypes.getOrganizationTypeByLabel(type), PageRequest.of(page, size));
+        List<Organization> organizations = organizationService.getAllOrganization(OrganizationTypes.getOrganizationTypeByLabel(type), PageRequest.of(page, size));
         List<OrganizationDTO> organizationDTOList = organizations.stream()
                 .map(OrganizationDTO::form)
                 .collect(Collectors.toList());
@@ -57,13 +57,13 @@ public class OrganizationController {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>("Validation errors: " + bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
         }
-        OrganizationDTO organizationDTO1 = OrganizationDTO.form(organizationServices.updateOrganizationProfile(organizationDTO, id));
+        OrganizationDTO organizationDTO1 = OrganizationDTO.form(organizationService.updateOrganizationProfile(organizationDTO, id));
         return new ResponseEntity<>(organizationDTO1, HttpStatus.OK);
     }
 
     @GetMapping("/getOrganizationById/{id}")
     public ResponseEntity<?> getOrganizationById(@PathVariable Long id) {
-        OrganizationDTO organizationDTO = OrganizationDTO.form(organizationServices.getOrganizationById(id));
+        OrganizationDTO organizationDTO = OrganizationDTO.form(organizationService.getOrganizationById(id));
         return new ResponseEntity<>(organizationDTO, HttpStatus.OK);
     }
 
@@ -71,7 +71,7 @@ public class OrganizationController {
     public ResponseEntity<?> searchByName(@PathVariable String name,
                                           @RequestParam(defaultValue = "0") int page,
                                           @RequestParam(defaultValue = "10") int size) {
-        return new ResponseEntity<>(organizationServices.searchOrgByName(name, PageRequest.of(page,size))
+        return new ResponseEntity<>(organizationService.searchOrgByName(name, PageRequest.of(page,size))
                 .stream()
                 .map(OrganizationDTO::form)
                 .toList(), HttpStatus.OK);
@@ -79,6 +79,6 @@ public class OrganizationController {
 
     @GetMapping("/getCreationTime/{id}")
     public ResponseEntity<?> getCreationTime(@PathVariable Long id) {
-        return new ResponseEntity<>(organizationServices.getCreationTime(id).toString(), HttpStatus.OK);
+        return new ResponseEntity<>(organizationService.getCreationTime(id).toString(), HttpStatus.OK);
     }
 }
