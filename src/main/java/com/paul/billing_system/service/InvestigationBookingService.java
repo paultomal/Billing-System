@@ -5,6 +5,7 @@ import com.paul.billing_system.entity.*;
 import com.paul.billing_system.repository.*;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +30,7 @@ public class InvestigationBookingService {
         return investigationRepository.findAll(pageRequest).getContent();
     }
 
+    @Transactional
     public InvestigationBooking addBooking(InvestigationBookingDTO investigationBookingDTO) {
 
         InvestigationBooking book = new InvestigationBooking();
