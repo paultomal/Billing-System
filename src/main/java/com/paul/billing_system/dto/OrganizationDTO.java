@@ -2,14 +2,13 @@ package com.paul.billing_system.dto;
 
 import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.enums.OrganizationTypes;
+import com.paul.billing_system.enums.UserRoles;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -40,6 +39,8 @@ public class OrganizationDTO {
 
     private String operatingHour;
 
+    private int noOfOrgAdmins;
+
     public static OrganizationDTO form(Organization organization) {
         OrganizationDTO organizationDTO = new OrganizationDTO();
         organizationDTO.setId(organization.getId());
@@ -52,6 +53,12 @@ public class OrganizationDTO {
         organizationDTO.setEmergencyContact(organization.getEmergencyContact());
         organizationDTO.setOperatingHour(organization.getOperatingHour());
         organizationDTO.setOrgCode(organization.getOrgCode());
+        organizationDTO.setNoOfOrgAdmins(organization.getUserList()
+                .stream()
+                .filter(u -> u.getRoles().equals(UserRoles.ROLE_ORG_ADMIN))
+                .toList()
+                .size());
+
         return organizationDTO;
     }
 }
