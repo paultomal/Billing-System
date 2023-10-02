@@ -36,6 +36,16 @@ public class OrganizationController {
     }
 
     @PreAuthorize("hasAuthority('ROLE_ROOT')")
+    @PutMapping("/updateOrganizationProfile/{id}")
+    public ResponseEntity<?> updateOrganizationProfile(@Valid @PathVariable Long id, @RequestBody OrganizationDTO organizationDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>("Validation errors: " + bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+        }
+        OrganizationDTO organizationDTO1 = OrganizationDTO.form(organizationService.updateOrganizationProfile(organizationDTO, id));
+        return new ResponseEntity<>(organizationDTO1, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAuthority('ROLE_ROOT')")
     @GetMapping("/OrganizationType")
     public List<String> getAllOrganizationTypesList() {
         return OrganizationTypes.getAllOrganizationTypesList();
@@ -51,16 +61,6 @@ public class OrganizationController {
                 .map(OrganizationDTO::form)
                 .collect(Collectors.toList());
         return new ResponseEntity<>(organizationDTOList, HttpStatus.OK);
-    }
-
-    @PreAuthorize("hasAuthority('ROLE_ROOT')")
-    @PutMapping("/updateOrganizationProfile/{id}")
-    public ResponseEntity<?> updateOrganizationProfile(@Valid @PathVariable Long id, @RequestBody OrganizationDTO organizationDTO, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return new ResponseEntity<>("Validation errors: " + bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
-        }
-        OrganizationDTO organizationDTO1 = OrganizationDTO.form(organizationService.updateOrganizationProfile(organizationDTO, id));
-        return new ResponseEntity<>(organizationDTO1, HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyAuthority('ROLE_ROOT','ROLE_ORG_ADMIN','ROLE_ADMIN')")

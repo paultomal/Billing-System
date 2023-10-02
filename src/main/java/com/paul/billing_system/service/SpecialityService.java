@@ -1,11 +1,13 @@
 package com.paul.billing_system.service;
 
+import com.paul.billing_system.dto.SpecialityDTO;
 import com.paul.billing_system.entity.Speciality;
 import com.paul.billing_system.repository.SpecialityRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,5 +31,25 @@ public class SpecialityService {
 
     public List<Speciality> searchSpecialist(String name, PageRequest pageRequest) {
         return specialityRepository.findBySearch(name, pageRequest);
+    }
+
+    public Speciality addSpeciality(SpecialityDTO specialityDTO) {
+        Speciality speciality = new Speciality();
+        speciality.setMedSpecName(specialityDTO.getMedSpecName());
+        speciality.setIconUrl(specialityDTO.getIconUrl());
+        speciality.setCreatedAt(new Date());
+        return specialityRepository.save(speciality);
+    }
+
+    public Speciality updateSpeciality(Long sId, SpecialityDTO specialityDTO) {
+        Optional<Speciality> speciality = specialityRepository.findById(sId);
+
+        if (speciality.isPresent()){
+            speciality.get().setMedSpecName(specialityDTO.getMedSpecName());
+            speciality.get().setIconUrl(specialityDTO.getIconUrl());
+            speciality.get().setUpdatedAt(new Date());
+            return specialityRepository.save(speciality.get());
+        }
+        return null;
     }
 }

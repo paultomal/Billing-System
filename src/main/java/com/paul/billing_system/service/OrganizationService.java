@@ -34,9 +34,6 @@ public class OrganizationService {
         organization.setOperatingHour(organizationDTO.getOperatingHour());
         organization.setCreatedAt(new Date());
 
-/*        List<Speciality> specialities = specialityRepository.findAll();
-
-        organization.setSpecialities(specialities);*/
         organization =organizationRepository.save(organization);
 
         return organization;
