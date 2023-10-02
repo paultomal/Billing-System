@@ -45,4 +45,7 @@ public class Organization extends BaseEntity {
     private String emergencyContact;
 
     private String operatingHour;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "organization")
+    private List<UserInfo> userList;
 }
