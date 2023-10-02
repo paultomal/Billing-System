@@ -57,13 +57,15 @@ public class DrugService {
 
         return drugs.stream()
                 .peek(drugDTO -> {
-            OrgDrugPriceQuantity orgDrugPriceQuantity = priceQuantityRepository.findByOrganizationIdAndDrugId(orgId, drugDTO.getId());
-            if(orgDrugPriceQuantity.getPrice() != null) {
-                drugDTO.setPrice(orgDrugPriceQuantity.getPrice());
-            }
-            if(orgDrugPriceQuantity.getQuantity() != null) {
-                drugDTO.setQuantity(orgDrugPriceQuantity.getQuantity());
-            }
+                    OrgDrugPriceQuantity orgDrugPriceQuantity = priceQuantityRepository.findByOrganizationIdAndDrugId(orgId, drugDTO.getId());
+                    if (orgDrugPriceQuantity != null) {
+                        if (orgDrugPriceQuantity.getPrice() != null) {
+                            drugDTO.setPrice(orgDrugPriceQuantity.getPrice());
+                        }
+                        if (orgDrugPriceQuantity.getQuantity() != null) {
+                            drugDTO.setQuantity(orgDrugPriceQuantity.getQuantity());
+                        }
+                    }
                 })
                 .toList();
     }
