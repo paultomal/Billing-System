@@ -53,11 +53,11 @@ public class OrganizationDTO {
         organizationDTO.setEmergencyContact(organization.getEmergencyContact());
         organizationDTO.setOperatingHour(organization.getOperatingHour());
         organizationDTO.setOrgCode(organization.getOrgCode());
-        organizationDTO.setNoOfOrgAdmins(organization.getUserList()
+        organizationDTO.setNoOfOrgAdmins(organization.getUserList() != null ? organization.getUserList()
                 .stream()
                 .filter(u -> u.getRoles().equals(UserRoles.ROLE_ORG_ADMIN))
                 .toList()
-                .size());
+                .size() : 0);
 
         return organizationDTO;
     }
