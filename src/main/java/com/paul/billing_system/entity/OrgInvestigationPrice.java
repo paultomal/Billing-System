@@ -1,6 +1,5 @@
 package com.paul.billing_system.entity;
 
-import com.paul.billing_system.dto.OrgBasedInvestigationDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class OrgBasedInvestigation {
+public class OrgInvestigationPrice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

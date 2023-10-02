@@ -23,13 +23,13 @@ public class InvestigationBooking extends BaseEntity {
     @JoinColumn(name = "org_id", referencedColumnName = "id")
     private Organization organization;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToMany
     @JoinTable(
-            name = "booking_investigation",
-            joinColumns = @JoinColumn(name = "booking_id", referencedColumnName = "id"),
+            name = "book_investigation",
+            joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "invastigaion_id")
     )
-    private List<OrgBasedInvestigation> orgBasedInvestigationList;
+    private List<Investigation> investigationList;
 
     @ManyToOne
     @JoinColumn(name = "patient_id", referencedColumnName = "id")

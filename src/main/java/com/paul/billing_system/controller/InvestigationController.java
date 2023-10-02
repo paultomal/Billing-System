@@ -70,4 +70,11 @@ public class InvestigationController {
                 .toList(), HttpStatus.OK);
 
     }
+    @GetMapping("/getAllInvestigations/{orgId}")
+    public List<InvestigationDTO> getAllInvestigations(@PathVariable Long orgId,
+                                                       @RequestParam(defaultValue = "0") int page,
+                                                       @RequestParam(defaultValue = "10") int size){
+        return investigationService.getAllInvestigations(orgId, PageRequest.of(page,size));
+    }
+
 }

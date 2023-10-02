@@ -1,8 +1,6 @@
 package com.paul.billing_system.service;
 
 import com.paul.billing_system.dto.InvestigationBookingDTO;
-import com.paul.billing_system.dto.InvestigationDTO;
-import com.paul.billing_system.dto.OrgBasedInvestigationDTO;
 import com.paul.billing_system.entity.*;
 import com.paul.billing_system.repository.*;
 import org.springframework.data.domain.PageRequest;
@@ -18,7 +16,9 @@ public class InvestigationBookingService {
     private final InvestigationRepository investigationRepository;
     private final OrganizationRepository organizationRepository;
 
-    public InvestigationBookingService(InvestigationBookingRepository investigationBookingRepository, PatientRepository patientRepository, InvestigationRepository investigationRepository, SpecialityRepository specialityRepository, OrganizationRepository organizationRepository) {
+
+    public InvestigationBookingService(InvestigationBookingRepository investigationBookingRepository, PatientRepository patientRepository,
+                                       InvestigationRepository investigationRepository,  OrganizationRepository organizationRepository) {
         this.bookingRepository = investigationBookingRepository;
         this.patientRepository = patientRepository;
         this.investigationRepository = investigationRepository;
@@ -47,31 +47,19 @@ public class InvestigationBookingService {
             book.setPatient(patient.get());
         }
 
-
         book.setOrganization(organizationRepository.findById(investigationBookingDTO.getOrg_id()).orElse(null));
 
-        List<OrgBasedInvestigationDTO> orgBasedInvestigationDTOList = investigationBookingDTO.getInvestigationDTOList();
-        book.setOrgBasedInvestigationList(orgBasedInvestigationDTOList.stream().map(this::form).toList());
+        book.setInvestigationList(investigationBookingDTO
+                .getInvestigationDTOList()
+                .stream()
+                .map(investigationDTO -> investigationRepository.findById(investigationDTO.getId()).orElse(null))
+                .toList());
 
         book.setTotal(investigationBookingDTO.getTotal());
 
         return bookingRepository.save(book);
     }
 
-    public OrgBasedInvestigation form(OrgBasedInvestigationDTO orgBasedInvestigationDTO) {
-
-        OrgBasedInvestigation orgBasedInvestigation = new OrgBasedInvestigation();
-
-
-        orgBasedInvestigation.setOrganization(organizationRepository.findById(orgBasedInvestigationDTO.getOrgId()).orElse(null));
-
-        Double orgInvestigationCharge = orgBasedInvestigationDTO.getOrgInvestigationCharge();
-        orgBasedInvestigation.setOrgInvestigationCharge(orgInvestigationCharge);
-
-        orgBasedInvestigation.setInvestigation(investigationRepository.findById(orgBasedInvestigationDTO.getInvestigationId()).orElse(null));
-        orgBasedInvestigation.setOrgInvestigationCharge(orgBasedInvestigation.getOrgInvestigationCharge());
-        return orgBasedInvestigation;
-    }
 
     public InvestigationBooking getInvestigationBookingById(Long bookInvestigationId) {
         Optional<InvestigationBooking> investigationBooking = bookingRepository.findById(bookInvestigationId);

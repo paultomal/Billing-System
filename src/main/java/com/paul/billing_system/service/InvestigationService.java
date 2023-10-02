@@ -2,7 +2,9 @@ package com.paul.billing_system.service;
 
 import com.paul.billing_system.dto.InvestigationDTO;
 import com.paul.billing_system.entity.Investigation;
+import com.paul.billing_system.entity.OrgInvestigationPrice;
 import com.paul.billing_system.repository.InvestigationRepository;
+import com.paul.billing_system.repository.OrgInvestigationPriceRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,24 +16,26 @@ import java.util.Optional;
 @Service
 public class InvestigationService {
     private final InvestigationRepository investigationRepository;
+    private final OrgInvestigationPriceRepository orgInvestigationPriceRepository;
 
 
-    public InvestigationService(InvestigationRepository investigationRepository) {
+    public InvestigationService(InvestigationRepository investigationRepository, OrgInvestigationPriceRepository orgInvestigationPriceRepository) {
         this.investigationRepository = investigationRepository;
 
+        this.orgInvestigationPriceRepository = orgInvestigationPriceRepository;
     }
 
     @Transactional
     public Investigation saveInvestigation(InvestigationDTO investigationDTO) {
         Investigation investigation = new Investigation();
-            investigation.setServiceName(investigationDTO.getServiceName());
-            investigation.setServiceCharge(investigationDTO.getServiceCharge());
-            investigationRepository.save(investigation);
+        investigation.setServiceName(investigationDTO.getServiceName());
+        investigation.setServiceCharge(investigationDTO.getServiceCharge());
+        investigationRepository.save(investigation);
         return investigation;
     }
 
-    public List<Investigation> getAllServices( PageRequest pageRequest) {
-                return investigationRepository.findAll(pageRequest).getContent();
+    public List<Investigation> getAllServices(PageRequest pageRequest) {
+        return investigationRepository.findAll(pageRequest).getContent();
     }
 
     public Investigation getServiceById(Long id) {
@@ -56,5 +60,25 @@ public class InvestigationService {
 
     public List<Investigation> searchInvestigation(String name, PageRequest pageRequest) {
         return investigationRepository.searchByName(name, pageRequest);
+    }
+
+    public List<InvestigationDTO> getAllInvestigations(Long orgId, PageRequest pageRequest) {
+
+        List<InvestigationDTO> investigations = investigationRepository.findAll(pageRequest)
+                .getContent()
+                .stream()
+                .map(InvestigationDTO::form)
+                .toList();
+
+        return investigations.stream()
+                .peek(
+                        investigationDTO -> {
+                            OrgInvestigationPrice orgInvestigationPrice = orgInvestigationPriceRepository
+                                    .findByOrganizationAndInvestigation(orgId, investigationDTO.getId());
+                            if (orgInvestigationPrice != null) {
+                                if (orgInvestigationPrice.getOrgInvestigationCharge() != null)
+                                    investigationDTO.setOrgInvestigationCharge(orgInvestigationPrice.getOrgInvestigationCharge());
+                            }
+                        }).toList();
     }
 }
