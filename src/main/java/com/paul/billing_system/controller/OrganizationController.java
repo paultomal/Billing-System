@@ -63,14 +63,14 @@ public class OrganizationController {
         return new ResponseEntity<>(organizationDTO1, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_ROOT','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ROOT','ROLE_ORG_ADMIN','ROLE_ADMIN')")
     @GetMapping("/getOrganizationById/{id}")
     public ResponseEntity<?> getOrganizationById(@PathVariable Long id) {
         OrganizationDTO organizationDTO = OrganizationDTO.form(organizationService.getOrganizationById(id));
         return new ResponseEntity<>(organizationDTO, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_ROOT','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ROOT','ROLE_ORG_ADMIN','ROLE_ADMIN')")
     @GetMapping("/search/{name}")
     public ResponseEntity<?> searchByName(@PathVariable String name,
                                           @RequestParam(defaultValue = "0") int page,

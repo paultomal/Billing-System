@@ -50,13 +50,15 @@ public class DrugController {
     }
 
     @GetMapping("/getDrug/{id}/{orgId}")
-    public DrugDTO getDrugByIdAndOrgId(@PathVariable Long id, @PathVariable Long orgId) {
+    public DrugDTO getDrugByIdAndOrgId(@PathVariable Long id,
+                                       @PathVariable Long orgId) {
         return drugService.getDrugOfOrg(id, orgId);
     }
 
     @PreAuthorize("hasAuthority('ROLE_ROOT')")
     @PutMapping("/updateDrug/{id}")
-    public DrugDTO updateDrug(@PathVariable Long id, @RequestBody DrugDTO drugDTO) {
+    public DrugDTO updateDrug(@PathVariable Long id,
+                              @RequestBody DrugDTO drugDTO) {
         return drugService.updateDrug(id, drugDTO);
     }
 
@@ -66,6 +68,7 @@ public class DrugController {
         return orgDrugPriceQuantityService.updatePriceQuantity(priceQuantityDTO);
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ROOT')")
     @DeleteMapping("/deleteDrug/{id}")
     public String deleteDrug(@PathVariable Long id) {
         return drugService.deleteDrug(id);
@@ -78,17 +81,25 @@ public class DrugController {
         return drugService.searchDrugByBrandName(brandName, PageRequest.of(page, size));
     }
 
+    @GetMapping("/searchDrugByBrandNameAndOrgId/{orgId}/{brandName}")
+    public List<DrugDTO> searchDrugByBrandNameAndOrgId(@PathVariable Long orgId,
+                                                       @PathVariable String brandName,
+                                                       @RequestParam(defaultValue = "0") int page,
+                                                       @RequestParam(defaultValue = "10") int size) {
+        return drugService.searchDrugByBrandNameAndOrgId(orgId, brandName, PageRequest.of(page, size));
+    }
+
     @GetMapping("/searchDrugByVendor/{vendor}")
     public List<DrugDTO> searchDrugByVendor(@PathVariable String vendor,
-                                               @RequestParam(defaultValue = "0") int page,
-                                               @RequestParam(defaultValue = "10") int size) {
+                                            @RequestParam(defaultValue = "0") int page,
+                                            @RequestParam(defaultValue = "10") int size) {
         return drugService.searchDrugByVendor(vendor, PageRequest.of(page, size));
     }
 
     @GetMapping("/searchDrugByGeneric/{generic}")
     public List<DrugDTO> searchDrugByGeneric(@PathVariable String generic,
-                                               @RequestParam(defaultValue = "0") int page,
-                                               @RequestParam(defaultValue = "10") int size) {
+                                             @RequestParam(defaultValue = "0") int page,
+                                             @RequestParam(defaultValue = "10") int size) {
         return drugService.searchDrugByGeneric(generic, PageRequest.of(page, size));
     }
 
@@ -101,8 +112,8 @@ public class DrugController {
 
     @GetMapping("/searchDrugByStrength/{strength}")
     public List<DrugDTO> searchDrugByStrength(@PathVariable String strength,
-                                               @RequestParam(defaultValue = "0") int page,
-                                               @RequestParam(defaultValue = "10") int size) {
+                                              @RequestParam(defaultValue = "0") int page,
+                                              @RequestParam(defaultValue = "10") int size) {
         return drugService.searchDrugByStrength(strength, PageRequest.of(page, size));
     }
 
