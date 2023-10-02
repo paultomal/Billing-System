@@ -45,6 +45,14 @@ public class InvestigationController {
         return new ResponseEntity<>(investigationDTOList, HttpStatus.OK);
     }
 
+    @GetMapping("/getAllInvestigationByOrg/{orgId}")
+    public List<InvestigationDTO> getAllInvestigationByOrg(@PathVariable Long orgId,
+                                                      @RequestParam(defaultValue = "0") int page,
+                                                      @RequestParam(defaultValue = "10") int size
+                                                      ){
+        return investigationService.getAllInvestigationByOrg(orgId, PageRequest.of(page,size));
+      }
+
     @GetMapping("/getInvestigation/{id}")
     public ResponseEntity<?> getServiceById(@PathVariable Long id) {
         InvestigationDTO investigationDTO = InvestigationDTO.form(investigationService.getServiceById(id));

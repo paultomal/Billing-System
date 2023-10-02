@@ -81,4 +81,27 @@ public class InvestigationService {
                             }
                         }).toList();
     }
+
+
+    public List<InvestigationDTO> getAllInvestigationByOrg(Long orgId, PageRequest pageRequest) {
+        List<InvestigationDTO> investigation = investigationRepository.findAll(pageRequest).getContent()
+                .stream()
+                .map(InvestigationDTO::form)
+                .toList();
+        return getInvestigationWithCharge(orgId, investigation);
+    }
+
+
+    private List<InvestigationDTO> getInvestigationWithCharge(Long orgId, List<InvestigationDTO> investigation) {
+        return investigation.stream()
+                .peek(drugDTO -> {
+                    OrgInvestigationPrice orgInvestigationPrice = orgInvestigationPriceRepository.findByOrganizationAndInvestigation(orgId, drugDTO.getId());
+                    if (orgInvestigationPrice != null) {
+                        if (orgInvestigationPrice.getOrgInvestigationCharge() != null) {
+                            drugDTO.setOrgInvestigationCharge(orgInvestigationPrice.getOrgInvestigationCharge());
+                        }
+                    }
+                })
+                .toList();
+    }
 }
