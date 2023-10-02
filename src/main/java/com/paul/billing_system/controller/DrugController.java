@@ -96,11 +96,27 @@ public class DrugController {
         return drugService.searchDrugByVendor(vendor, PageRequest.of(page, size));
     }
 
+    @GetMapping("/searchDrugByVendorAndOrgId/{orgId}/{vendor}")
+    public List<DrugDTO> searchDrugByVendorAndOrgId(@PathVariable Long orgId,
+                                                    @PathVariable String vendor,
+                                                    @RequestParam(defaultValue = "0") int page,
+                                                    @RequestParam(defaultValue = "10") int size) {
+        return drugService.searchDrugByVendorAndOrgId(orgId, vendor, PageRequest.of(page, size));
+    }
+
     @GetMapping("/searchDrugByGeneric/{generic}")
     public List<DrugDTO> searchDrugByGeneric(@PathVariable String generic,
                                              @RequestParam(defaultValue = "0") int page,
                                              @RequestParam(defaultValue = "10") int size) {
         return drugService.searchDrugByGeneric(generic, PageRequest.of(page, size));
+    }
+
+    @GetMapping("/searchDrugByGenericAndOrgId/{orgId}/{generic}")
+    public List<DrugDTO> searchDrugByGenericAndOrgId(@PathVariable Long orgId,
+                                                     @PathVariable String generic,
+                                                     @RequestParam(defaultValue = "0") int page,
+                                                     @RequestParam(defaultValue = "10") int size) {
+        return drugService.searchDrugByGenericAndOrgId(orgId, generic, PageRequest.of(page, size));
     }
 
     @GetMapping("/searchDrugByFormation/{formation}")
@@ -110,11 +126,27 @@ public class DrugController {
         return drugService.searchDrugByFormation(formation, PageRequest.of(page, size));
     }
 
+    @GetMapping("/searchDrugByFormationAndOrgId/{orgId}/{formation}")
+    public List<DrugDTO> searchDrugByFormationAndOrgId(@PathVariable Long orgId,
+                                                       @PathVariable String formation,
+                                                       @RequestParam(defaultValue = "0") int page,
+                                                       @RequestParam(defaultValue = "10") int size) {
+        return drugService.searchDrugByFormationAndOrgId(orgId, formation, PageRequest.of(page, size));
+    }
+
     @GetMapping("/searchDrugByStrength/{strength}")
     public List<DrugDTO> searchDrugByStrength(@PathVariable String strength,
                                               @RequestParam(defaultValue = "0") int page,
                                               @RequestParam(defaultValue = "10") int size) {
         return drugService.searchDrugByStrength(strength, PageRequest.of(page, size));
+    }
+
+    @GetMapping("/searchDrugByStrengthAndOrgId/{orgId}/{strength}")
+    public List<DrugDTO> searchDrugByStrengthAndOrgId(@PathVariable Long orgId,
+                                                      @PathVariable String strength,
+                                                      @RequestParam(defaultValue = "0") int page,
+                                                      @RequestParam(defaultValue = "10") int size) {
+        return drugService.searchDrugByStrengthAndOrgId(orgId, strength, PageRequest.of(page, size));
     }
 
 }

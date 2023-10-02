@@ -131,11 +131,29 @@ public class DrugService {
                 .toList();
     }
 
+    public List<DrugDTO> searchDrugByVendorAndOrgId(Long orgId, String name, PageRequest pageRequest) {
+        List<DrugDTO> searchedDrugs = drugRepository.searchByVendor(name, pageRequest)
+                .stream()
+                .map(DrugDTO::form)
+                .toList();
+
+        return getDrugsWithPriceAndQuantity(orgId, searchedDrugs);
+    }
+
     public List<DrugDTO> searchDrugByGeneric(String name, PageRequest pageRequest) {
         return drugRepository.searchByGeneric(name, pageRequest)
                 .stream()
                 .map(DrugDTO::form)
                 .toList();
+    }
+
+    public List<DrugDTO> searchDrugByGenericAndOrgId(Long orgId, String name, PageRequest pageRequest) {
+        List<DrugDTO> searchedDrugs = drugRepository.searchByGeneric(name, pageRequest)
+                .stream()
+                .map(DrugDTO::form)
+                .toList();
+
+        return getDrugsWithPriceAndQuantity(orgId, searchedDrugs);
     }
 
     public List<DrugDTO> searchDrugByFormation(String name, PageRequest pageRequest) {
@@ -145,11 +163,29 @@ public class DrugService {
                 .toList();
     }
 
+    public List<DrugDTO> searchDrugByFormationAndOrgId(Long orgId, String name, PageRequest pageRequest) {
+        List<DrugDTO> searchedDrugs = drugRepository.searchByFormation(name, pageRequest)
+                .stream()
+                .map(DrugDTO::form)
+                .toList();
+
+        return getDrugsWithPriceAndQuantity(orgId, searchedDrugs);
+    }
+
     public List<DrugDTO> searchDrugByStrength(String name, PageRequest pageRequest) {
         return drugRepository.searchByStrength(name, pageRequest)
                 .stream()
                 .map(DrugDTO::form)
                 .toList();
+    }
+
+    public List<DrugDTO> searchDrugByStrengthAndOrgId(Long orgId, String name, PageRequest pageRequest) {
+        List<DrugDTO> searchedDrugs = drugRepository.searchByStrength(name, pageRequest)
+                .stream()
+                .map(DrugDTO::form)
+                .toList();
+
+        return getDrugsWithPriceAndQuantity(orgId, searchedDrugs);
     }
 
     private List<DrugDTO> getDrugsWithPriceAndQuantity(Long orgId, List<DrugDTO> drugs) {
