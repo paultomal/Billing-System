@@ -9,8 +9,8 @@ public enum DaysOfWeek {
     TUESDAY("Tuesday"),
     WEDNESDAY("Wednesday"),
     THURSDAY("Thursday"),
-    FRIDAY("friday"),
-    SATURDAY("friday");
+    FRIDAY("Friday"),
+    SATURDAY("Saturday");
 
     private final String label;
 
