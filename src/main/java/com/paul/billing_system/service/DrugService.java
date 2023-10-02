@@ -55,19 +55,7 @@ public class DrugService {
                 .map(DrugDTO::form)
                 .toList();
 
-        return drugs.stream()
-                .peek(drugDTO -> {
-                    OrgDrugPriceQuantity orgDrugPriceQuantity = priceQuantityRepository.findByOrganizationIdAndDrugId(orgId, drugDTO.getId());
-                    if (orgDrugPriceQuantity != null) {
-                        if (orgDrugPriceQuantity.getPrice() != null) {
-                            drugDTO.setPrice(orgDrugPriceQuantity.getPrice());
-                        }
-                        if (orgDrugPriceQuantity.getQuantity() != null) {
-                            drugDTO.setQuantity(orgDrugPriceQuantity.getQuantity());
-                        }
-                    }
-                })
-                .toList();
+        return getDrugsWithPriceAndQuantity(orgId, drugs);
     }
 
     public DrugDTO getDrugById(Long id) {
@@ -127,6 +115,15 @@ public class DrugService {
                 .toList();
     }
 
+    public List<DrugDTO> searchDrugByBrandNameAndOrgId(Long orgId, String name, PageRequest pageRequest) {
+        List<DrugDTO> searchedDrugs = drugRepository.searchByName(name, pageRequest)
+                .stream()
+                .map(DrugDTO::form)
+                .toList();
+
+        return getDrugsWithPriceAndQuantity(orgId, searchedDrugs);
+    }
+
     public List<DrugDTO> searchDrugByVendor(String name, PageRequest pageRequest) {
         return drugRepository.searchByVendor(name, pageRequest)
                 .stream()
@@ -152,6 +149,22 @@ public class DrugService {
         return drugRepository.searchByStrength(name, pageRequest)
                 .stream()
                 .map(DrugDTO::form)
+                .toList();
+    }
+
+    private List<DrugDTO> getDrugsWithPriceAndQuantity(Long orgId, List<DrugDTO> drugs) {
+        return drugs.stream()
+                .peek(drugDTO -> {
+                    OrgDrugPriceQuantity orgDrugPriceQuantity = priceQuantityRepository.findByOrganizationIdAndDrugId(orgId, drugDTO.getId());
+                    if (orgDrugPriceQuantity != null) {
+                        if (orgDrugPriceQuantity.getPrice() != null) {
+                            drugDTO.setPrice(orgDrugPriceQuantity.getPrice());
+                        }
+                        if (orgDrugPriceQuantity.getQuantity() != null) {
+                            drugDTO.setQuantity(orgDrugPriceQuantity.getQuantity());
+                        }
+                    }
+                })
                 .toList();
     }
 }
