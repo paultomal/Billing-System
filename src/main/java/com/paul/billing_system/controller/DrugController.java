@@ -44,6 +44,13 @@ public class DrugController {
         return drugService.getAllDrugsOfOrg(orgId, PageRequest.of(page,size));
     }
 
+    @GetMapping("/getAllDrugsDuringOrder/{orgId}")
+    public List<DrugDTO> getDrugsByOrgIdDuringOrder(@PathVariable Long orgId,
+                                         @RequestParam(defaultValue = "0") int page,
+                                         @RequestParam(defaultValue = "10") int size) {
+        return drugService.getAllDrugsOfOrgDuringOrder(orgId, PageRequest.of(page,size));
+    }
+
     @GetMapping("/getDrug/{id}")
     public DrugDTO getDrug(@PathVariable Long id) {
         return drugService.getDrugById(id);

@@ -48,15 +48,15 @@ public class DrugOrderService {
         drugOrder.setOrganization(organizationRepository.findById(drugOrderDTO.getOrgId()).orElseThrow());
 
         List<DrugDTO> availableDrugs = new ArrayList<>();
-        drugOrderDTO.getDrugList().stream().peek(d -> {
-            OrgDrugPriceQuantity drugPriceQuantity = priceQuantityRepository.findByOrganizationIdAndDrugId(drugOrderDTO.getOrgId(), d.getId());
+        for(DrugDTO drug : drugOrderDTO.getDrugList()) {
+            OrgDrugPriceQuantity drugPriceQuantity = priceQuantityRepository.findByOrganizationIdAndDrugId(drugOrderDTO.getOrgId(), drug.getId());
             if(drugPriceQuantity != null) {
                 if(drugPriceQuantity.getQuantity() != null && drugPriceQuantity.getQuantity() > 0) {
-                    availableDrugs.add(d);
+                    availableDrugs.add(drug);
                     drugPriceQuantity.setQuantity(drugPriceQuantity.getQuantity() - 1);
                 }
             }
-        });
+        }
 
         List<Double> priceList = availableDrugs.stream().map(DrugDTO::getPrice).toList();
         Double total = priceList.stream().reduce(0.0, Double::sum);
