@@ -70,7 +70,7 @@ public class InvestigationController {
     public List<InvestigationDTO> getAllInvestigations(@PathVariable Long orgId,
                                                        @RequestParam(defaultValue = "0") int page,
                                                        @RequestParam(defaultValue = "10") int size){
-        return investigationService.getAllInvestigations(orgId, PageRequest.of(page,size));
+        return investigationService.getAllInvestigationByOrg(orgId, PageRequest.of(page,size));
     }
 
 
@@ -79,15 +79,7 @@ public class InvestigationController {
         InvestigationDTO investigationDTO = InvestigationDTO.form(investigationService.getServiceById(id));
         return new ResponseEntity<>(investigationDTO, HttpStatus.OK);
     }
+
 }
 
 
-/*
-        @GetMapping("/getAllInvestigationByOrg/{orgId}")
-        public List<InvestigationDTO> getAllInvestigationByOrg(@PathVariable Long orgId,
-                                                          @RequestParam(defaultValue = "0") int page,
-                                                          @RequestParam(defaultValue = "10") int size
-                                                          ){
-            return investigationService.getAllInvestigationByOrg(orgId, PageRequest.of(page,size));
-          }
-    */
