@@ -51,6 +51,7 @@ public class InvestigationBookingService {
             Patient patients1 = new Patient();
             patients1.setName(investigationBookingDTO.getP_name());
             patients1.setContact(investigationBookingDTO.getContact());
+            patients1.setOrganization(organizationRepository.findById(investigationBookingDTO.getOrg_id()).orElseThrow());
             patients1 = patientRepository.save(patients1);
             book.setPatient(patients1);
         } else {
