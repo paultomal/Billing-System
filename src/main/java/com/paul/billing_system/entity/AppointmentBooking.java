@@ -34,6 +34,8 @@ public class AppointmentBooking {
 
     private String discount;
 
+    private String slot;
+
     @NotNull
     private Double totalFees;
 
