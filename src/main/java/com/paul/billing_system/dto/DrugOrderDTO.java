@@ -1,6 +1,5 @@
 package com.paul.billing_system.dto;
 
-import com.paul.billing_system.entity.DrugOrder;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,17 +27,4 @@ public class DrugOrderDTO {
 
     @NotNull
     private Double total;
-
-    public static DrugOrderDTO form(DrugOrder drugOrder) {
-        DrugOrderDTO drugOrderDTO = new DrugOrderDTO();
-        drugOrderDTO.setId(drugOrder.getId());
-        drugOrderDTO.setPatientId(drugOrder.getPatient().getId());
-        drugOrderDTO.setPatientName(drugOrder.getPatient().getName());
-        drugOrderDTO.setPatientContact(drugOrder.getPatient().getContact());
-        drugOrderDTO.setOrgId(drugOrder.getOrganization().getId());
-        drugOrderDTO.setDrugList(drugOrder.getDrugList().stream().map(DrugDTO::form).toList());
-        drugOrderDTO.setTotal(drugOrder.getTotal());
-
-        return drugOrderDTO;
-    }
 }
