@@ -52,6 +52,7 @@ public class DrugOrderService {
             OrgDrugPriceQuantity drugPriceQuantity = priceQuantityRepository.findByOrganizationIdAndDrugId(drugOrderDTO.getOrgId(), drug.getId());
             if(drugPriceQuantity != null) {
                 if(drugPriceQuantity.getQuantity() != null && drugPriceQuantity.getQuantity() > 0) {
+                    drug.setPrice(drugPriceQuantity.getPrice());
                     availableDrugs.add(drug);
                     drugPriceQuantity.setQuantity(drugPriceQuantity.getQuantity() - 1);
                 }
