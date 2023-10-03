@@ -62,7 +62,7 @@ public class InvestigationService {
         return investigationRepository.searchByName(name, pageRequest);
     }
 
-    public List<InvestigationDTO> getAllInvestigations(Long orgId, PageRequest pageRequest) {
+/*    public List<InvestigationDTO> getAllInvestigations(Long orgId, PageRequest pageRequest) {
 
         List<InvestigationDTO> investigations = investigationRepository.findAll(pageRequest)
                 .getContent()
@@ -80,10 +80,10 @@ public class InvestigationService {
                                     investigationDTO.setOrgInvestigationCharge(orgInvestigationPrice.getOrgInvestigationCharge());
                             }
                         }).toList();
-    }
+    }*/
 
 
-/*    public List<InvestigationDTO> getAllInvestigationByOrg(Long orgId, PageRequest pageRequest) {
+    public List<InvestigationDTO> getAllInvestigationByOrg(Long orgId, PageRequest pageRequest) {
         List<InvestigationDTO> investigation = investigationRepository.findAll(pageRequest).getContent()
                 .stream()
                 .map(InvestigationDTO::form)
@@ -94,14 +94,14 @@ public class InvestigationService {
 
     private List<InvestigationDTO> getInvestigationWithCharge(Long orgId, List<InvestigationDTO> investigation) {
         return investigation.stream()
-                .peek(drugDTO -> {
-                    OrgInvestigationPrice orgInvestigationPrice = orgInvestigationPriceRepository.findByOrganizationAndInvestigation(orgId, drugDTO.getId());
+                .peek(investigationDTO -> {
+                    OrgInvestigationPrice orgInvestigationPrice = orgInvestigationPriceRepository.findByOrganizationAndInvestigation(orgId, investigationDTO.getId());
                     if (orgInvestigationPrice != null) {
                         if (orgInvestigationPrice.getOrgInvestigationCharge() != null) {
-                            drugDTO.setOrgInvestigationCharge(orgInvestigationPrice.getOrgInvestigationCharge());
+                            investigationDTO.setOrgInvestigationCharge(orgInvestigationPrice.getOrgInvestigationCharge());
                         }
                     }
                 })
                 .toList();
-    }*/
+    }
 }
