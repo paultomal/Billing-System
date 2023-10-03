@@ -30,6 +30,8 @@ public class AppointmentBookingDTO {
 
     private String discount;
 
+    private String slot;
+
     @NotNull
     private Double totalFees;
 
@@ -47,6 +49,7 @@ public class AppointmentBookingDTO {
         appointmentBookingDTO.setDoc_name(appointmentBooking.getDoctor().getName());
         appointmentBookingDTO.setConsultationFee(appointmentBooking.getDoctor().getConsultationFee());
         appointmentBookingDTO.setDiscount(appointmentBooking.getDiscount());
+        appointmentBookingDTO.setSlot(appointmentBooking.getSlot());
         appointmentBookingDTO.setTotalFees(appointmentBooking.getTotalFees());
 
         return appointmentBookingDTO;

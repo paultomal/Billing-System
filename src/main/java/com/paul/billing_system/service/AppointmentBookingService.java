@@ -52,6 +52,7 @@ public class AppointmentBookingService {
         appointmentBooking.setDoctor(doctorRepository.findById(appointmentBookingDTO.getDoc_id()).orElseThrow());
         appointmentBooking.setConsultationFee(appointmentBookingDTO.getConsultationFee());
         appointmentBooking.setDiscount(appointmentBookingDTO.getDiscount());
+        appointmentBooking.setSlot(appointmentBookingDTO.getSlot());
         appointmentBooking.setTotalFees(appointmentBookingDTO.getTotalFees());
 
         return AppointmentBookingDTO.form(appointmentBookingRepository.save(appointmentBooking));
