@@ -89,6 +89,14 @@ public class DrugController {
         return drugService.searchDrugByBrandNameAndOrgId(orgId, brandName, PageRequest.of(page, size));
     }
 
+    @GetMapping("/searchDrugByBrandNameAndOrgIdDuringOrder/{orgId}/{brandName}")
+    public List<DrugDTO> searchDrugByBrandNameAndOrgIdDuringOrder(@PathVariable Long orgId,
+                                                                  @PathVariable String brandName,
+                                                                  @RequestParam(defaultValue = "0") int page,
+                                                                  @RequestParam(defaultValue = "10") int size) {
+        return drugService.searchDrugByBrandNameAndOrgIdDuringOrder(orgId, brandName, PageRequest.of(page, size));
+    }
+
     @GetMapping("/searchDrugByVendor/{vendor}")
     public List<DrugDTO> searchDrugByVendor(@PathVariable String vendor,
                                             @RequestParam(defaultValue = "0") int page,
