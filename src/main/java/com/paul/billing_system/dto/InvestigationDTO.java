@@ -15,8 +15,6 @@ public class InvestigationDTO {
 
     private Double serviceCharge;
 
-    private Double orgInvestigationCharge;
-
     public static InvestigationDTO form(Investigation investigation) {
         InvestigationDTO investigationDTO = new InvestigationDTO();
         investigationDTO.setId(investigation.getId());

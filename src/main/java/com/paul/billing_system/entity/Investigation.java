@@ -11,12 +11,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-@EqualsAndHashCode(callSuper = true)
+//@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Investigation extends BaseEntity {
+public class Investigation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

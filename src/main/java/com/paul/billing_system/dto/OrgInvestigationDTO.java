@@ -15,13 +15,16 @@ public class OrgInvestigationDTO {
 
     private Long investigationId;
 
-    private Double orgInvestigationCharge;
+    private String serviceName;
+
+    private Double serviceCharge;
 
     public static OrgInvestigationDTO form(OrgInvestigationPrice orgInvestigationPrice) {
         OrgInvestigationDTO orgInvestigationDTO = new OrgInvestigationDTO();
         orgInvestigationDTO.setOrgId(orgInvestigationPrice.getOrganization().getId());
         orgInvestigationDTO.setInvestigationId(orgInvestigationPrice.getInvestigation().getId());
-        orgInvestigationDTO.setOrgInvestigationCharge(orgInvestigationPrice.getOrgInvestigationCharge());
+        orgInvestigationDTO.setServiceName(orgInvestigationPrice.getInvestigation().getServiceName());
+        orgInvestigationDTO.setServiceCharge(orgInvestigationPrice.getServiceCharge());
         return orgInvestigationDTO;
     }
 }
