@@ -1,18 +1,15 @@
 package com.paul.billing_system.service;
 
 import com.paul.billing_system.dto.OrgInvestigationDTO;
-import com.paul.billing_system.entity.Investigation;
 import com.paul.billing_system.entity.OrgInvestigationPrice;
 import com.paul.billing_system.repository.InvestigationRepository;
 import com.paul.billing_system.repository.OrgInvestigationPriceRepository;
 import com.paul.billing_system.repository.OrganizationRepository;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class OrgBasedInvestigationService {
@@ -42,7 +39,7 @@ public class OrgBasedInvestigationService {
                     investigationRepository.findById(orgBasedInvestigationDTO.getInvestigationId()).orElse(null)
             );
 
-            orgInvestigationPrice.setOrgInvestigationCharge(orgBasedInvestigationDTO.getOrgInvestigationCharge());
+            orgInvestigationPrice.setServiceCharge(orgBasedInvestigationDTO.getServiceCharge());
 
             orgInvestigationPriceList.add(orgInvestigationPrice);
         });
@@ -58,7 +55,7 @@ public class OrgBasedInvestigationService {
         }
         orgInvestigationPrice.setOrganization(organizationRepository.findById(orgInvestigationDTO.getOrgId()).orElseThrow());
         orgInvestigationPrice.setInvestigation(investigationRepository.findById(orgInvestigationDTO.getInvestigationId()).orElseThrow());
-        orgInvestigationPrice.setOrgInvestigationCharge(orgInvestigationDTO.getOrgInvestigationCharge());
+        orgInvestigationPrice.setServiceCharge(orgInvestigationDTO.getServiceCharge());
         return OrgInvestigationDTO.form(orgInvestigationPriceRepository.save(orgInvestigationPrice));
     }
 

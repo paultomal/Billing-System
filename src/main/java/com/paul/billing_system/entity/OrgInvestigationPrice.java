@@ -14,7 +14,7 @@ public class OrgInvestigationPrice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Double orgInvestigationCharge;
+    private Double serviceCharge;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "org_id")

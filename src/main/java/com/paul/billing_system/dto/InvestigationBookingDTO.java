@@ -1,5 +1,6 @@
 package com.paul.billing_system.dto;
 
+import com.paul.billing_system.entity.Investigation;
 import com.paul.billing_system.entity.InvestigationBooking;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -22,7 +23,7 @@ public class InvestigationBookingDTO {
 
     private String contact;
 
-    private List<InvestigationDTO> investigationDTOList;
+    private List<InvestigationDTO> investigationList;
 
     @NotNull
     private Double total;
@@ -36,8 +37,10 @@ public class InvestigationBookingDTO {
         bookingDTO.setP_name(booking.getPatient().getName());
         bookingDTO.setContact(booking.getPatient().getContact());
 
-        bookingDTO.setInvestigationDTOList(booking.getInvestigationList().stream().map(InvestigationDTO::form).toList());
+        bookingDTO.setInvestigationList(booking.getInvestigationList().stream().map(InvestigationDTO::form).toList());
+
         bookingDTO.setTotal(booking.getTotal());
         return bookingDTO;
     }
+
 }

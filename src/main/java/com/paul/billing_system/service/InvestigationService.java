@@ -50,7 +50,7 @@ public class InvestigationService {
         if (investigation.isPresent()) {
             investigation.get().setServiceName(investigationDTO.getServiceName());
             investigation.get().setServiceCharge(investigationDTO.getServiceCharge());
-            investigation.get().setUpdatedAt(new Date());
+            //investigation.get().setUpdatedAt(new Date());
 
             return investigationRepository.save(investigation.get());
         }
@@ -61,6 +61,44 @@ public class InvestigationService {
     public List<Investigation> searchInvestigation(String name, PageRequest pageRequest) {
         return investigationRepository.searchByName(name, pageRequest);
     }
+
+
+    public List<InvestigationDTO> getAllInvestigationByOrg(Long orgId, PageRequest pageRequest) {
+        List<InvestigationDTO> investigation = investigationRepository.findAll(pageRequest).getContent()
+                .stream()
+                .map(InvestigationDTO::form)
+                .toList();
+        return getInvestigationWithCharge(orgId, investigation);
+    }
+
+
+
+    private List<InvestigationDTO> getInvestigationWithCharge(Long orgId, List<InvestigationDTO> investigation) {
+        return investigation.stream()
+                .peek(investigationDTO -> {
+                    OrgInvestigationPrice orgInvestigationPrice = orgInvestigationPriceRepository.findByOrganizationAndInvestigation(orgId, investigationDTO.getId());
+                    if (orgInvestigationPrice != null) {
+                        if (orgInvestigationPrice.getServiceCharge() != null) {
+                            investigationDTO.setServiceCharge(orgInvestigationPrice.getServiceCharge());
+                        }
+                    }
+                })
+                .toList();
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*    public List<InvestigationDTO> getAllInvestigations(Long orgId, PageRequest pageRequest) {
 
@@ -83,25 +121,4 @@ public class InvestigationService {
     }*/
 
 
-    public List<InvestigationDTO> getAllInvestigationByOrg(Long orgId, PageRequest pageRequest) {
-        List<InvestigationDTO> investigation = investigationRepository.findAll(pageRequest).getContent()
-                .stream()
-                .map(InvestigationDTO::form)
-                .toList();
-        return getInvestigationWithCharge(orgId, investigation);
-    }
 
-
-    private List<InvestigationDTO> getInvestigationWithCharge(Long orgId, List<InvestigationDTO> investigation) {
-        return investigation.stream()
-                .peek(investigationDTO -> {
-                    OrgInvestigationPrice orgInvestigationPrice = orgInvestigationPriceRepository.findByOrganizationAndInvestigation(orgId, investigationDTO.getId());
-                    if (orgInvestigationPrice != null) {
-                        if (orgInvestigationPrice.getOrgInvestigationCharge() != null) {
-                            investigationDTO.setOrgInvestigationCharge(orgInvestigationPrice.getOrgInvestigationCharge());
-                        }
-                    }
-                })
-                .toList();
-    }
-}

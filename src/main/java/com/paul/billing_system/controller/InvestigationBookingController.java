@@ -28,8 +28,7 @@ public class InvestigationBookingController {
 
     @PostMapping("/addBooking")
     public ResponseEntity<?> addBooking(@RequestBody InvestigationBookingDTO investigationBookingDTO){
-        InvestigationBookingDTO investigationBookingDTO1 = InvestigationBookingDTO.form(bookingServices.addBooking(investigationBookingDTO));
-        return new ResponseEntity<>(investigationBookingDTO1,HttpStatus.OK);
+        return new ResponseEntity<>(bookingServices.addBooking(investigationBookingDTO),HttpStatus.OK);
     }
 
     @GetMapping("/getInvestigationBookingById/{book_investigation_id}")
