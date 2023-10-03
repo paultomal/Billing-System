@@ -124,6 +124,18 @@ public class DrugService {
         return getDrugsWithPriceAndQuantity(orgId, searchedDrugs);
     }
 
+    public List<DrugDTO> searchDrugByBrandNameAndOrgIdDuringOrder(Long orgId, String name, PageRequest pageRequest) {
+        List<DrugDTO> searchedDrugs = drugRepository.searchByName(name, pageRequest)
+                .stream()
+                .map(DrugDTO::form)
+                .toList();
+
+        return getDrugsWithPriceAndQuantity(orgId, searchedDrugs)
+                .stream()
+                .filter(d -> d.getQuantity() != null && d.getQuantity() > 0)
+                .toList();
+    }
+
     public List<DrugDTO> searchDrugByVendor(String name, PageRequest pageRequest) {
         return drugRepository.searchByVendor(name, pageRequest)
                 .stream()
