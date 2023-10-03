@@ -83,7 +83,7 @@ public class InvestigationService {
     }
 
 
-    public List<InvestigationDTO> getAllInvestigationByOrg(Long orgId, PageRequest pageRequest) {
+/*    public List<InvestigationDTO> getAllInvestigationByOrg(Long orgId, PageRequest pageRequest) {
         List<InvestigationDTO> investigation = investigationRepository.findAll(pageRequest).getContent()
                 .stream()
                 .map(InvestigationDTO::form)
@@ -103,5 +103,5 @@ public class InvestigationService {
                     }
                 })
                 .toList();
-    }
+    }*/
 }

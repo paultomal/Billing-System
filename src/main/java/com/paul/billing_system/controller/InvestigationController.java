@@ -45,19 +45,6 @@ public class InvestigationController {
         return new ResponseEntity<>(investigationDTOList, HttpStatus.OK);
     }
 
-    @GetMapping("/getAllInvestigationByOrg/{orgId}")
-    public List<InvestigationDTO> getAllInvestigationByOrg(@PathVariable Long orgId,
-                                                      @RequestParam(defaultValue = "0") int page,
-                                                      @RequestParam(defaultValue = "10") int size
-                                                      ){
-        return investigationService.getAllInvestigationByOrg(orgId, PageRequest.of(page,size));
-      }
-
-    @GetMapping("/getInvestigation/{id}")
-    public ResponseEntity<?> getServiceById(@PathVariable Long id) {
-        InvestigationDTO investigationDTO = InvestigationDTO.form(investigationService.getServiceById(id));
-        return new ResponseEntity<>(investigationDTO, HttpStatus.OK);
-    }
 
     @PutMapping("/updateInvestigation/{id}")
     public ResponseEntity<?> updateService(@Valid @RequestBody InvestigationDTO investigationDTO, @PathVariable Long id, BindingResult bindingResult) {
@@ -78,11 +65,29 @@ public class InvestigationController {
                 .toList(), HttpStatus.OK);
 
     }
-    @GetMapping("/getAllInvestigations/{orgId}")
+
+    @GetMapping("/getAllInvestigationByOrg/{orgId}")
     public List<InvestigationDTO> getAllInvestigations(@PathVariable Long orgId,
                                                        @RequestParam(defaultValue = "0") int page,
                                                        @RequestParam(defaultValue = "10") int size){
         return investigationService.getAllInvestigations(orgId, PageRequest.of(page,size));
     }
 
+
+    @GetMapping("/getInvestigation/{id}")
+    public ResponseEntity<?> getServiceById(@PathVariable Long id) {
+        InvestigationDTO investigationDTO = InvestigationDTO.form(investigationService.getServiceById(id));
+        return new ResponseEntity<>(investigationDTO, HttpStatus.OK);
+    }
 }
+
+
+/*
+        @GetMapping("/getAllInvestigationByOrg/{orgId}")
+        public List<InvestigationDTO> getAllInvestigationByOrg(@PathVariable Long orgId,
+                                                          @RequestParam(defaultValue = "0") int page,
+                                                          @RequestParam(defaultValue = "10") int size
+                                                          ){
+            return investigationService.getAllInvestigationByOrg(orgId, PageRequest.of(page,size));
+          }
+    */
