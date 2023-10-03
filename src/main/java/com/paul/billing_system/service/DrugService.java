@@ -58,6 +58,18 @@ public class DrugService {
         return getDrugsWithPriceAndQuantity(orgId, drugs);
     }
 
+    public List<DrugDTO> getAllDrugsOfOrgDuringOrder(Long orgId, PageRequest pageRequest) {
+        List<DrugDTO> drugs = drugRepository.findAll(pageRequest).getContent()
+                .stream()
+                .map(DrugDTO::form)
+                .toList();
+
+        return getDrugsWithPriceAndQuantity(orgId, drugs)
+                .stream()
+                .filter(d -> d.getQuantity() != null && d.getQuantity() > 0)
+                .toList();
+    }
+
     public DrugDTO getDrugById(Long id) {
         Optional<Drug> drug = drugRepository.findById(id);
 
