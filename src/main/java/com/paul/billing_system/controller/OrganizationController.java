@@ -71,11 +71,12 @@ public class OrganizationController {
     }
 
     @PreAuthorize("hasAnyAuthority('ROLE_ROOT','ROLE_ORG_ADMIN','ROLE_ADMIN')")
-    @GetMapping("/search/{name}")
-    public ResponseEntity<?> searchByName(@PathVariable String name,
-                                          @RequestParam(defaultValue = "0") int page,
-                                          @RequestParam(defaultValue = "10") int size) {
-        return new ResponseEntity<>(organizationService.searchOrgByName(name, PageRequest.of(page,size))
+    @GetMapping("/search/{type}/{name}")
+    public ResponseEntity<?> searchByNameAndType(@PathVariable String type,
+                                                 @PathVariable String name,
+                                                 @RequestParam(defaultValue = "0") int page,
+                                                 @RequestParam(defaultValue = "10") int size) {
+        return new ResponseEntity<>(organizationService.searchOrgByNameAndType(OrganizationTypes.getOrganizationTypeByLabel(type), name, PageRequest.of(page,size))
                 .stream()
                 .map(OrganizationDTO::form)
                 .toList(), HttpStatus.OK);
