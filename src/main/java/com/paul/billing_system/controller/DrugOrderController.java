@@ -43,4 +43,12 @@ public class DrugOrderController {
     public DrugOrderDTO getDrugOrderById(@PathVariable Long id) {
         return drugOrderService.getOrder(id);
     }
+
+    @GetMapping("/search/{orgId}/{patientName}")
+    public ResponseEntity<?> searchDrugOrder(@PathVariable Long orgId,
+                                             @PathVariable String patientName,
+                                             @RequestParam(defaultValue = "0") int page,
+                                             @RequestParam(defaultValue = "10") int size) {
+        return new ResponseEntity<>(drugOrderService.searchDrugOrder(orgId, patientName, PageRequest.of(page, size)), HttpStatus.OK);
+    }
 }
