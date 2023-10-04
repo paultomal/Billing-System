@@ -14,6 +14,7 @@ public class ResponseDTO {
     private String token;
     private Date expiredDate;
     private String username;
+    private Long userId;
     private List roles;
     private String orgCode;
     private long orgId;

@@ -100,7 +100,7 @@ public class InvestigationBookingService {
 
         investigationBookingDTO.setInvestigationList(investigationDTOList);
 
-         return investigationBookingDTO;
+        return investigationBookingDTO;
     }
 
     public InvestigationBooking getInvestigationBookingById(Long bookInvestigationId) {

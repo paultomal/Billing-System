@@ -2,15 +2,12 @@ package com.paul.billing_system.controller;
 
 import com.paul.billing_system.dto.InvestigationBookingDTO;
 import com.paul.billing_system.dto.InvestigationDTO;
-import com.paul.billing_system.dto.PatientDTO;
 import com.paul.billing_system.entity.Investigation;
 import com.paul.billing_system.entity.InvestigationBooking;
-import com.paul.billing_system.entity.Patient;
 import com.paul.billing_system.service.InvestigationBookingService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

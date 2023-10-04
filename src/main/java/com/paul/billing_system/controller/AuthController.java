@@ -61,6 +61,7 @@ public class AuthController {
                 responseDTO.setRoles(jwtService.extractRole(responseDTO.getToken()));
                 responseDTO.setExpiredDate(jwtService.extractExpiration(responseDTO.getToken()));
                 assert user != null;
+                responseDTO.setUserId(user.getId());
                 responseDTO.setOrgCode(user.getOrganization().getOrgCode());
                 responseDTO.setOrgId(user.getOrganization().getId());
                 responseDTO.setOrgType(OrganizationTypes.getLabelByOrganizationType(user.getOrganization().getType()));
