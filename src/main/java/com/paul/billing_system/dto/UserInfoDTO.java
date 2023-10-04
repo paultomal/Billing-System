@@ -33,9 +33,12 @@ public class UserInfoDTO {
 
     private Long orgId;
 
-
+    private String orgName;
 
     public static UserInfoDTO form(UserInfo userInfo){
+        if(userInfo == null)
+            return null;
+
         UserInfoDTO userInfoDTO = new UserInfoDTO();
         userInfoDTO.setId(userInfo.getId());
         userInfoDTO.setName(userInfo.getName());
@@ -47,7 +50,7 @@ public class UserInfoDTO {
         userInfoDTO.setRoles(userRoles);
 
         userInfoDTO.setOrgId(userInfo.getOrganization().getId()!= null ? userInfo.getOrganization().getId() : null);
+        userInfoDTO.setOrgName(userInfo.getOrganization().getName());
         return userInfoDTO;
     }
-
 }
