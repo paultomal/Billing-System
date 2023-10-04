@@ -70,7 +70,7 @@ public class DoctorController {
                 .toList(), HttpStatus.OK);
     }
 
-    @GetMapping("/searchDoctor/{orgId}/{name}")
+    @GetMapping("/searchDoctorByOrg/{orgId}/{name}")
     public ResponseEntity<?> searchDoctorByName(@PathVariable Long orgId,
                                                 @PathVariable String name,
                                                 @RequestParam(defaultValue = "0") int page,

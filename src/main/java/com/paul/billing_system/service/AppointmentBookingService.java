@@ -1,6 +1,7 @@
 package com.paul.billing_system.service;
 
 import com.paul.billing_system.dto.AppointmentBookingDTO;
+import com.paul.billing_system.dto.RevenueDTO;
 import com.paul.billing_system.entity.AppointmentBooking;
 import com.paul.billing_system.entity.Patient;
 import com.paul.billing_system.repository.AppointmentBookingRepository;
@@ -64,5 +65,15 @@ public class AppointmentBookingService {
 
     public List<AppointmentBookingDTO> getAppointmentsByOrg(Long orgId, PageRequest pageRequest) {
         return appointmentBookingRepository.findAllByOrganizationId(orgId, pageRequest).stream().map(AppointmentBookingDTO::form).toList();
+    }
+
+    public RevenueDTO getTotalRevenueForHospital(Long orgId) {
+        List<AppointmentBooking> appointments = appointmentBookingRepository.findAll();
+
+        RevenueDTO revenueDTO = new RevenueDTO();
+        revenueDTO.setTotalRevenue(appointments.stream().map(AppointmentBooking::getTotalFees).reduce(0.0, Double::sum));
+        revenueDTO.setTotalDiscount(appointments.stream().map(a -> Double.parseDouble(a.getDiscount())).reduce(0.0, (Double::sum)));
+
+        return revenueDTO;
     }
 }

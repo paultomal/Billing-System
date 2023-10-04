@@ -37,4 +37,9 @@ public class AppointmentBookingController {
                                                             @RequestParam(defaultValue = "10") int size) {
         return appointmentBookingService.getAppointmentsByOrg(orgId, PageRequest.of(page, size));
     }
+
+    @GetMapping("/getRevenue/{orgId}")
+    public ResponseEntity<?> getRevenueOfHospital(@PathVariable Long orgId) {
+        return new ResponseEntity<>(appointmentBookingService.getTotalRevenueForHospital(orgId), HttpStatus.OK);
+    }
 }
