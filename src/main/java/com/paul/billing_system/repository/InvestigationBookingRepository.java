@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface InvestigationBookingRepository extends JpaRepository<InvestigationBooking, Long> {
 
-    @Query("SELECT ib FROM InvestigationBooking ib WHERE ib.organization.id = :orgId AND ib.patient.name LIKE %:patient%")
+    @Query("SELECT ib FROM InvestigationBooking ib WHERE ib.organization.id = :orgId AND ib.patient.name like concat( '%',:patient, '%')")
     List<InvestigationBooking> findByOrganizationAndPatient(@Param("orgId") Long orgId, @Param("patient") String patient, PageRequest pageRequest);
 
     @Query("SELECT ib FROM InvestigationBooking ib WHERE ib.organization.id = :orId")
