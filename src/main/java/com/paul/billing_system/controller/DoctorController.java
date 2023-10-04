@@ -70,14 +70,14 @@ public class DoctorController {
                 .toList(), HttpStatus.OK);
     }
 
-    @GetMapping("/searchDoctor/{orgId}/{name}")
-    public ResponseEntity<?> searchDoctorByName(@PathVariable Long orgId,
-                                                @PathVariable String name,
-                                                @RequestParam(defaultValue = "0") int page,
-                                                @RequestParam(defaultValue = "10") int size) {
-        return new ResponseEntity<>(doctorService.searchDoctorUnderOrg(orgId, name, PageRequest.of(page,size))
-                .stream()
-                .map(DoctorDTO::form)
-                .toList(), HttpStatus.OK);
-    }
+//    @GetMapping("/searchDoctor/{orgId}/{name}")
+//    public ResponseEntity<?> searchDoctorByName(@PathVariable Long orgId,
+//                                                @PathVariable String name,
+//                                                @RequestParam(defaultValue = "0") int page,
+//                                                @RequestParam(defaultValue = "10") int size) {
+//        return new ResponseEntity<>(doctorService.searchDoctorUnderOrg(orgId, name, PageRequest.of(page,size))
+//                .stream()
+//                .map(DoctorDTO::form)
+//                .toList(), HttpStatus.OK);
+//    }
 }
