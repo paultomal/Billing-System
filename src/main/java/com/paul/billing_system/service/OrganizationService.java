@@ -4,7 +4,6 @@ import com.paul.billing_system.dto.OrganizationDTO;
 import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.enums.OrganizationTypes;
 import com.paul.billing_system.repository.OrganizationRepository;
-import com.paul.billing_system.repository.SpecialityRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +33,7 @@ public class OrganizationService {
         organization.setOperatingHour(organizationDTO.getOperatingHour());
         organization.setCreatedAt(new Date());
 
-        organization =organizationRepository.save(organization);
+        organization = organizationRepository.save(organization);
 
         return organization;
 
