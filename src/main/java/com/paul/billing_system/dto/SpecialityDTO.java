@@ -15,11 +15,14 @@ public class SpecialityDTO {
 
     private String iconUrl;
 
+    private String description;
+
     public static SpecialityDTO form(Speciality speciality){
         SpecialityDTO specialityDTO = new SpecialityDTO();
         specialityDTO.setId(speciality.getId());
         specialityDTO.setMedSpecName(speciality.getMedSpecName());
         specialityDTO.setIconUrl(speciality.getIconUrl());
+        specialityDTO.setDescription(speciality.getDescription());
         return specialityDTO;
     }
 }

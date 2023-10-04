@@ -37,6 +37,7 @@ public class SpecialityService {
         Speciality speciality = new Speciality();
         speciality.setMedSpecName(specialityDTO.getMedSpecName());
         speciality.setIconUrl(specialityDTO.getIconUrl());
+        speciality.setDescription(specialityDTO.getDescription());
         speciality.setCreatedAt(new Date());
         return specialityRepository.save(speciality);
     }
@@ -47,6 +48,7 @@ public class SpecialityService {
         if (speciality.isPresent()){
             speciality.get().setMedSpecName(specialityDTO.getMedSpecName());
             speciality.get().setIconUrl(specialityDTO.getIconUrl());
+            speciality.get().setDescription(specialityDTO.getDescription());
             speciality.get().setUpdatedAt(new Date());
             return specialityRepository.save(speciality.get());
         }
