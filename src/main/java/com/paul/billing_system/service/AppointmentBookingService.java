@@ -3,6 +3,7 @@ package com.paul.billing_system.service;
 import com.paul.billing_system.dto.AppointmentBookingDTO;
 import com.paul.billing_system.dto.RevenueDTO;
 import com.paul.billing_system.entity.AppointmentBooking;
+import com.paul.billing_system.entity.Doctor;
 import com.paul.billing_system.entity.Patient;
 import com.paul.billing_system.repository.AppointmentBookingRepository;
 import com.paul.billing_system.repository.DoctorRepository;
@@ -35,13 +36,12 @@ public class AppointmentBookingService {
         appointmentBooking.setOrganization(organizationRepository.findById(appointmentBookingDTO.getOrgId()).orElseThrow());
 
         Optional<Patient> patient = Optional.empty();
-        if(appointmentBookingDTO.getPatientId() != null)
+        if (appointmentBookingDTO.getPatientId() != null)
             patient = patientRepository.findById(appointmentBookingDTO.getPatientId());
 
-        if(patient.isPresent()) {
+        if (patient.isPresent()) {
             appointmentBooking.setPatient(patient.get());
-        }
-        else {
+        } else {
             Patient newPatient = new Patient();
             newPatient.setName(appointmentBookingDTO.getPatientName());
             newPatient.setContact(appointmentBookingDTO.getPatientContact());
@@ -49,12 +49,13 @@ public class AppointmentBookingService {
 
             appointmentBooking.setPatient(patientRepository.save(newPatient));
         }
-        
-        appointmentBooking.setDoctor(doctorRepository.findById(appointmentBookingDTO.getDoc_id()).orElseThrow());
-        appointmentBooking.setConsultationFee(appointmentBookingDTO.getConsultationFee());
+
+        Doctor doctor = doctorRepository.findById(appointmentBookingDTO.getDoc_id()).orElseThrow();
+        appointmentBooking.setDoctor(doctor);
+        appointmentBooking.setConsultationFee(doctor.getConsultationFee());
         appointmentBooking.setDiscount(appointmentBookingDTO.getDiscount());
         appointmentBooking.setSlot(appointmentBookingDTO.getSlot());
-        appointmentBooking.setTotalFees(appointmentBookingDTO.getTotalFees());
+        appointmentBooking.setTotalFees(Double.parseDouble(doctor.getConsultationFee()) - Double.parseDouble(appointmentBookingDTO.getDiscount()));
 
         return AppointmentBookingDTO.form(appointmentBookingRepository.save(appointmentBooking));
     }
@@ -64,16 +65,32 @@ public class AppointmentBookingService {
     }
 
     public List<AppointmentBookingDTO> getAppointmentsByOrg(Long orgId, PageRequest pageRequest) {
-        return appointmentBookingRepository.findAllByOrganizationId(orgId, pageRequest).stream().map(AppointmentBookingDTO::form).toList();
+        return appointmentBookingRepository.findAllByOrganizationId(orgId, pageRequest)
+                .stream()
+                .map(AppointmentBookingDTO::form)
+                .toList();
     }
 
     public RevenueDTO getTotalRevenueForHospital(Long orgId) {
         List<AppointmentBooking> appointments = appointmentBookingRepository.findAll();
 
         RevenueDTO revenueDTO = new RevenueDTO();
-        revenueDTO.setTotalRevenue(appointments.stream().map(AppointmentBooking::getTotalFees).reduce(0.0, Double::sum));
-        revenueDTO.setTotalDiscount(appointments.stream().map(a -> Double.parseDouble(a.getDiscount())).reduce(0.0, (Double::sum)));
+        revenueDTO.setTotalRevenue(appointments
+                .stream()
+                .map(AppointmentBooking::getTotalFees)
+                .reduce(0.0, Double::sum));
+        revenueDTO.setTotalDiscount(appointments
+                .stream()
+                .map(a -> Double.parseDouble(a.getDiscount()))
+                .reduce(0.0, (Double::sum)));
 
         return revenueDTO;
+    }
+
+    public List<AppointmentBookingDTO> searchAppointment(Long orgId, String patientName, PageRequest pageRequest) {
+        return appointmentBookingRepository.findByOrganizationAndPatient(orgId, patientName, pageRequest)
+                .stream()
+                .map(AppointmentBookingDTO::form)
+                .toList();
     }
 }

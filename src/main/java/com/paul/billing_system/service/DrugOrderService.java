@@ -90,6 +90,13 @@ public class DrugOrderService {
                 .toList();
     }
 
+    public List<DrugOrderDTO> searchDrugOrder(Long orgId, String patientName, PageRequest pageRequest) {
+        return drugOrderRepository.findByOrganizationAndPatient(orgId, patientName, pageRequest)
+                .stream()
+                .map(this::form)
+                .toList();
+    }
+
     public DrugOrderDTO form(DrugOrder drugOrder) {
         DrugOrderDTO drugOrderDTO = new DrugOrderDTO();
         drugOrderDTO.setId(drugOrder.getId());

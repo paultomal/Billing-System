@@ -42,4 +42,12 @@ public class AppointmentBookingController {
     public ResponseEntity<?> getRevenueOfHospital(@PathVariable Long orgId) {
         return new ResponseEntity<>(appointmentBookingService.getTotalRevenueForHospital(orgId), HttpStatus.OK);
     }
+
+    @GetMapping("/search/{orgId}/{patientName}")
+    public ResponseEntity<?> searchAppointment(@PathVariable Long orgId,
+                                               @PathVariable String patientName,
+                                               @RequestParam(defaultValue = "0") int page,
+                                               @RequestParam(defaultValue = "10") int size) {
+        return new ResponseEntity<>(appointmentBookingService.searchAppointment(orgId, patientName, PageRequest.of(page, size)), HttpStatus.OK);
+    }
 }
