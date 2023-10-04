@@ -15,8 +15,8 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
     @Query("select d from Doctor d where d.name like concat('%', :name, '%')")
     List<Doctor> findByName(@Param("name") String name, Pageable pageable);
 
-//    @Query("select d from Doctor d where d.name like concat('%', :name, '%') and :org in d.organizationList")
-//    List<Doctor> findDoctorByNameUnderOrg(@Param("org") Organization org, @Param("name") String name, Pageable pageable);
+    @Query(value = "select * from doctor d join doctor_organization d_o on d.id = d_o.doctor_id and d_o.organization_id = :orgId where d.name like concat('%', :name, '%')", nativeQuery = true)
+    List<Doctor> findDoctorByNameUnderOrg(@Param("orgId") Long orgId, @Param("name") String name, Pageable pageable);
 
     List<Doctor> findAllByOrganizationListContainsAndSpecialityListContains(Organization organization, Speciality speciality, Pageable pageable);
 
