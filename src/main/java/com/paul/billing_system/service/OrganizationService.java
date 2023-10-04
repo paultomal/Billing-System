@@ -67,8 +67,8 @@ public class OrganizationService {
         return null;
     }
 
-    public List<Organization> searchOrgByName(String name, PageRequest pageRequest) {
-        return organizationRepository.searchByName(name, pageRequest);
+    public List<Organization> searchOrgByNameAndType(OrganizationTypes type, String name, PageRequest pageRequest) {
+        return organizationRepository.searchByName(type, name, pageRequest);
     }
 
     public Object getCreationTime(Long id) {
