@@ -85,10 +85,12 @@ public class DrugService {
         }
         DrugDTO drugDTO = drug.map(DrugDTO::form).orElse(null);
         assert drugDTO != null;
-        if(orgDrugPriceQuantity.getPrice() != null)
-            drugDTO.setPrice(orgDrugPriceQuantity.getPrice());
-        if(orgDrugPriceQuantity.getQuantity() != null)
-            drugDTO.setQuantity(orgDrugPriceQuantity.getQuantity());
+        if(orgDrugPriceQuantity != null) {
+            if (orgDrugPriceQuantity.getPrice() != null)
+                drugDTO.setPrice(orgDrugPriceQuantity.getPrice());
+            if (orgDrugPriceQuantity.getQuantity() != null)
+                drugDTO.setQuantity(orgDrugPriceQuantity.getQuantity());
+        }
 
         return drugDTO;
     }
