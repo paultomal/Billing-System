@@ -9,7 +9,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -72,7 +71,6 @@ public class InvestigationService {
     }
 
 
-
     private List<InvestigationDTO> getInvestigationWithCharge(Long orgId, List<InvestigationDTO> investigation) {
         return investigation.stream()
                 .peek(investigationDTO -> {
@@ -85,40 +83,24 @@ public class InvestigationService {
                 })
                 .toList();
     }
+
+    public InvestigationDTO getOrgBasedInvestigation(Long id, Long orgId) {
+        Optional<Investigation> investigation = investigationRepository.findById(id);
+
+        OrgInvestigationPrice orgInvestigationPrice = null;
+        if (investigation.isPresent()) {
+            orgInvestigationPrice = orgInvestigationPriceRepository.findByOrganizationAndInvestigation(orgId, investigation.get().getId());
+        }
+        InvestigationDTO investigationDTO = investigation.map(InvestigationDTO::form).orElse(null);
+        assert investigationDTO != null;
+        if (orgInvestigationPrice != null) {
+            if (orgInvestigationPrice.getServiceCharge() != null)
+                investigationDTO.setServiceCharge(orgInvestigationPrice.getServiceCharge());
+        }
+        return investigationDTO;
+    }
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*    public List<InvestigationDTO> getAllInvestigations(Long orgId, PageRequest pageRequest) {
-
-        List<InvestigationDTO> investigations = investigationRepository.findAll(pageRequest)
-                .getContent()
-                .stream()
-                .map(InvestigationDTO::form)
-                .toList();
-
-        return investigations.stream()
-                .peek(
-                        investigationDTO -> {
-                            OrgInvestigationPrice orgInvestigationPrice = orgInvestigationPriceRepository
-                                    .findByOrganizationAndInvestigation(orgId, investigationDTO.getId());
-                            if (orgInvestigationPrice != null) {
-                                if (orgInvestigationPrice.getOrgInvestigationCharge() != null)
-                                    investigationDTO.setOrgInvestigationCharge(orgInvestigationPrice.getOrgInvestigationCharge());
-                            }
-                        }).toList();
-    }*/
 
 
 

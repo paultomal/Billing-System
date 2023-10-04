@@ -80,6 +80,12 @@ public class InvestigationController {
         return new ResponseEntity<>(investigationDTO, HttpStatus.OK);
     }
 
+    @GetMapping("/getOrgBasedInvestigation/{orgId}/{id}")
+    public InvestigationDTO getOrgBasedInvestigation(@PathVariable Long id,
+                                                     @PathVariable Long orgId) {
+       return investigationService.getOrgBasedInvestigation(id, orgId);
+    }
+
 }
 
 
