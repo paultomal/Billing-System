@@ -105,7 +105,7 @@ public class DoctorService {
        return doctorRepository.findByName(name, pageRequest);
     }
 
-//    public List<Doctor> searchDoctorUnderOrg(Long orgId, String name, PageRequest pageRequest) {
-//        return doctorRepository.findDoctorByNameUnderOrg(organizationRepository.findById(orgId).orElseThrow(), name, pageRequest);
-//    }
+    public List<Doctor> searchDoctorUnderOrg(Long orgId, String name, PageRequest pageRequest) {
+        return doctorRepository.findDoctorByNameUnderOrg(orgId, name, pageRequest);
+    }
 }
