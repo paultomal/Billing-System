@@ -164,4 +164,9 @@ public class DrugController {
         return drugService.searchDrugByStrengthAndOrgId(orgId, strength, PageRequest.of(page, size));
     }
 
+    @GetMapping("/countDrug")
+    public Long countDrug(){
+        return drugService.countDrug();
+    }
+
 }

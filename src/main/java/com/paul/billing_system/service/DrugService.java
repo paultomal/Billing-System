@@ -229,4 +229,8 @@ public class DrugService {
                 })
                 .toList();
     }
+
+    public Long countDrug() {
+        return (long) drugRepository.findAll().size();
+    }
 }
