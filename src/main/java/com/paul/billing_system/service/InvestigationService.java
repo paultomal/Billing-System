@@ -61,6 +61,17 @@ public class InvestigationService {
         return investigationRepository.searchByName(name, pageRequest);
     }
 
+    public List<InvestigationDTO> searchInvestigationBYOrg(Long orgId, String name, PageRequest pageRequest) {
+        List<InvestigationDTO> searchInvestigation = investigationRepository.searchByName(name, pageRequest)
+                .stream()
+                .map(InvestigationDTO::form)
+                .toList();
+        return getInvestigationWithCharge(orgId, searchInvestigation)
+                .stream()
+                .toList();
+
+    }
+
 
     public List<InvestigationDTO> getAllInvestigationByOrg(Long orgId, PageRequest pageRequest) {
         List<InvestigationDTO> investigation = investigationRepository.findAll(pageRequest).getContent()
@@ -100,6 +111,9 @@ public class InvestigationService {
         return investigationDTO;
     }
 
+    public Long countInvestigation() {
+        return (long) investigationRepository.findAll().size();
+    }
 }
 
 

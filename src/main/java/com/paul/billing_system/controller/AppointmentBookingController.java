@@ -50,4 +50,9 @@ public class AppointmentBookingController {
                                                @RequestParam(defaultValue = "10") int size) {
         return new ResponseEntity<>(appointmentBookingService.searchAppointment(orgId, patientName, PageRequest.of(page, size)), HttpStatus.OK);
     }
+
+    @GetMapping("/appointmentCount/{orgId}")
+    public Long appointmentCount(@PathVariable Long orgId){
+        return appointmentBookingService.appointmentCount(orgId);
+    }
 }

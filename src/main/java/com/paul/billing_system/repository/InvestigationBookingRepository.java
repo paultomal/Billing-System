@@ -18,4 +18,6 @@ public interface InvestigationBookingRepository extends JpaRepository<Investigat
     @Query("SELECT ib FROM InvestigationBooking ib WHERE ib.organization.id = :orId")
     List<InvestigationBooking> findByOrganization(Long orId, Pageable pageable);
 
+    List<InvestigationBooking> findAllByOrganizationId(Long orgId);
+
 }

@@ -54,4 +54,8 @@ public class SpecialityService {
         }
         return null;
     }
+
+    public Long countSpeciality() {
+        return (long) specialityRepository.findAll().size();
+    }
 }

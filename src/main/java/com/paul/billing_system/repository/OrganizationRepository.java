@@ -11,6 +11,7 @@ import java.util.List;
 
 public interface OrganizationRepository extends JpaRepository<Organization, Long> {
     List<Organization> findByType(OrganizationTypes type, Pageable pageable);
+    List<Organization> findByType(OrganizationTypes type);
 
     @Query("select o from Organization o where o.name like concat('%', :name, '%') and o.type = :type")
     List<Organization> searchByName(@Param("type") OrganizationTypes type, @Param("name") String name, Pageable pageable);

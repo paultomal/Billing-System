@@ -66,11 +66,19 @@ public class InvestigationController {
 
     }
 
+    @GetMapping("/search/{orgId}/{name}")
+    public List<InvestigationDTO> searchInvestigationBYOrg(@PathVariable Long orgId,
+                                                           @PathVariable String name,
+                                                           @RequestParam(defaultValue = "0") int page,
+                                                           @RequestParam(defaultValue = "10") int size){
+        return investigationService.searchInvestigationBYOrg(orgId,name,PageRequest.of(page,size));
+    }
+
     @GetMapping("/getAllInvestigationByOrg/{orgId}")
     public List<InvestigationDTO> getAllInvestigations(@PathVariable Long orgId,
                                                        @RequestParam(defaultValue = "0") int page,
-                                                       @RequestParam(defaultValue = "10") int size){
-        return investigationService.getAllInvestigationByOrg(orgId, PageRequest.of(page,size));
+                                                       @RequestParam(defaultValue = "10") int size) {
+        return investigationService.getAllInvestigationByOrg(orgId, PageRequest.of(page, size));
     }
 
 
@@ -83,7 +91,12 @@ public class InvestigationController {
     @GetMapping("/getOrgBasedInvestigation/{orgId}/{id}")
     public InvestigationDTO getOrgBasedInvestigation(@PathVariable Long id,
                                                      @PathVariable Long orgId) {
-       return investigationService.getOrgBasedInvestigation(id, orgId);
+        return investigationService.getOrgBasedInvestigation(id, orgId);
+    }
+
+    @GetMapping("/countInvestigation")
+    public Long countInvestigation(){
+        return investigationService.countInvestigation();
     }
 
 }

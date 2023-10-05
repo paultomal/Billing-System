@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/orgInvestigation")
-public class OrgBasedInvestigationController {
+public class  OrgBasedInvestigationController {
     private final OrgBasedInvestigationService orgBasedInvestigationService;
 
     public OrgBasedInvestigationController(OrgBasedInvestigationService orgBasedInvestigationService) {

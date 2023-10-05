@@ -12,6 +12,8 @@ import java.util.List;
 public interface DrugOrderRepository extends JpaRepository<DrugOrder, Long> {
     List<DrugOrder> getDrugOrdersByOrganizationId(Long id, Pageable pageable);
 
+    List<DrugOrder> findAllByOrganizationId(Long orgId);
+
     @Query("SELECT do FROM DrugOrder do WHERE do.organization.id = :orgId AND do.patient.name like concat( '%', :patientName, '%')")
     List<DrugOrder> findByOrganizationAndPatient(@Param("orgId") Long orgId, @Param("patientName") String patientName, PageRequest pageRequest);
 }
