@@ -88,10 +88,8 @@ public class OrganizationController {
     }
 
     @GetMapping("/getOrganizationCountByType/{type}")
-    public Long getAllOrganizationCount(@PathVariable String type,
-                                                @RequestParam(defaultValue = "0") int page,
-                                                @RequestParam(defaultValue = "10") int size) {
+    public Long getAllOrganizationCount(@PathVariable String type) {
 
-        return organizationService.getAllOrganizationCount(OrganizationTypes.getOrganizationTypeByLabel(type), PageRequest.of(page, size));
+        return organizationService.getAllOrganizationCount(OrganizationTypes.getOrganizationTypeByLabel(type));
     }
 }

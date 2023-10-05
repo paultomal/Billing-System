@@ -94,6 +94,11 @@ public class InvestigationController {
         return investigationService.getOrgBasedInvestigation(id, orgId);
     }
 
+    @GetMapping("/countInvestigation")
+    public Long countInvestigation(){
+        return investigationService.countInvestigation();
+    }
+
 }
 
 

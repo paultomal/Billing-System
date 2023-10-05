@@ -61,4 +61,10 @@ public class SpecialityController {
         List<SpecialityDTO> specialityDTOList = specialities.stream().map(SpecialityDTO::form).toList();
         return new ResponseEntity<>(specialityDTOList, HttpStatus.OK);
     }
+
+
+    @GetMapping("/countSpeciality")
+    public Long countSpeciality(){
+        return specialityService.countSpeciality();
+    }
 }

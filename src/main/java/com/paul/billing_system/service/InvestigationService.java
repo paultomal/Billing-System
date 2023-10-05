@@ -110,6 +110,10 @@ public class InvestigationService {
         }
         return investigationDTO;
     }
+
+    public Long countInvestigation() {
+        return (long) investigationRepository.findAll().size();
+    }
 }
 
 

@@ -93,4 +93,8 @@ public class AppointmentBookingService {
                 .map(AppointmentBookingDTO::form)
                 .toList();
     }
+
+    public Long appointmentCount(Long orgId) {
+        return (long) appointmentBookingRepository.findAllByOrganizationId(orgId).size();
+    }
 }
