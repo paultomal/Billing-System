@@ -73,4 +73,8 @@ public class OrganizationService {
     public Object getCreationTime(Long id) {
         return organizationRepository.findById(id).get().getCreatedAt();
     }
+
+    public Long getAllOrganizationCount(OrganizationTypes type, PageRequest pageRequest) {
+        return (long) organizationRepository.findByType(type, pageRequest).size();
+    }
 }

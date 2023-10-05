@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -41,6 +43,8 @@ public class OrganizationDTO {
 
     private int noOfOrgAdmins;
 
+    private List<Organization> noOfOrganization;
+
     public static OrganizationDTO form(Organization organization) {
         OrganizationDTO organizationDTO = new OrganizationDTO();
         organizationDTO.setId(organization.getId());
@@ -61,4 +65,6 @@ public class OrganizationDTO {
 
         return organizationDTO;
     }
+
+
 }
