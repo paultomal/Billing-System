@@ -118,4 +118,8 @@ public class DrugOrderService {
 
         return drugOrderDTO;
     }
+
+    public Long countDrugOrders(Long orgId) {
+        return (long) drugOrderRepository.findAllByOrganizationId(orgId).size();
+    }
 }

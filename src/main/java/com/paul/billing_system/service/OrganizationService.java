@@ -74,7 +74,7 @@ public class OrganizationService {
         return organizationRepository.findById(id).get().getCreatedAt();
     }
 
-    public Long getAllOrganizationCount(OrganizationTypes type) {
+    public Long countOrganizationByType(OrganizationTypes type) {
         return (long) organizationRepository.findByType(type).size();
     }
 }

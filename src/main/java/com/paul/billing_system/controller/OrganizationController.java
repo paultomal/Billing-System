@@ -87,9 +87,9 @@ public class OrganizationController {
         return new ResponseEntity<>(organizationService.getCreationTime(id).toString(), HttpStatus.OK);
     }
 
-    @GetMapping("/getOrganizationCountByType/{type}")
-    public Long getAllOrganizationCount(@PathVariable String type) {
+    @GetMapping("/countOrganizationByType/{type}")
+    public Long countOrganizationByType(@PathVariable String type) {
 
-        return organizationService.getAllOrganizationCount(OrganizationTypes.getOrganizationTypeByLabel(type));
+        return organizationService.countOrganizationByType(OrganizationTypes.getOrganizationTypeByLabel(type));
     }
 }

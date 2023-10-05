@@ -51,4 +51,9 @@ public class DrugOrderController {
                                              @RequestParam(defaultValue = "10") int size) {
         return new ResponseEntity<>(drugOrderService.searchDrugOrder(orgId, patientName, PageRequest.of(page, size)), HttpStatus.OK);
     }
+
+    @GetMapping("/countDrugOrders/{orgId}")
+    public Long countDrugOrders(@PathVariable Long orgId){
+        return drugOrderService.countDrugOrders(orgId);
+    }
 }
