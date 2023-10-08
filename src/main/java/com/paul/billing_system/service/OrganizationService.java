@@ -56,6 +56,7 @@ public class OrganizationService {
             organization.get().setName(organizationDTO.getName());
             organization.get().setAddress(organizationDTO.getAddress());
             organization.get().setContact(organizationDTO.getContact());
+            organization.get().setOrgCode(organizationDTO.getOrgCode());
             organization.get().setEmail(organizationDTO.getEmail());
             organization.get().setEmergencyContact(organizationDTO.getEmergencyContact());
             organization.get().setOperatingHour(organizationDTO.getOperatingHour());
