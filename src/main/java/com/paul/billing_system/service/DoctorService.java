@@ -108,4 +108,10 @@ public class DoctorService {
     public List<Doctor> searchDoctorUnderOrg(Long orgId, String name, PageRequest pageRequest) {
         return doctorRepository.findDoctorByNameUnderOrg(orgId, name, pageRequest);
     }
+
+    public Long countDoctor(Long orgId, Long sId) {
+        Optional<Organization> organization = organizationRepository.findById(orgId);
+        Optional<Speciality> speciality = specialityRepository.findById(sId);
+        return (long) doctorRepository.findAllByOrganizationListContainsAndSpecialityListContains(organization.orElse(null), speciality.orElse(null)).size();
+    }
 }

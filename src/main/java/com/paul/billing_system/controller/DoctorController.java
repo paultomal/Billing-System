@@ -80,4 +80,10 @@ public class DoctorController {
                 .map(DoctorDTO::form)
                 .toList(), HttpStatus.OK);
     }
+
+    @GetMapping("/countDoctor/{orgId}/{sId}")
+    public Long countDoctor(@PathVariable Long orgId,
+                            @PathVariable Long sId){
+        return doctorService.countDoctor(orgId, sId);
+    }
 }
