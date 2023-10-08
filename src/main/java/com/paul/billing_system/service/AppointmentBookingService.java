@@ -72,7 +72,7 @@ public class AppointmentBookingService {
     }
 
     public RevenueDTO getTotalRevenueForHospital(Long orgId) {
-        List<AppointmentBooking> appointments = appointmentBookingRepository.findAll();
+        List<AppointmentBooking> appointments = appointmentBookingRepository.findAllByOrganizationId(orgId);
 
         RevenueDTO revenueDTO = new RevenueDTO();
         revenueDTO.setTotalRevenue(appointments
