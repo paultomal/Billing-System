@@ -19,5 +19,6 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
     List<Doctor> findDoctorByNameUnderOrg(@Param("orgId") Long orgId, @Param("name") String name, Pageable pageable);
 
     List<Doctor> findAllByOrganizationListContainsAndSpecialityListContains(Organization organization, Speciality speciality, Pageable pageable);
+    List<Doctor> findAllByOrganizationListContainsAndSpecialityListContains(Organization organization, Speciality speciality);
 
 }
