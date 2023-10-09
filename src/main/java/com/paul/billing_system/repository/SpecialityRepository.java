@@ -7,12 +7,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SpecialityRepository extends JpaRepository<Speciality, Long> {
 
     @Query("select s from Speciality s where s.medSpecName like concat( '%',:medSpecName, '%') ")
     List<Speciality> findBySearch(@Param("medSpecName") String medSpecName, Pageable pageable);
 
+    Optional<Speciality> findByMedSpecName(String medSpecName);
 }
 
 

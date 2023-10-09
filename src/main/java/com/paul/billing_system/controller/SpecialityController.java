@@ -2,17 +2,16 @@ package com.paul.billing_system.controller;
 
 import com.paul.billing_system.dto.SpecialityDTO;
 import com.paul.billing_system.entity.Speciality;
+import com.paul.billing_system.exception.SpecialtyNameAlreadyTakenException;
 import com.paul.billing_system.service.SpecialityService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-import static com.paul.billing_system.controller.AuthController.getErrorDetails;
 
 @RestController
 @RequestMapping("/specialist")
@@ -24,9 +23,10 @@ public class SpecialityController {
     }
 
     @PostMapping("/addSpeciality")
-    public ResponseEntity<?> addSpeciality(@RequestBody SpecialityDTO specialityDTO, BindingResult bindingResult) {
-        ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
-        if (errorDetails != null) return errorDetails;
+    public ResponseEntity<?> addSpeciality(@Valid @RequestBody SpecialityDTO specialityDTO) throws SpecialtyNameAlreadyTakenException {
+        if (specialityService.getSpecialtyByName(specialityDTO.getMedSpecName()).isPresent()){
+            throw new SpecialtyNameAlreadyTakenException(specialityDTO.getMedSpecName() + " is Already Saved in Database");
+        }
         SpecialityDTO specialityDTO1 = SpecialityDTO.form(specialityService.addSpeciality(specialityDTO));
         return new ResponseEntity<>(specialityDTO1, HttpStatus.CREATED);
     }

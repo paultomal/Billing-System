@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.paul.billing_system.controller.AuthController.getErrorDetails;
-
 @RestController
 @RequestMapping("/patient")
 //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
@@ -26,9 +24,8 @@ public class PatientsController {
 
     @PostMapping("/addPatients/{id}")
     public ResponseEntity<?> savePatients(@Valid @RequestBody PatientDTO patientDTO,
-                                          @PathVariable Long id, BindingResult bindingResult) {
-        ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
-        if (errorDetails != null) return errorDetails;
+                                          @PathVariable Long id) {
+
         PatientDTO patientDTO1 = PatientDTO.form(patientServices.savePatients(id, patientDTO));
         return new ResponseEntity<>(patientDTO1, HttpStatus.OK);
     }

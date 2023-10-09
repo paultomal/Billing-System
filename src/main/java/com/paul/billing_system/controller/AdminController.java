@@ -3,22 +3,22 @@ package com.paul.billing_system.controller;
 import com.paul.billing_system.dto.UserInfoDTO;
 import com.paul.billing_system.entity.UserInfo;
 import com.paul.billing_system.enums.UserRoles;
+import com.paul.billing_system.exception.EmailAlreadyTakenException;
+import com.paul.billing_system.exception.UserIsNotFoundException;
+import com.paul.billing_system.exception.UserNameAlreadyTakenException;
 import com.paul.billing_system.service.UserServices;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.paul.billing_system.controller.AuthController.getErrorDetails;
-
 @RestController
 @RequestMapping("/admin")
-@PreAuthorize("hasAuthority('ROLE_ORG_ADMIN')")
+@PreAuthorize("hasAnyAuthority('ROLE_ROOT','ROOT_ORG_ADMIN')")
 
 public class AdminController {
     private final UserServices userServices;
@@ -28,9 +28,13 @@ public class AdminController {
     }
 
     @PostMapping("/addAdmin")
-    public ResponseEntity<?> saveAdmin(@Valid @RequestBody UserInfoDTO userInfoDTO, BindingResult bindingResult) {
-        ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
-        if (errorDetails != null) return errorDetails;
+    public ResponseEntity<?> saveAdmin(@Valid @RequestBody UserInfoDTO userInfoDTO) throws EmailAlreadyTakenException, UserNameAlreadyTakenException {
+        if(userServices.getUserByEmail(userInfoDTO.getEmail()).isPresent()) {
+            throw new EmailAlreadyTakenException(userInfoDTO.getEmail() + " is already registered!!! Try Another");
+        }
+        if (userServices.getUserByUserName(userInfoDTO.getUsername()).isPresent()) {
+            throw new UserNameAlreadyTakenException(userInfoDTO.getUsername() + "is already registered!! Try Another");
+        }
         UserInfoDTO userInfoDTO1 = UserInfoDTO.form(userServices.saveAdmin(userInfoDTO));
         return new ResponseEntity<>(userInfoDTO1, HttpStatus.OK);
     }
@@ -54,9 +58,10 @@ public class AdminController {
     }
 
     @PutMapping("/updateAdmin/{id}")
-    public ResponseEntity<?> updateAdmin(@Valid @RequestBody UserInfoDTO userInfoDTO, @PathVariable Long id, BindingResult bindingResult) {
-        ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
-        if (errorDetails != null) return errorDetails;
+    public ResponseEntity<?> updateAdmin(@Valid @RequestBody UserInfoDTO userInfoDTO, @PathVariable Long id) throws UserIsNotFoundException {
+        if (userServices.getAdminById(id) == null){
+            throw new UserIsNotFoundException("Org Admin "+ id + " is not Found.");
+        }
         UserInfoDTO userInfoDTO1 = UserInfoDTO.form(userServices.updateAdmin(userInfoDTO, id));
         return new ResponseEntity<>(userInfoDTO1, HttpStatus.OK);
     }

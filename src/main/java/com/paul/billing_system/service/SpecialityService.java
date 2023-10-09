@@ -58,4 +58,8 @@ public class SpecialityService {
     public Long countSpeciality() {
         return (long) specialityRepository.findAll().size();
     }
+
+    public Optional<Speciality> getSpecialtyByName(String medSpecName) {
+        return specialityRepository.findByMedSpecName(medSpecName);
+    }
 }

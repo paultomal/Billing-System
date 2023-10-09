@@ -7,9 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface InvestigationRepository extends JpaRepository<Investigation, Long> {
 
+    Optional<Investigation> findByServiceName(String serviceName);
 
     @Query("select i from Investigation i where i.serviceName like concat('%', :name, '%') ")
     List<Investigation> searchByName(@Param("name") String name, Pageable pageable);

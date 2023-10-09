@@ -156,4 +156,12 @@ public class UserServices {
         return null;
 
     }
+
+    public Optional<UserInfo> getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public Optional<UserInfo> getUserByUserName(String username) {
+        return userRepository.findByUsername(username);
+    }
 }

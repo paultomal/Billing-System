@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.paul.billing_system.controller.AuthController.getErrorDetails;
-
 @RestController
 @RequestMapping("/organization")
 public class OrganizationController {
@@ -29,8 +27,7 @@ public class OrganizationController {
     @PreAuthorize("hasAuthority('ROLE_ROOT')")
     @PostMapping("/create")
     public ResponseEntity<?> save(@Valid @RequestBody OrganizationDTO organizationDTO, BindingResult bindingResult) {
-        ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
-        if (errorDetails != null) return errorDetails;
+
         OrganizationDTO organizationDTO1 = OrganizationDTO.form(organizationService.save(organizationDTO));
         return new ResponseEntity<>(organizationDTO1, HttpStatus.CREATED);
     }

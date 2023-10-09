@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.paul.billing_system.controller.AuthController.getErrorDetails;
 
 @RestController
 @RequestMapping("/doctors")
@@ -26,8 +25,7 @@ public class DoctorController {
 
     @PostMapping("/addDoctor/{orgId}")
     public ResponseEntity<?> save(@RequestBody DoctorDTO doctorDTO, @PathVariable Long orgId, BindingResult bindingResult) {
-        ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
-        if (errorDetails != null) return errorDetails;
+
         DoctorDTO doctorDTO1 = DoctorDTO.form(doctorService.save(orgId, doctorDTO));
         return new ResponseEntity<>(doctorDTO1, HttpStatus.OK);
     }
@@ -54,8 +52,7 @@ public class DoctorController {
 
     @PutMapping("/updateDoctor/{id}")
     public ResponseEntity<?> updateDoctor(@RequestBody DoctorDTO doctorDTO, @PathVariable Long id, BindingResult bindingResult) {
-        ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
-        if (errorDetails != null) return errorDetails;
+
         DoctorDTO doctorDTO1 = DoctorDTO.form(doctorService.updateDoctor(id, doctorDTO));
         return new ResponseEntity<>(doctorDTO1, HttpStatus.OK);
     }
