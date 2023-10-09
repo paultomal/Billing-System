@@ -36,11 +36,13 @@ public class AppointmentBookingService {
         appointmentBooking.setOrganization(organizationRepository.findById(appointmentBookingDTO.getOrgId()).orElseThrow());
 
         Optional<Patient> patient = Optional.empty();
+        List<AppointmentBooking> previousAppointments = null;
         if (appointmentBookingDTO.getPatientId() != null)
             patient = patientRepository.findById(appointmentBookingDTO.getPatientId());
 
         if (patient.isPresent()) {
             appointmentBooking.setPatient(patient.get());
+            previousAppointments = appointmentBookingRepository.findAllByDoctorIdAndPatientId(appointmentBookingDTO.getDoc_id(), patient.get().getId());
         } else {
             Patient newPatient = new Patient();
             newPatient.setName(appointmentBookingDTO.getPatientName());
@@ -52,10 +54,17 @@ public class AppointmentBookingService {
 
         Doctor doctor = doctorRepository.findById(appointmentBookingDTO.getDoc_id()).orElseThrow();
         appointmentBooking.setDoctor(doctor);
-        appointmentBooking.setConsultationFee(doctor.getConsultationFee());
         appointmentBooking.setDiscount(appointmentBookingDTO.getDiscount());
         appointmentBooking.setSlot(appointmentBookingDTO.getSlot());
-        appointmentBooking.setTotalFees(Double.parseDouble(doctor.getConsultationFee()) - Double.parseDouble(appointmentBookingDTO.getDiscount()));
+
+        if(previousAppointments == null) {
+            appointmentBooking.setConsultationFee(doctor.getConsultationFee());
+            appointmentBooking.setTotalFees(Double.parseDouble(doctor.getConsultationFee()) - Double.parseDouble(appointmentBookingDTO.getDiscount()));
+        }
+        else {
+            appointmentBooking.setConsultationFee(doctor.getFollowUp());
+            appointmentBooking.setTotalFees(Double.parseDouble(doctor.getFollowUp()) - Double.parseDouble(appointmentBookingDTO.getDiscount()));
+        }
 
         return AppointmentBookingDTO.form(appointmentBookingRepository.save(appointmentBooking));
     }
