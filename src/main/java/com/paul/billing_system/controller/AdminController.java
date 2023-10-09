@@ -38,18 +38,18 @@ public class AdminController {
     @GetMapping("/getAdmins/{org_Id}")
     public ResponseEntity<?> getAllAdmin(@PathVariable Long org_Id,
                                          @RequestParam(defaultValue = "0") int page,
-                                         @RequestParam(defaultValue = "10") int size){
-        List<UserInfo> userInfos = userServices.getAllAdmins(org_Id, PageRequest.of(page,size));
+                                         @RequestParam(defaultValue = "10") int size) {
+        List<UserInfo> userInfos = userServices.getAllAdmins(org_Id, PageRequest.of(page, size));
         List<UserInfoDTO> admin = userInfos.stream()
                 .map(UserInfoDTO::form)
-                .filter(u-> u.getRoles().equals(UserRoles.getLabelByUserRoles(UserRoles.ROLE_ADMIN)))
+                .filter(u -> u.getRoles().equals(UserRoles.getLabelByUserRoles(UserRoles.ROLE_ADMIN)))
                 .toList();
-        return new ResponseEntity<>(admin,HttpStatus.OK);
+        return new ResponseEntity<>(admin, HttpStatus.OK);
     }
 
-   @GetMapping("/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> getAdminById(@PathVariable Long id) {
-       UserInfoDTO userInfoDTO = UserInfoDTO.form(userServices.getAdminById(id));
+        UserInfoDTO userInfoDTO = UserInfoDTO.form(userServices.getAdminById(id));
         return new ResponseEntity<>(userInfoDTO, HttpStatus.OK);
     }
 

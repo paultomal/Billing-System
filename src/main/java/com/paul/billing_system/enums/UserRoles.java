@@ -10,13 +10,14 @@ public enum UserRoles {
         this.label = label;
     }
 
-    public static UserRoles getUserRolesByLabel(String label){
-        for (UserRoles roles : UserRoles.values()){
-            if (roles.label.equals(label))return roles;
-        }return null;
+    public static UserRoles getUserRolesByLabel(String label) {
+        for (UserRoles roles : UserRoles.values()) {
+            if (roles.label.equals(label)) return roles;
+        }
+        return null;
     }
 
-    public static String getLabelByUserRoles(UserRoles userRoles){
+    public static String getLabelByUserRoles(UserRoles userRoles) {
         return userRoles.label;
     }
 }

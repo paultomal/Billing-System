@@ -18,8 +18,8 @@ public class DrugFormationController {
 
     @GetMapping("/searchDrugFormation/{name}")
     public List<DrugFormation> searchDrugFormation(@PathVariable String name,
-                                                @RequestParam(defaultValue = "0") int page,
-                                                @RequestParam(defaultValue = "10") int size) {
+                                                   @RequestParam(defaultValue = "0") int page,
+                                                   @RequestParam(defaultValue = "10") int size) {
         return drugFormationService.searchDrugFormation(name, PageRequest.of(page, size));
     }
 }

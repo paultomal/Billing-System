@@ -53,7 +53,7 @@ public class DoctorService {
             doctorSlotList = doctorSlotRepository.saveAll(doctorSlotList);
             doctor.setDoctorSlots(doctorSlotList);
 
-            List<Organization> organizationList = doctorDTO.getOrgId().stream().map(o-> organizationRepository.findById(o).orElseThrow()).toList();
+            List<Organization> organizationList = doctorDTO.getOrgId().stream().map(o -> organizationRepository.findById(o).orElseThrow()).toList();
 
             List<Speciality> specialityList = doctorDTO.getSpId().stream().map(s -> specialityRepository.findById(s).orElseThrow()).toList();
 
@@ -64,6 +64,7 @@ public class DoctorService {
         }
         return doctor;
     }
+
     public DoctorSlot form(DoctorSlotDTO doctorSlotDTO) {
         DoctorSlot doctorSlot = new DoctorSlot();
         doctorSlot.setDay(DaysOfWeek.getDaysByLabel(doctorSlotDTO.getDay()));
@@ -102,7 +103,7 @@ public class DoctorService {
     }
 
     public List<Doctor> searchDoctor(String name, PageRequest pageRequest) {
-       return doctorRepository.findByName(name, pageRequest);
+        return doctorRepository.findByName(name, pageRequest);
     }
 
     public List<Doctor> searchDoctorUnderOrg(Long orgId, String name, PageRequest pageRequest) {

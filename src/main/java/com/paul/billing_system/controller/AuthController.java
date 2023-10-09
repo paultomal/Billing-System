@@ -67,9 +67,8 @@ public class AuthController {
                 responseDTO.setOrgId(user.getOrganization().getId());
                 responseDTO.setOrgType(OrganizationTypes.getLabelByOrganizationType(user.getOrganization().getType()));
 
-                return new ResponseEntity<>(responseDTO,HttpStatus.OK);
-            }
-            else {
+                return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+            } else {
                 throw new UsernameNotFoundException("Invalid user request!!");
             }
 
@@ -100,7 +99,7 @@ public class AuthController {
     }
 
     public void createSysRoot() {
-        if(userRepository.findByUsername("root").isEmpty()) {
+        if (userRepository.findByUsername("root").isEmpty()) {
             Organization org = new Organization();
             org.setName("root");
             org.setOrgCode("root");

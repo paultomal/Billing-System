@@ -35,8 +35,8 @@ public class AppointmentBookingDTO {
     @NotNull
     private Double totalFees;
 
-    public static AppointmentBookingDTO form(AppointmentBooking appointmentBooking){
-        if(appointmentBooking == null)
+    public static AppointmentBookingDTO form(AppointmentBooking appointmentBooking) {
+        if (appointmentBooking == null)
             return null;
 
         AppointmentBookingDTO appointmentBookingDTO = new AppointmentBookingDTO();

@@ -10,7 +10,6 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<UserInfo, Long> {
     Optional<UserInfo> findByUsername(String username);
-    //Optional<UserInfo> findByEmail(String username);
 
     @Query("SELECT a FROM UserInfo a where a.organization.id = :id")
     List<UserInfo> findByOrganization(Long id, Pageable pageable);

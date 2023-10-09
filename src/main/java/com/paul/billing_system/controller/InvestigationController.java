@@ -70,8 +70,8 @@ public class InvestigationController {
     public List<InvestigationDTO> searchInvestigationBYOrg(@PathVariable Long orgId,
                                                            @PathVariable String name,
                                                            @RequestParam(defaultValue = "0") int page,
-                                                           @RequestParam(defaultValue = "10") int size){
-        return investigationService.searchInvestigationBYOrg(orgId,name,PageRequest.of(page,size));
+                                                           @RequestParam(defaultValue = "10") int size) {
+        return investigationService.searchInvestigationBYOrg(orgId, name, PageRequest.of(page, size));
     }
 
     @GetMapping("/getAllInvestigationByOrg/{orgId}")
@@ -95,7 +95,7 @@ public class InvestigationController {
     }
 
     @GetMapping("/countInvestigation")
-    public Long countInvestigation(){
+    public Long countInvestigation() {
         return investigationService.countInvestigation();
     }
 

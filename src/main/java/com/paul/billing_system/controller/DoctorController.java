@@ -47,7 +47,7 @@ public class DoctorController {
     public ResponseEntity<?> getAllDoctors(@PathVariable Long id, @PathVariable Long sId,
                                            @RequestParam(defaultValue = "0") int page,
                                            @RequestParam(defaultValue = "10") int size) {
-        List<Doctor> doctors = doctorService.getAllDoctors(id, sId, PageRequest.of(page,size));
+        List<Doctor> doctors = doctorService.getAllDoctors(id, sId, PageRequest.of(page, size));
         List<DoctorDTO> doctorDTOList = doctors.stream().map(DoctorDTO::form).toList();
         return new ResponseEntity<>(doctorDTOList, HttpStatus.OK);
     }
@@ -64,7 +64,7 @@ public class DoctorController {
     public ResponseEntity<?> searchDoctorByName(@PathVariable String name,
                                                 @RequestParam(defaultValue = "0") int page,
                                                 @RequestParam(defaultValue = "10") int size) {
-        return new ResponseEntity<>(doctorService.searchDoctor(name, PageRequest.of(page,size))
+        return new ResponseEntity<>(doctorService.searchDoctor(name, PageRequest.of(page, size))
                 .stream()
                 .map(DoctorDTO::form)
                 .toList(), HttpStatus.OK);
@@ -75,7 +75,7 @@ public class DoctorController {
                                                 @PathVariable String name,
                                                 @RequestParam(defaultValue = "0") int page,
                                                 @RequestParam(defaultValue = "10") int size) {
-        return new ResponseEntity<>(doctorService.searchDoctorUnderOrg(orgId, name, PageRequest.of(page,size))
+        return new ResponseEntity<>(doctorService.searchDoctorUnderOrg(orgId, name, PageRequest.of(page, size))
                 .stream()
                 .map(DoctorDTO::form)
                 .toList(), HttpStatus.OK);
@@ -83,7 +83,7 @@ public class DoctorController {
 
     @GetMapping("/countDoctor/{orgId}/{sId}")
     public Long countDoctor(@PathVariable Long orgId,
-                            @PathVariable Long sId){
+                            @PathVariable Long sId) {
         return doctorService.countDoctor(orgId, sId);
     }
 }

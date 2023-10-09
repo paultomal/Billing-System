@@ -12,15 +12,15 @@ import org.springframework.web.context.request.WebRequest;
 @ControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(AuthenticationIsNotGivenException.class)
-    public ResponseEntity<?> customAuthenticationIsNotGivenException(AuthenticationIsNotGivenException exception){
+    public ResponseEntity<?> customAuthenticationIsNotGivenException(AuthenticationIsNotGivenException exception) {
         ErrorDetails errorDetails = new ErrorDetails(exception.getMessage());
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> globalExceptionHandling(Exception exception, WebRequest request){
+    public ResponseEntity<?> globalExceptionHandling(Exception exception) {
         ErrorDetails errorDetails =
-                new ErrorDetails( exception.getMessage());
+                new ErrorDetails(exception.getMessage());
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

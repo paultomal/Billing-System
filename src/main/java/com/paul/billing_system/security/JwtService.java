@@ -50,10 +50,10 @@ public class JwtService {
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
-    public String generateToken(String username, List role){
-        Map<String,Object> claims = new HashMap<>();
+    public String generateToken(String username, List role) {
+        Map<String, Object> claims = new HashMap<>();
         claims.put("role", role);
-        return createToken(claims,username);
+        return createToken(claims, username);
     }
 
     private String createToken(Map<String, Object> claims, String username) {
@@ -61,7 +61,7 @@ public class JwtService {
                 .setClaims(claims)
                 .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis()+1000*60*60*24))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
                 .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
     }
 

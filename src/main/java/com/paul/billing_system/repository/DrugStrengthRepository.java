@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface DrugStrengthRepository extends JpaRepository<DrugStrength, Long> {
     DrugStrength findByName(String name);
+
     @Query("select d from DrugStrength d where d.name like concat('%', :name, '%') ")
     List<DrugStrength> searchByName(@Param("name") String name, Pageable pageable);
 }

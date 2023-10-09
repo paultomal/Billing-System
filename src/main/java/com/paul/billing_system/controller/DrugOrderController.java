@@ -53,7 +53,7 @@ public class DrugOrderController {
     }
 
     @GetMapping("/countDrugOrders/{orgId}")
-    public Long countDrugOrders(@PathVariable Long orgId){
+    public Long countDrugOrders(@PathVariable Long orgId) {
         return drugOrderService.countDrugOrders(orgId);
     }
 }

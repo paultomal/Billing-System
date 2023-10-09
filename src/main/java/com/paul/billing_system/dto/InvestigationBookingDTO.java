@@ -1,6 +1,5 @@
 package com.paul.billing_system.dto;
 
-import com.paul.billing_system.entity.Investigation;
 import com.paul.billing_system.entity.InvestigationBooking;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -28,7 +27,7 @@ public class InvestigationBookingDTO {
     @NotNull
     private Double total;
 
-    public static InvestigationBookingDTO form(InvestigationBooking booking){
+    public static InvestigationBookingDTO form(InvestigationBooking booking) {
         InvestigationBookingDTO bookingDTO = new InvestigationBookingDTO();
 
         bookingDTO.setId(booking.getId());

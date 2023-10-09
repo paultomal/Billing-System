@@ -80,12 +80,12 @@ public class DrugService {
         Optional<Drug> drug = drugRepository.findById(id);
 
         OrgDrugPriceQuantity orgDrugPriceQuantity = null;
-        if(drug.isPresent()) {
+        if (drug.isPresent()) {
             orgDrugPriceQuantity = priceQuantityRepository.findByOrganizationIdAndDrugId(orgId, drug.get().getId());
         }
         DrugDTO drugDTO = drug.map(DrugDTO::form).orElse(null);
         assert drugDTO != null;
-        if(orgDrugPriceQuantity != null) {
+        if (orgDrugPriceQuantity != null) {
             if (orgDrugPriceQuantity.getPrice() != null)
                 drugDTO.setPrice(orgDrugPriceQuantity.getPrice());
             if (orgDrugPriceQuantity.getQuantity() != null)
@@ -98,7 +98,7 @@ public class DrugService {
     public DrugDTO updateDrug(Long id, DrugDTO drugDTO) {
         Optional<Drug> drug = drugRepository.findById(id);
 
-        if(drug.isPresent()) {
+        if (drug.isPresent()) {
             drug.get().setBrandName(drugDTO.getBrandName());
             drug.get().setPrice(drugDTO.getPrice());
             drug.get().setGeneric(genericRepository.findByName(drugDTO.getGenericName()));
@@ -113,7 +113,7 @@ public class DrugService {
     }
 
     public String deleteDrug(Long id) {
-        if(drugRepository.findById(id).isPresent()) {
+        if (drugRepository.findById(id).isPresent()) {
             drugRepository.deleteById(id);
 
             return "Drug deleted of ID: " + id;

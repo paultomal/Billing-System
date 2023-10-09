@@ -114,7 +114,7 @@ public class InvestigationBookingService {
 
 
     public List<InvestigationBooking> searchBookInvestigation(Long orgId, String patientName, PageRequest pageRequest) {
-        return bookingRepository.findByOrganizationAndPatient(orgId,patientName,pageRequest);
+        return bookingRepository.findByOrganizationAndPatient(orgId, patientName, pageRequest);
     }
 
     public Long countInvestigationBooking(Long orgId) {

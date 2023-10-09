@@ -45,7 +45,7 @@ public class SpecialityService {
     public Speciality updateSpeciality(Long sId, SpecialityDTO specialityDTO) {
         Optional<Speciality> speciality = specialityRepository.findById(sId);
 
-        if (speciality.isPresent()){
+        if (speciality.isPresent()) {
             speciality.get().setMedSpecName(specialityDTO.getMedSpecName());
             speciality.get().setIconUrl(specialityDTO.getIconUrl());
             speciality.get().setDescription(specialityDTO.getDescription());

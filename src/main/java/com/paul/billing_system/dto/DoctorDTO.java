@@ -3,7 +3,6 @@ package com.paul.billing_system.dto;
 import com.paul.billing_system.entity.Doctor;
 import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.entity.Speciality;
-import com.paul.billing_system.enums.DaysOfWeek;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

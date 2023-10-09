@@ -1,7 +1,6 @@
 package com.paul.billing_system.repository;
 
 import com.paul.billing_system.entity.InvestigationBooking;
-import com.paul.billing_system.entity.Patient;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -11,18 +11,18 @@ public enum OrganizationTypes {
     PHARMACY("Pharmacy");
     private final String label;
 
-    OrganizationTypes (String label) {
+    OrganizationTypes(String label) {
         this.label = label;
     }
 
     public static OrganizationTypes getOrganizationTypeByLabel(String label) {
         for (OrganizationTypes types : OrganizationTypes.values()) {
-            if(types.label.equals(label)) return types;
+            if (types.label.equals(label)) return types;
         }
         return null;
     }
 
-    public static String getLabelByOrganizationType(OrganizationTypes organizationTypes){
+    public static String getLabelByOrganizationType(OrganizationTypes organizationTypes) {
         return organizationTypes.label;
     }
 

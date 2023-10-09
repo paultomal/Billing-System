@@ -25,14 +25,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 public class AppConfig {
     @Autowired
-    private  JwtAuthFilter authFilter;
+    private JwtAuthFilter authFilter;
 
     @Bean
     //Authentication
     public UserDetailsService userDetailsService() {
-/*        UserDetails superAdmin = User.builder().username("Paul").password(encoder.encode("paul")).roles("Super_Admin").build();
-        UserDetails admin = User.builder().username("Tomal").password(encoder.encode("paul")).roles("Admin").build();
-        return new InMemoryUserDetailsManager(superAdmin, admin);*/
         return new UserInfoUserDetailsService();
     }
 
@@ -40,8 +37,8 @@ public class AppConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(autz -> autz
-                .requestMatchers("/superAdmin/addSuperAdmin","/authenticate","/getRole").permitAll()
-                .requestMatchers("/**")
+                        .requestMatchers("/superAdmin/addSuperAdmin", "/authenticate", "/getRole").permitAll()
+                        .requestMatchers("/**")
                         .authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
@@ -55,7 +52,7 @@ public class AppConfig {
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider(){
+    public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userDetailsService());
         authenticationProvider.setPasswordEncoder(passwordEncoder());

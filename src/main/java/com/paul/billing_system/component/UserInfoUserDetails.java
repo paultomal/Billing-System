@@ -1,16 +1,12 @@
 package com.paul.billing_system.component;
 
 import com.paul.billing_system.entity.UserInfo;
-import jakarta.persistence.Column;
-import jakarta.validation.constraints.Email;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class UserInfoUserDetails implements UserDetails {
     private final String username;
@@ -22,10 +18,7 @@ public class UserInfoUserDetails implements UserDetails {
     public UserInfoUserDetails(UserInfo userInfo) {
         username = userInfo.getUsername();
         password = userInfo.getPassword();
-        authorities= List.of(new SimpleGrantedAuthority(userInfo.getRoles().name()));
-/*
-                Arrays.stream(userInfo.getRoles().split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
-*/
+        authorities = List.of(new SimpleGrantedAuthority(userInfo.getRoles().name()));
     }
 
     @Override

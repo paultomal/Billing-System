@@ -11,6 +11,7 @@ import java.util.List;
 
 public interface AppointmentBookingRepository extends JpaRepository<AppointmentBooking, Long> {
     List<AppointmentBooking> findAllByOrganizationId(Long orgId, Pageable pageable);
+
     List<AppointmentBooking> findAllByOrganizationId(Long orgId);
 
     @Query("SELECT ab FROM AppointmentBooking ab WHERE ab.organization.id = :orgId AND ab.patient.name like concat( '%', :patientName, '%')")

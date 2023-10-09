@@ -24,7 +24,7 @@ public class PatientDTO {
 
     private Long orgId;
 
-    public static PatientDTO form(Patient patient){
+    public static PatientDTO form(Patient patient) {
         PatientDTO patientDTO = new PatientDTO();
         patientDTO.setId(patient.getId());
         patientDTO.setName(patient.getName());

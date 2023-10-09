@@ -26,7 +26,7 @@ public class OrgDrugPriceQuantityService {
     public OrgDrugPriceQuantityDTO updatePriceQuantity(OrgDrugPriceQuantityDTO priceQuantityDTO) {
         OrgDrugPriceQuantity orgDrugPriceQuantity = orgDrugPriceQuantityRepository.findByOrganizationIdAndDrugId(priceQuantityDTO.getOrgId(), priceQuantityDTO.getDrugId());
 
-        if(orgDrugPriceQuantity == null) {
+        if (orgDrugPriceQuantity == null) {
             orgDrugPriceQuantity = new OrgDrugPriceQuantity();
         }
         orgDrugPriceQuantity.setOrganization(organizationRepository.findById(priceQuantityDTO.getOrgId()).orElseThrow());

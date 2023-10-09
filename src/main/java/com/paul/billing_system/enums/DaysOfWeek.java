@@ -18,15 +18,15 @@ public enum DaysOfWeek {
         this.label = label;
     }
 
-    public static  DaysOfWeek getDaysByLabel(String label){
-        for (DaysOfWeek days : DaysOfWeek.values()){
-            if(days.label.equals(label))
+    public static DaysOfWeek getDaysByLabel(String label) {
+        for (DaysOfWeek days : DaysOfWeek.values()) {
+            if (days.label.equals(label))
                 return days;
         }
         return null;
     }
 
-    public static String getLabelByDays(DaysOfWeek days){
+    public static String getLabelByDays(DaysOfWeek days) {
         return days.label;
     }
 

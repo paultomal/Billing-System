@@ -5,7 +5,6 @@ import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.entity.UserInfo;
 import com.paul.billing_system.enums.UserRoles;
 import com.paul.billing_system.repository.OrganizationRepository;
-import com.paul.billing_system.repository.SpecialityRepository;
 import com.paul.billing_system.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -26,7 +25,6 @@ public class UserServices {
     private final UserRepository userRepository;
 
     private final OrganizationRepository organizationRepository;
-
 
 
     public UserServices(UserRepository userRepository, OrganizationRepository organizationRepository) {
@@ -107,7 +105,7 @@ public class UserServices {
     // Staffs
 
     @Transactional
-    public UserInfo saveAdmin( UserInfoDTO userInfoDTO) {
+    public UserInfo saveAdmin(UserInfoDTO userInfoDTO) {
         Optional<Organization> organization1 = organizationRepository.findById(userInfoDTO.getOrgId());
         UserInfo userInfo = new UserInfo();
         if (organization1.isPresent()) {
@@ -150,11 +148,11 @@ public class UserServices {
         return null;
     }
 
-    public List<UserInfo> getAllAdmins(Long id,  PageRequest pageRequest) {
+    public List<UserInfo> getAllAdmins(Long id, PageRequest pageRequest) {
 
         Optional<Organization> organization = organizationRepository.findById(id);
         if (organization.isPresent())
-                return userRepository.findByOrganizationAndSpecialist(id, pageRequest);
+            return userRepository.findByOrganizationAndSpecialist(id, pageRequest);
         return null;
 
     }

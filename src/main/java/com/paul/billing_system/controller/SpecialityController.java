@@ -24,17 +24,17 @@ public class SpecialityController {
     }
 
     @PostMapping("/addSpeciality")
-    public ResponseEntity<?> addSpeciality(@RequestBody SpecialityDTO specialityDTO, BindingResult bindingResult){
+    public ResponseEntity<?> addSpeciality(@RequestBody SpecialityDTO specialityDTO, BindingResult bindingResult) {
         ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
         if (errorDetails != null) return errorDetails;
         SpecialityDTO specialityDTO1 = SpecialityDTO.form(specialityService.addSpeciality(specialityDTO));
-        return new ResponseEntity<>(specialityDTO1,HttpStatus.CREATED);
+        return new ResponseEntity<>(specialityDTO1, HttpStatus.CREATED);
     }
 
     @PutMapping("/updateSpeciality/{sId}")
-    public ResponseEntity<?> updateSpeciality(@PathVariable Long sId, @RequestBody SpecialityDTO specialityDTO){
-        SpecialityDTO specialityDTO1 = SpecialityDTO.form(specialityService.updateSpeciality(sId,specialityDTO));
-        return new ResponseEntity<>(specialityDTO1,HttpStatus.OK);
+    public ResponseEntity<?> updateSpeciality(@PathVariable Long sId, @RequestBody SpecialityDTO specialityDTO) {
+        SpecialityDTO specialityDTO1 = SpecialityDTO.form(specialityService.updateSpeciality(sId, specialityDTO));
+        return new ResponseEntity<>(specialityDTO1, HttpStatus.OK);
     }
 
     @GetMapping("/getAllSpecialist")
@@ -64,7 +64,7 @@ public class SpecialityController {
 
 
     @GetMapping("/countSpeciality")
-    public Long countSpeciality(){
+    public Long countSpeciality() {
         return specialityService.countSpeciality();
     }
 }

@@ -52,7 +52,7 @@ public class AppointmentBookingController {
     }
 
     @GetMapping("/appointmentCount/{orgId}")
-    public Long appointmentCount(@PathVariable Long orgId){
+    public Long appointmentCount(@PathVariable Long orgId) {
         return appointmentBookingService.appointmentCount(orgId);
     }
 }

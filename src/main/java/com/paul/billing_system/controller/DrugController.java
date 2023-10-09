@@ -34,21 +34,21 @@ public class DrugController {
     @GetMapping("/getAllDrugs")
     public List<DrugDTO> getDrugs(@RequestParam(defaultValue = "0") int page,
                                   @RequestParam(defaultValue = "10") int size) {
-        return drugService.getAllDrugs(PageRequest.of(page,size));
+        return drugService.getAllDrugs(PageRequest.of(page, size));
     }
 
     @GetMapping("/getAllDrugs/{orgId}")
     public List<DrugDTO> getDrugsByOrgId(@PathVariable Long orgId,
                                          @RequestParam(defaultValue = "0") int page,
                                          @RequestParam(defaultValue = "10") int size) {
-        return drugService.getAllDrugsOfOrg(orgId, PageRequest.of(page,size));
+        return drugService.getAllDrugsOfOrg(orgId, PageRequest.of(page, size));
     }
 
     @GetMapping("/getAllDrugsDuringOrder/{orgId}")
     public List<DrugDTO> getDrugsByOrgIdDuringOrder(@PathVariable Long orgId,
-                                         @RequestParam(defaultValue = "0") int page,
-                                         @RequestParam(defaultValue = "10") int size) {
-        return drugService.getAllDrugsOfOrgDuringOrder(orgId, PageRequest.of(page,size));
+                                                    @RequestParam(defaultValue = "0") int page,
+                                                    @RequestParam(defaultValue = "10") int size) {
+        return drugService.getAllDrugsOfOrgDuringOrder(orgId, PageRequest.of(page, size));
     }
 
     @GetMapping("/getDrug/{id}")
@@ -165,7 +165,7 @@ public class DrugController {
     }
 
     @GetMapping("/countDrug")
-    public Long countDrug(){
+    public Long countDrug() {
         return drugService.countDrug();
     }
 

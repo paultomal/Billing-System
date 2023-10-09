@@ -76,7 +76,7 @@ public class OrganizationController {
                                                  @PathVariable String name,
                                                  @RequestParam(defaultValue = "0") int page,
                                                  @RequestParam(defaultValue = "10") int size) {
-        return new ResponseEntity<>(organizationService.searchOrgByNameAndType(OrganizationTypes.getOrganizationTypeByLabel(type), name, PageRequest.of(page,size))
+        return new ResponseEntity<>(organizationService.searchOrgByNameAndType(OrganizationTypes.getOrganizationTypeByLabel(type), name, PageRequest.of(page, size))
                 .stream()
                 .map(OrganizationDTO::form)
                 .toList(), HttpStatus.OK);

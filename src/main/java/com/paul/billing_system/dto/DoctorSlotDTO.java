@@ -16,8 +16,8 @@ public class DoctorSlotDTO {
 
     private String time;
 
-    public static DoctorSlotDTO form(DoctorSlot doctorSlot){
-        DoctorSlotDTO doctorSlotDTO =new DoctorSlotDTO();
+    public static DoctorSlotDTO form(DoctorSlot doctorSlot) {
+        DoctorSlotDTO doctorSlotDTO = new DoctorSlotDTO();
         doctorSlotDTO.setId(doctorSlot.getId());
         doctorSlotDTO.setDay(DaysOfWeek.getLabelByDays(doctorSlot.getDay()));
         doctorSlotDTO.setTime(doctorSlot.getTime());

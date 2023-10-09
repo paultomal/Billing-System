@@ -30,7 +30,7 @@ public class OrgAdminController {
     public ResponseEntity<?> save(@Valid @RequestBody UserInfoDTO userInfoDTO, BindingResult bindingResult) {
         ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
         if (errorDetails != null) return errorDetails;
-        UserInfoDTO userInfoDTO1 = UserInfoDTO.form(userServices.saveOrgAdmin( userInfoDTO));
+        UserInfoDTO userInfoDTO1 = UserInfoDTO.form(userServices.saveOrgAdmin(userInfoDTO));
         return new ResponseEntity<>(userInfoDTO1, HttpStatus.OK);
     }
 
@@ -41,7 +41,7 @@ public class OrgAdminController {
         List<UserInfo> userInfos = userServices.getOrgAdmins(id, PageRequest.of(page, size));
         List<UserInfoDTO> orgAdmin = userInfos.stream()
                 .map(UserInfoDTO::form)
-                .filter(u-> u.getRoles().equals(UserRoles.getLabelByUserRoles(UserRoles.ROLE_ORG_ADMIN)))
+                .filter(u -> u.getRoles().equals(UserRoles.getLabelByUserRoles(UserRoles.ROLE_ORG_ADMIN)))
                 .toList();
         return new ResponseEntity<>(orgAdmin, HttpStatus.OK);
     }
@@ -55,7 +55,7 @@ public class OrgAdminController {
     @GetMapping("/getAdminLengthOfOrgAdmin/{orgId}")
     public ResponseEntity<?> getAdminLengthOfOrgAdmin(@PathVariable Long orgId,
                                                       @RequestParam(defaultValue = "0") int page,
-                                                      @RequestParam(defaultValue = "10") int size ){
+                                                      @RequestParam(defaultValue = "10") int size) {
         long lengthOfAdmins = userServices.getOrgAdmins(orgId, PageRequest.of(page, size)).size();
 
         return new ResponseEntity<>(lengthOfAdmins, HttpStatus.OK);
