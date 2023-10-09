@@ -16,4 +16,6 @@ public interface AppointmentBookingRepository extends JpaRepository<AppointmentB
 
     @Query("SELECT ab FROM AppointmentBooking ab WHERE ab.organization.id = :orgId AND ab.patient.name like concat( '%', :patientName, '%')")
     List<AppointmentBooking> findByOrganizationAndPatient(@Param("orgId") Long orgId, @Param("patientName") String patientName, PageRequest pageRequest);
+
+    List<AppointmentBooking> findAllByDoctorIdAndPatientId(Long doctorId, Long patientId);
 }
