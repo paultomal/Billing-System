@@ -47,7 +47,7 @@ public class AppointmentBookingDTO {
         appointmentBookingDTO.setPatientContact(appointmentBooking.getPatient().getContact());
         appointmentBookingDTO.setDoc_id(appointmentBooking.getDoctor().getId());
         appointmentBookingDTO.setDoc_name(appointmentBooking.getDoctor().getName());
-        appointmentBookingDTO.setConsultationFee(appointmentBooking.getDoctor().getConsultationFee());
+        appointmentBookingDTO.setConsultationFee(appointmentBooking.getConsultationFee());
         appointmentBookingDTO.setDiscount(appointmentBooking.getDiscount());
         appointmentBookingDTO.setSlot(appointmentBooking.getSlot());
         appointmentBookingDTO.setTotalFees(appointmentBooking.getTotalFees());
