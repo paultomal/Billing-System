@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface OrgInvestigationPriceRepository extends JpaRepository<OrgInvestigationPrice, Long> {
 
-
     @Query("select obi from OrgInvestigationPrice obi where obi.organization.id = :orgId and obi.investigation.id = :inId")
     OrgInvestigationPrice findByOrganizationAndInvestigation(Long orgId, Long inId);
 }

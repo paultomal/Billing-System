@@ -7,7 +7,6 @@ import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.entity.UserInfo;
 import com.paul.billing_system.enums.OrganizationTypes;
 import com.paul.billing_system.enums.UserRoles;
-import com.paul.billing_system.exception.ErrorDetails;
 import com.paul.billing_system.repository.UserRepository;
 import com.paul.billing_system.security.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +18,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -81,21 +78,6 @@ public class AuthController {
     @GetMapping("/getRole")
     public ResponseEntity<?> getRole(@RequestHeader("Authorization") String token) {
         return new ResponseEntity<>(jwtService.extractRole(token.substring(7)), HttpStatus.OK);
-    }
-
-    static ResponseEntity<?> getErrorDetails(BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            List<String> errorMessages = bindingResult.getFieldErrors()
-                    .stream()
-                    .map(FieldError::getDefaultMessage)
-                    .toList();
-
-            String errorMessage = "Error: " + errorMessages;
-
-            ErrorDetails errorDetails = new ErrorDetails(errorMessage);
-            return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
-        }
-        return null;
     }
 
     public void createSysRoot() {

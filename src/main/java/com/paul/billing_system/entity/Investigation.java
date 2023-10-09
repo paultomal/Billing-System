@@ -1,9 +1,6 @@
 package com.paul.billing_system.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +17,7 @@ public class Investigation {
     private Long id;
 
     @NotEmpty(message = "Name should not be empty")
+    @Column(unique = true)
     private String serviceName;
 
     private Double serviceCharge;

@@ -2,7 +2,7 @@ package com.paul.billing_system.controller;
 
 import com.paul.billing_system.dto.InvestigationDTO;
 import com.paul.billing_system.entity.Investigation;
-import com.paul.billing_system.exception.AuthenticationIsNotGivenException;
+import com.paul.billing_system.exception.InvestigationServiceNameAlreadyTaken;
 import com.paul.billing_system.service.InvestigationService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.PageRequest;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.paul.billing_system.controller.AuthController.getErrorDetails;
 
 @RestController
 @RequestMapping("/investigation")
@@ -25,21 +24,17 @@ public class InvestigationController {
     }
 
     @PostMapping("/addInvestigation")
-    public ResponseEntity<?> save(@Valid @RequestBody InvestigationDTO investigationDTO, BindingResult bindingResult) {
-        ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
-        if (errorDetails != null) return errorDetails;
+    public ResponseEntity<?> save(@Valid @RequestBody InvestigationDTO investigationDTO) throws InvestigationServiceNameAlreadyTaken {
+        if (investigationService.getInvestigationByServiceName(investigationDTO.getServiceName()).isPresent()){
+            throw new InvestigationServiceNameAlreadyTaken(investigationDTO.getServiceName() + " is Already Saved in Database");
+        }
         InvestigationDTO investigationDTO1 = InvestigationDTO.form(investigationService.saveInvestigation(investigationDTO));
         return new ResponseEntity<>(investigationDTO1, HttpStatus.OK);
     }
 
     @GetMapping("/getAllInvestigation")
     public ResponseEntity<?> getAllServices(@RequestParam(defaultValue = "0") int page,
-                                            @RequestParam(defaultValue = "10") int size,
-                                            @RequestHeader("Authorization") String token) throws AuthenticationIsNotGivenException {
-        if (token == null) {
-            throw new AuthenticationIsNotGivenException("No Token");
-        }
-
+                                            @RequestParam(defaultValue = "10") int size){
         List<Investigation> investigations = investigationService.getAllServices(PageRequest.of(page, size));
         List<InvestigationDTO> investigationDTOList = investigations.stream().map(InvestigationDTO::form).toList();
         return new ResponseEntity<>(investigationDTOList, HttpStatus.OK);
@@ -48,8 +43,7 @@ public class InvestigationController {
 
     @PutMapping("/updateInvestigation/{id}")
     public ResponseEntity<?> updateService(@Valid @RequestBody InvestigationDTO investigationDTO, @PathVariable Long id, BindingResult bindingResult) {
-        ResponseEntity<?> errorDetails = getErrorDetails(bindingResult);
-        if (errorDetails != null) return errorDetails;
+
         InvestigationDTO investigationDTO1 = InvestigationDTO.form(investigationService.updateService(investigationDTO, id));
         return new ResponseEntity<>(investigationDTO1, HttpStatus.OK);
     }

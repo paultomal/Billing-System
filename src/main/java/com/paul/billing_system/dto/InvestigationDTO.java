@@ -1,6 +1,8 @@
 package com.paul.billing_system.dto;
 
 import com.paul.billing_system.entity.Investigation;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +13,8 @@ import lombok.NoArgsConstructor;
 public class InvestigationDTO {
     private Long id;
 
+    @NotEmpty(message = "Name should not be empty")
+    @Column(unique = true)
     private String serviceName;
 
     private Double serviceCharge;

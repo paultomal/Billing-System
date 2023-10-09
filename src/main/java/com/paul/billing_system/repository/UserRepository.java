@@ -16,4 +16,7 @@ public interface UserRepository extends JpaRepository<UserInfo, Long> {
 
     @Query("SELECT a FROM UserInfo a WHERE a.organization.id = :id")
     List<UserInfo> findByOrganizationAndSpecialist(Long id, Pageable pageable);
+
+    Optional<UserInfo> findByEmail(String email);
+
 }

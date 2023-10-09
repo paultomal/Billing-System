@@ -114,6 +114,10 @@ public class InvestigationService {
     public Long countInvestigation() {
         return (long) investigationRepository.findAll().size();
     }
+
+    public Optional<Investigation> getInvestigationByServiceName(String serviceName) {
+        return investigationRepository.findByServiceName(serviceName);
+    }
 }
 
 
