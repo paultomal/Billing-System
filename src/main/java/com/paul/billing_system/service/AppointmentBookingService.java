@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,7 +55,9 @@ public class AppointmentBookingService {
 
         Doctor doctor = doctorRepository.findById(appointmentBookingDTO.getDoc_id()).orElseThrow();
         appointmentBooking.setDoctor(doctor);
-        appointmentBooking.setDiscount(String.valueOf(Double.parseDouble(appointmentBookingDTO.getConsultationFee()) *(Double.parseDouble(appointmentBookingDTO.getDiscount()) / 100)));
+        Double discount = Double.parseDouble(appointmentBookingDTO.getConsultationFee()) * (Double.parseDouble(appointmentBookingDTO.getDiscount()) / 100);
+        DecimalFormat decimalFormat = new DecimalFormat("#.#");
+        appointmentBooking.setDiscount(decimalFormat.format(discount));
         appointmentBooking.setSlot(appointmentBookingDTO.getSlot());
 
         if(previousAppointments == null) {
@@ -63,7 +66,7 @@ public class AppointmentBookingService {
         }
         else {
             appointmentBooking.setConsultationFee(doctor.getFollowUp());
-            appointmentBooking.setTotalFees(Double.parseDouble(doctor.getFollowUp()) - Double.parseDouble(doctor.getFollowUp()) *(Double.parseDouble(appointmentBookingDTO.getDiscount()) / 100));
+            appointmentBooking.setTotalFees(Double.parseDouble(doctor.getFollowUp()) - Double.parseDouble(doctor.getFollowUp()) * (Double.parseDouble(appointmentBookingDTO.getDiscount()) / 100));
         }
 
         return AppointmentBookingDTO.form(appointmentBookingRepository.save(appointmentBooking));
