@@ -55,17 +55,20 @@ public class AppointmentBookingService {
 
         Doctor doctor = doctorRepository.findById(appointmentBookingDTO.getDoc_id()).orElseThrow();
         appointmentBooking.setDoctor(doctor);
-        Double discount = Double.parseDouble(appointmentBookingDTO.getConsultationFee()) * (Double.parseDouble(appointmentBookingDTO.getDiscount()) / 100);
-        DecimalFormat decimalFormat = new DecimalFormat("#.#");
-        appointmentBooking.setDiscount(decimalFormat.format(discount));
         appointmentBooking.setSlot(appointmentBookingDTO.getSlot());
 
         if(previousAppointments == null) {
             appointmentBooking.setConsultationFee(doctor.getConsultationFee());
+            Double discount = Double.parseDouble(appointmentBooking.getConsultationFee()) * (Double.parseDouble(appointmentBookingDTO.getDiscount()) / 100);
+            DecimalFormat decimalFormat = new DecimalFormat("#.#");
+            appointmentBooking.setDiscount(decimalFormat.format(discount));
             appointmentBooking.setTotalFees(Double.parseDouble(doctor.getConsultationFee()) - Double.parseDouble(doctor.getConsultationFee()) * (Double.parseDouble(appointmentBookingDTO.getDiscount()) / 100));
         }
         else {
             appointmentBooking.setConsultationFee(doctor.getFollowUp());
+            Double discount = Double.parseDouble(appointmentBooking.getConsultationFee()) * (Double.parseDouble(appointmentBookingDTO.getDiscount()) / 100);
+            DecimalFormat decimalFormat = new DecimalFormat("#.#");
+            appointmentBooking.setDiscount(decimalFormat.format(discount));
             appointmentBooking.setTotalFees(Double.parseDouble(doctor.getFollowUp()) - Double.parseDouble(doctor.getFollowUp()) * (Double.parseDouble(appointmentBookingDTO.getDiscount()) / 100));
         }
 
