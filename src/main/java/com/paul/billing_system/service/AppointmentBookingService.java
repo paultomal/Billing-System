@@ -57,7 +57,7 @@ public class AppointmentBookingService {
         appointmentBooking.setDoctor(doctor);
         appointmentBooking.setSlot(appointmentBookingDTO.getSlot());
 
-        if(previousAppointments == null) {
+        if(previousAppointments == null || previousAppointments.isEmpty()) {
             appointmentBooking.setConsultationFee(doctor.getConsultationFee());
             Double discount = Double.parseDouble(appointmentBooking.getConsultationFee()) * (Double.parseDouble(appointmentBookingDTO.getDiscount()) / 100);
             DecimalFormat decimalFormat = new DecimalFormat("#.#");
