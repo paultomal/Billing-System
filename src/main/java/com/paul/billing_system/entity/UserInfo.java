@@ -23,10 +23,12 @@ public class UserInfo extends BaseEntity {
     private String name;
 
     @Column(unique = true)
+    @NotEmpty(message = "UserName should not be empty")
     private String username;
 
     @Email(message = "Email should be valid")
     @Column(unique = true)
+    @NotEmpty(message = "Email should not be empty")
     private String email;
 
     private String password;

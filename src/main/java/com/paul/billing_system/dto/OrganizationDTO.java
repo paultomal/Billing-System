@@ -34,7 +34,6 @@ public class OrganizationDTO {
 
     @Email(message = "Email should be valid")
     @Column(unique = true)
-    @NotEmpty(message = "Email should not be empty")
     private String email;
 
     private String emergencyContact;
@@ -42,8 +41,6 @@ public class OrganizationDTO {
     private String operatingHour;
 
     private int noOfOrgAdmins;
-
-    private List<Organization> noOfOrganization;
 
     public static OrganizationDTO form(Organization organization) {
         OrganizationDTO organizationDTO = new OrganizationDTO();

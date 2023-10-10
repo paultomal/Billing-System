@@ -9,9 +9,9 @@ import com.paul.billing_system.repository.AppointmentBookingRepository;
 import com.paul.billing_system.repository.DoctorRepository;
 import com.paul.billing_system.repository.OrganizationRepository;
 import com.paul.billing_system.repository.PatientRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -54,16 +54,16 @@ public class AppointmentBookingService {
 
         Doctor doctor = doctorRepository.findById(appointmentBookingDTO.getDoc_id()).orElseThrow();
         appointmentBooking.setDoctor(doctor);
-        appointmentBooking.setDiscount(appointmentBookingDTO.getDiscount());
+        appointmentBooking.setDiscount(String.valueOf(Double.parseDouble(appointmentBookingDTO.getConsultationFee()) *(Double.parseDouble(appointmentBookingDTO.getDiscount()) / 100)));
         appointmentBooking.setSlot(appointmentBookingDTO.getSlot());
 
         if(previousAppointments == null) {
             appointmentBooking.setConsultationFee(doctor.getConsultationFee());
-            appointmentBooking.setTotalFees(Double.parseDouble(doctor.getConsultationFee()) - Double.parseDouble(appointmentBookingDTO.getDiscount()));
+            appointmentBooking.setTotalFees(Double.parseDouble(doctor.getConsultationFee()) - Double.parseDouble(doctor.getConsultationFee()) * (Double.parseDouble(appointmentBookingDTO.getDiscount()) / 100));
         }
         else {
             appointmentBooking.setConsultationFee(doctor.getFollowUp());
-            appointmentBooking.setTotalFees(Double.parseDouble(doctor.getFollowUp()) - Double.parseDouble(appointmentBookingDTO.getDiscount()));
+            appointmentBooking.setTotalFees(Double.parseDouble(doctor.getFollowUp()) - Double.parseDouble(doctor.getFollowUp()) *(Double.parseDouble(appointmentBookingDTO.getDiscount()) / 100));
         }
 
         return AppointmentBookingDTO.form(appointmentBookingRepository.save(appointmentBooking));

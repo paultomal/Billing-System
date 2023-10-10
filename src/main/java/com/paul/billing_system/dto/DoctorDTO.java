@@ -3,6 +3,8 @@ package com.paul.billing_system.dto;
 import com.paul.billing_system.entity.Doctor;
 import com.paul.billing_system.entity.Organization;
 import com.paul.billing_system.entity.Speciality;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,6 +23,8 @@ public class DoctorDTO {
 
     private String contact;
 
+    @Email(message = "Email should be valid")
+    @Column(unique = true)
     private String email;
 
     private String followUp;

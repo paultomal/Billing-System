@@ -6,9 +6,9 @@ import com.paul.billing_system.entity.DrugOrder;
 import com.paul.billing_system.entity.OrgDrugPriceQuantity;
 import com.paul.billing_system.entity.Patient;
 import com.paul.billing_system.repository.*;
-import jakarta.transaction.Transactional;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
