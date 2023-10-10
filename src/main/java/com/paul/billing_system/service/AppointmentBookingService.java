@@ -54,16 +54,16 @@ public class AppointmentBookingService {
 
         Doctor doctor = doctorRepository.findById(appointmentBookingDTO.getDoc_id()).orElseThrow();
         appointmentBooking.setDoctor(doctor);
-        appointmentBooking.setDiscount(appointmentBookingDTO.getDiscount());
+        appointmentBooking.setDiscount(String.valueOf(Double.parseDouble(appointmentBookingDTO.getConsultationFee()) *(Double.parseDouble(appointmentBookingDTO.getDiscount()) / 100)));
         appointmentBooking.setSlot(appointmentBookingDTO.getSlot());
 
         if(previousAppointments == null) {
             appointmentBooking.setConsultationFee(doctor.getConsultationFee());
-            appointmentBooking.setTotalFees(Double.parseDouble(doctor.getConsultationFee()) - Double.parseDouble(appointmentBookingDTO.getDiscount()));
+            appointmentBooking.setTotalFees(Double.parseDouble(doctor.getConsultationFee()) - Double.parseDouble(doctor.getConsultationFee()) * (Double.parseDouble(appointmentBookingDTO.getDiscount()) / 100));
         }
         else {
             appointmentBooking.setConsultationFee(doctor.getFollowUp());
-            appointmentBooking.setTotalFees(Double.parseDouble(doctor.getFollowUp()) - Double.parseDouble(appointmentBookingDTO.getDiscount()));
+            appointmentBooking.setTotalFees(Double.parseDouble(doctor.getFollowUp()) - Double.parseDouble(doctor.getFollowUp()) *(Double.parseDouble(appointmentBookingDTO.getDiscount()) / 100));
         }
 
         return AppointmentBookingDTO.form(appointmentBookingRepository.save(appointmentBooking));
