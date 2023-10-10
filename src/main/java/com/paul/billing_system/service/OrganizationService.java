@@ -78,4 +78,13 @@ public class OrganizationService {
     public Long countOrganizationByType(OrganizationTypes type) {
         return (long) organizationRepository.findByType(type).size();
     }
+
+
+    public Optional<Organization> getSpecialtyByOrgCode(String orgCode) {
+        return organizationRepository.findByOrgCode(orgCode);
+    }
+
+    public Optional<Organization> getOrganizationByEmail(String email) {
+        return organizationRepository.findByEmail(email);
+    }
 }

@@ -1,6 +1,7 @@
 package com.paul.billing_system.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,6 +18,7 @@ public class Speciality extends BaseEntity {
     private Long id;
 
     @Column(unique = true)
+    @NotEmpty(message = "Speciality can't be null")
     private String medSpecName;
 
     private String iconUrl;

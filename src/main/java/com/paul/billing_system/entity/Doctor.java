@@ -1,6 +1,8 @@
 package com.paul.billing_system.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,12 +20,17 @@ public class Doctor extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty(message = "Doctor Name should not be empty")
     private String name;
 
+    @NotEmpty(message = "Degrees should not be empty")
     private String degrees;
 
     private String contact;
 
+    @Email(message = "Email should be valid")
+    @Column(unique = true)
+    @NotEmpty(message = "Email should not be empty")
     private String email;
 
     private String followUp;

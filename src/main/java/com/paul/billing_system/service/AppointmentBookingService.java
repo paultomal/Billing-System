@@ -9,9 +9,9 @@ import com.paul.billing_system.repository.AppointmentBookingRepository;
 import com.paul.billing_system.repository.DoctorRepository;
 import com.paul.billing_system.repository.OrganizationRepository;
 import com.paul.billing_system.repository.PatientRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;

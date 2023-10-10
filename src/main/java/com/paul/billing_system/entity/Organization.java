@@ -39,7 +39,7 @@ public class Organization extends BaseEntity {
 
     @Email(message = "Email should be valid")
     @Column(unique = true)
-    @NotEmpty(message = "Email should not be empty")
+    @NotEmpty(message = "Email can't be null")
     private String email;
 
     private String emergencyContact;
