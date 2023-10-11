@@ -95,6 +95,11 @@ public class DoctorService {
             doctor.get().setConsultationFee(doctorDTO.getConsultation());
             doctor.get().setMinDiscount(doctorDTO.getMinDiscount());
             doctor.get().setMaxDiscount(doctorDTO.getMaxDiscount());
+
+            List<DoctorSlot> doctorSlotList = doctorDTO.getDoctorSlotDTOList().stream().map(this::form).toList();
+            doctorSlotList = doctorSlotRepository.saveAll(doctorSlotList);
+            doctor.get().setDoctorSlots(doctorSlotList);
+
             doctor.get().setUpdatedAt(new Date());
 
             return doctorRepository.save(doctor.get());
