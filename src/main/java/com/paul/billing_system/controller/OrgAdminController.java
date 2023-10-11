@@ -12,8 +12,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,11 +29,11 @@ public class OrgAdminController {
 
     @PostMapping("/addOrgAdmin")
     public ResponseEntity<?> save(@Valid @RequestBody UserInfoDTO userInfoDTO) throws EmailAlreadyTakenException, UserNameAlreadyTakenException {
-        if (userServices.getUserByEmail(userInfoDTO.getEmail()).isPresent()){
+        if (userServices.getUserByEmail(userInfoDTO.getEmail()).isPresent()) {
             throw new EmailAlreadyTakenException(userInfoDTO.getEmail() + " is already taken!! Try Another!!");
         }
 
-        if (userServices.getUserByUserName(userInfoDTO.getUsername()).isPresent()){
+        if (userServices.getUserByUserName(userInfoDTO.getUsername()).isPresent()) {
             throw new UserNameAlreadyTakenException(userInfoDTO.getUsername() + " is already taken!! Try Another!!");
         }
         UserInfoDTO userInfoDTO1 = UserInfoDTO.form(userServices.saveOrgAdmin(userInfoDTO));
@@ -71,8 +69,8 @@ public class OrgAdminController {
 
     @PutMapping("/updateOrgAdmin/{id}")
     public ResponseEntity<?> updateAdmin(@Valid @PathVariable Long id, @RequestBody UserInfoDTO userInfoDTO) throws UserIsNotFoundException {
-        if (userServices.getOrgAdminById(id) == null){
-            throw new UserIsNotFoundException("Org Admin "+ id + " is not Found.");
+        if (userServices.getOrgAdminById(id) == null) {
+            throw new UserIsNotFoundException("Org Admin " + id + " is not Found.");
         }
         UserInfoDTO userInfoDTO1 = UserInfoDTO.form(userServices.updateOrgAdmin(id, userInfoDTO));
         return new ResponseEntity<>(userInfoDTO1, HttpStatus.OK);

@@ -6,7 +6,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,11 +17,16 @@ import java.io.IOException;
 
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
-    @Autowired
-    private JwtService jwtService;
-    @Autowired
-    private UserInfoUserDetailsService userDetailsService;
+
+    private final JwtService jwtService;
+
+    private final UserInfoUserDetailsService userDetailsService;
     private String username = null;
+
+    public JwtAuthFilter(JwtService jwtService, UserInfoUserDetailsService userDetailsService) {
+        this.jwtService = jwtService;
+        this.userDetailsService = userDetailsService;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -71,10 +75,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     }
 
     private boolean isUrlExcludedFromAuthentication(String requestUri) {
-        // Define the URLs that should be excluded from authentication
         String[] excludedUrls = {"/authenticate"};
 
-        // Check if the request URI matches any excluded URLs
         for (String excludedUrl : excludedUrls) {
             if (requestUri.equals(excludedUrl) || requestUri.startsWith(excludedUrl + "/")) {
                 return true;

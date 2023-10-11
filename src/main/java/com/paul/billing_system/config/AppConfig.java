@@ -2,7 +2,6 @@ package com.paul.billing_system.config;
 
 import com.paul.billing_system.component.UserInfoUserDetailsService;
 import com.paul.billing_system.security.JwtAuthFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,11 +23,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableMethodSecurity
 public class AppConfig {
-    @Autowired
-    private JwtAuthFilter authFilter;
+    private final JwtAuthFilter authFilter;
+
+    public AppConfig(JwtAuthFilter authFilter) {
+        this.authFilter = authFilter;
+    }
 
     @Bean
-    //Authentication
     public UserDetailsService userDetailsService() {
         return new UserInfoUserDetailsService();
     }
@@ -36,11 +37,9 @@ public class AppConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(autz -> autz
+                .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/**")
                         .permitAll()
-//                        .requestMatchers("/**")
-//                        .authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())

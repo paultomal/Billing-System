@@ -11,7 +11,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +33,7 @@ public class OrganizationController {
         if (organizationService.getSpecialtyByOrgCode(organizationDTO.getOrgCode()).isPresent()) {
             throw new OrgCodeIsAlreadyTakenException(organizationDTO.getOrgCode() + " isn't available!!!");
         }
-        if (organizationService.getOrganizationByEmail(organizationDTO.getEmail()).isPresent()){
+        if (organizationService.getOrganizationByEmail(organizationDTO.getEmail()).isPresent()) {
             throw new EmailAlreadyTakenException(organizationDTO.getEmail() + " isn't Already been Used. Try Another Email.");
         }
 

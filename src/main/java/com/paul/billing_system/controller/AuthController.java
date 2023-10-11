@@ -9,7 +9,6 @@ import com.paul.billing_system.enums.OrganizationTypes;
 import com.paul.billing_system.enums.UserRoles;
 import com.paul.billing_system.repository.UserRepository;
 import com.paul.billing_system.security.JwtService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,18 +23,22 @@ import java.util.List;
 
 @RestController
 public class AuthController {
-    @Autowired
-    private JwtService jwtService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private UserInfoUserDetailsService userDetailsService;
+
+    private final JwtService jwtService;
+
+    private final PasswordEncoder passwordEncoder;
+
+    private final AuthenticationManager authenticationManager;
+
+    private final UserInfoUserDetailsService userDetailsService;
 
     private final UserRepository userRepository;
 
-    public AuthController(UserRepository userRepository) {
+    public AuthController(JwtService jwtService, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, UserInfoUserDetailsService userDetailsService, UserRepository userRepository) {
+        this.jwtService = jwtService;
+        this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
+        this.userDetailsService = userDetailsService;
         this.userRepository = userRepository;
     }
 
@@ -92,6 +95,7 @@ public class AuthController {
             UserInfo user = new UserInfo();
             user.setName("root");
             user.setUsername("root");
+            user.setEmail("root@jotno.net");
             user.setPassword(passwordEncoder.encode("root"));
             user.setRoles(UserRoles.ROLE_ROOT);
             user.setOrganization(org);

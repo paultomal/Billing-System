@@ -60,13 +60,13 @@ public class InvestigationBookingController {
                                                      @PathVariable String patientName,
                                                      @RequestParam(defaultValue = "0") int page,
                                                      @RequestParam(defaultValue = "10") int size) {
-        List<InvestigationBooking> investigations = bookingServices.searchBookInvestigation(orgId,patientName, PageRequest.of(page, size));
+        List<InvestigationBooking> investigations = bookingServices.searchBookInvestigation(orgId, patientName, PageRequest.of(page, size));
         List<InvestigationBookingDTO> investigationList = investigations.stream().map(InvestigationBookingDTO::form).toList();
-        return new ResponseEntity<>(investigationList,HttpStatus.OK);
+        return new ResponseEntity<>(investigationList, HttpStatus.OK);
     }
 
     @GetMapping("/countInvestigationBooking/{orgId}")
-    public Long countInvestigationBooking(@PathVariable Long orgId){
+    public Long countInvestigationBooking(@PathVariable Long orgId) {
         return bookingServices.countInvestigationBooking(orgId);
     }
 }

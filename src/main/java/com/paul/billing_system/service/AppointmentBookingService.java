@@ -57,14 +57,13 @@ public class AppointmentBookingService {
         appointmentBooking.setDoctor(doctor);
         appointmentBooking.setSlot(appointmentBookingDTO.getSlot());
 
-        if(previousAppointments == null || previousAppointments.isEmpty()) {
+        if (previousAppointments == null || previousAppointments.isEmpty()) {
             appointmentBooking.setConsultationFee(doctor.getConsultationFee());
             Double discount = Double.parseDouble(appointmentBooking.getConsultationFee()) * (Double.parseDouble(appointmentBookingDTO.getDiscount()) / 100);
             DecimalFormat decimalFormat = new DecimalFormat("#.#");
             appointmentBooking.setDiscount(decimalFormat.format(discount));
             appointmentBooking.setTotalFees(Double.parseDouble(doctor.getConsultationFee()) - Double.parseDouble(doctor.getConsultationFee()) * (Double.parseDouble(appointmentBookingDTO.getDiscount()) / 100));
-        }
-        else {
+        } else {
             appointmentBooking.setConsultationFee(doctor.getFollowUp());
             Double discount = Double.parseDouble(appointmentBooking.getConsultationFee()) * (Double.parseDouble(appointmentBookingDTO.getDiscount()) / 100);
             DecimalFormat decimalFormat = new DecimalFormat("#.#");

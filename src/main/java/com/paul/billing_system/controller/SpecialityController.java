@@ -27,7 +27,7 @@ public class SpecialityController {
     @PreAuthorize("hasAuthority('ROLE_ROOT')")
     @PostMapping("/addSpeciality")
     public ResponseEntity<?> addSpeciality(@Valid @RequestBody SpecialityDTO specialityDTO) throws SpecialtyNameAlreadyTakenException {
-        if (specialityService.getSpecialtyByName(specialityDTO.getMedSpecName()).isPresent()){
+        if (specialityService.getSpecialtyByName(specialityDTO.getMedSpecName()).isPresent()) {
             throw new SpecialtyNameAlreadyTakenException(specialityDTO.getMedSpecName() + " is Already Saved in Database");
         }
         SpecialityDTO specialityDTO1 = SpecialityDTO.form(specialityService.addSpeciality(specialityDTO));
