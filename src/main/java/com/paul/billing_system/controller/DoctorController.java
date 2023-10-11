@@ -55,10 +55,8 @@ public class DoctorController {
     }
 
     @PutMapping("/updateDoctor/{id}")
-    public ResponseEntity<?> updateDoctor(@RequestBody DoctorDTO doctorDTO, @PathVariable Long id) throws EmailAlreadyTakenException {
-        if(doctorService.getDoctorByEmail(doctorDTO.getEmail()).isPresent()) {
-            throw new EmailAlreadyTakenException(doctorDTO.getEmail() + " is already registered!!! Try Another");
-        }
+    public ResponseEntity<?> updateDoctor(@RequestBody DoctorDTO doctorDTO, @PathVariable Long id){
+
         DoctorDTO doctorDTO1 = DoctorDTO.form(doctorService.updateDoctor(id, doctorDTO));
         return new ResponseEntity<>(doctorDTO1, HttpStatus.OK);
     }
