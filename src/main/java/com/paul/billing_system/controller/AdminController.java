@@ -39,6 +39,7 @@ public class AdminController {
         return new ResponseEntity<>(userInfoDTO1, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyAuthority('ROLE_ROOT','ROLE_ORG_ADMIN')")
     @GetMapping("/getAdmins/{org_Id}")
     public ResponseEntity<?> getAllAdmin(@PathVariable Long org_Id,
                                          @RequestParam(defaultValue = "0") int page,
