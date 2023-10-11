@@ -25,37 +25,3 @@ public class OrgBasedInvestigationController {
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-    @PutMapping("/updateInvestigation")
-    public ResponseEntity<?> addOrgInvestigation(@RequestBody OrgInvestigationDTO orgInvestigationDTO) {
-        OrgInvestigationDTO orgInvestigationDTO1 = OrgInvestigationDTO.form(orgBasedInvestigationService.addOrgInvestigation(orgInvestigationDTO));
-        return new ResponseEntity<>(orgInvestigationDTO1, HttpStatus.OK);
-    }
-*/
-
