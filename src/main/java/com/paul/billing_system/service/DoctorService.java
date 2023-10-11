@@ -115,4 +115,8 @@ public class DoctorService {
         Optional<Speciality> speciality = specialityRepository.findById(sId);
         return (long) doctorRepository.findAllByOrganizationListContainsAndSpecialityListContains(organization.orElse(null), speciality.orElse(null)).size();
     }
+
+    public Optional<Doctor> getDoctorByEmail(String email) {
+        return doctorRepository.findByEmail(email);
+    }
 }

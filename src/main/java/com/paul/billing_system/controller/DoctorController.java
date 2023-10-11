@@ -3,6 +3,7 @@ package com.paul.billing_system.controller;
 import com.paul.billing_system.dto.DoctorDTO;
 import com.paul.billing_system.entity.Doctor;
 import com.paul.billing_system.enums.DaysOfWeek;
+import com.paul.billing_system.exception.EmailAlreadyTakenException;
 import com.paul.billing_system.service.DoctorService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -25,8 +26,10 @@ public class DoctorController {
     }
 
     @PostMapping("/addDoctor/{orgId}")
-    public ResponseEntity<?> save(@RequestBody DoctorDTO doctorDTO, @PathVariable Long orgId, BindingResult bindingResult) {
-
+    public ResponseEntity<?> save(@RequestBody DoctorDTO doctorDTO, @PathVariable Long orgId) throws EmailAlreadyTakenException {
+        if(doctorService.getDoctorByEmail(doctorDTO.getEmail()).isPresent()) {
+            throw new EmailAlreadyTakenException(doctorDTO.getEmail() + " is already registered!!! Try Another");
+        }
         DoctorDTO doctorDTO1 = DoctorDTO.form(doctorService.save(orgId, doctorDTO));
         return new ResponseEntity<>(doctorDTO1, HttpStatus.OK);
     }
@@ -52,8 +55,10 @@ public class DoctorController {
     }
 
     @PutMapping("/updateDoctor/{id}")
-    public ResponseEntity<?> updateDoctor(@RequestBody DoctorDTO doctorDTO, @PathVariable Long id, BindingResult bindingResult) {
-
+    public ResponseEntity<?> updateDoctor(@RequestBody DoctorDTO doctorDTO, @PathVariable Long id) throws EmailAlreadyTakenException {
+        if(doctorService.getDoctorByEmail(doctorDTO.getEmail()).isPresent()) {
+            throw new EmailAlreadyTakenException(doctorDTO.getEmail() + " is already registered!!! Try Another");
+        }
         DoctorDTO doctorDTO1 = DoctorDTO.form(doctorService.updateDoctor(id, doctorDTO));
         return new ResponseEntity<>(doctorDTO1, HttpStatus.OK);
     }

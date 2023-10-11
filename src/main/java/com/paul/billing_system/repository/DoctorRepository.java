@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface DoctorRepository extends JpaRepository<Doctor, Long> {
 
@@ -21,5 +22,7 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
     List<Doctor> findAllByOrganizationListContainsAndSpecialityListContains(Organization organization, Speciality speciality, Pageable pageable);
 
     List<Doctor> findAllByOrganizationListContainsAndSpecialityListContains(Organization organization, Speciality speciality);
+
+    Optional<Doctor> findByEmail(String email);
 
 }
