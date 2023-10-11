@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/investigation")
+@PreAuthorize("hasAnyAuthority('ROLE_ORG_ADMIN','ROLE_ADMIN','ROLE_ROOT')")
+
 public class InvestigationController {
     private final InvestigationService investigationService;
 
@@ -23,6 +26,7 @@ public class InvestigationController {
         this.investigationService = investigationService;
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ROOT')")
     @PostMapping("/addInvestigation")
     public ResponseEntity<?> save(@Valid @RequestBody InvestigationDTO investigationDTO) throws InvestigationServiceNameAlreadyTaken {
         if (investigationService.getInvestigationByServiceName(investigationDTO.getServiceName()).isPresent()){
@@ -41,6 +45,7 @@ public class InvestigationController {
     }
 
 
+    @PreAuthorize("hasAuthority('ROLE_ROOT')")
     @PutMapping("/updateInvestigation/{id}")
     public ResponseEntity<?> updateService(@Valid @RequestBody InvestigationDTO investigationDTO, @PathVariable Long id, BindingResult bindingResult) {
 

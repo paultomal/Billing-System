@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/organization")
+@PreAuthorize("hasAnyAuthority('ROLE_ROOT','ROLE_ORG_ADMIN','ROLE_ADMIN')")
 public class OrganizationController {
     private final OrganizationService organizationService;
 
@@ -69,14 +70,12 @@ public class OrganizationController {
         return new ResponseEntity<>(organizationDTOList, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_ROOT','ROLE_ORG_ADMIN','ROLE_ADMIN')")
     @GetMapping("/getOrganizationById/{id}")
     public ResponseEntity<?> getOrganizationById(@PathVariable Long id) {
         OrganizationDTO organizationDTO = OrganizationDTO.form(organizationService.getOrganizationById(id));
         return new ResponseEntity<>(organizationDTO, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_ROOT','ROLE_ORG_ADMIN','ROLE_ADMIN')")
     @GetMapping("/search/{type}/{name}")
     public ResponseEntity<?> searchByNameAndType(@PathVariable String type,
                                                  @PathVariable String name,

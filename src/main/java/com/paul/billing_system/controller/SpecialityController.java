@@ -9,12 +9,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/specialist")
+@PreAuthorize("hasAnyAuthority('ROLE_ORG_ADMIN','ROLE_ADMIN','ROLE_ROOT')")
 public class SpecialityController {
     private final SpecialityService specialityService;
 
@@ -22,6 +24,7 @@ public class SpecialityController {
         this.specialityService = specialityService;
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ROOT')")
     @PostMapping("/addSpeciality")
     public ResponseEntity<?> addSpeciality(@Valid @RequestBody SpecialityDTO specialityDTO) throws SpecialtyNameAlreadyTakenException {
         if (specialityService.getSpecialtyByName(specialityDTO.getMedSpecName()).isPresent()){
@@ -31,6 +34,7 @@ public class SpecialityController {
         return new ResponseEntity<>(specialityDTO1, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ROOT')")
     @PutMapping("/updateSpeciality/{sId}")
     public ResponseEntity<?> updateSpeciality(@PathVariable Long sId, @RequestBody SpecialityDTO specialityDTO) {
         SpecialityDTO specialityDTO1 = SpecialityDTO.form(specialityService.updateSpeciality(sId, specialityDTO));

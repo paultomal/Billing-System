@@ -4,12 +4,14 @@ import com.paul.billing_system.dto.OrgInvestigationDTO;
 import com.paul.billing_system.service.OrgBasedInvestigationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/orgInvestigation")
+@PreAuthorize("hasAuthority('ROLE_ORG_ADMIN')")
 public class OrgBasedInvestigationController {
     private final OrgBasedInvestigationService orgBasedInvestigationService;
 
@@ -17,17 +19,9 @@ public class OrgBasedInvestigationController {
         this.orgBasedInvestigationService = orgBasedInvestigationService;
     }
 
-    //@PreAuthorize("hasAuthority('ROLE_ORG_ADMIN')")
-
     @PutMapping("/updateInvestigationOrgPrice")
     public OrgInvestigationDTO updateInvestigationPrice(@RequestBody OrgInvestigationDTO orgInvestigationDTO) {
         return orgBasedInvestigationService.updateInvestigationOrgPrice(orgInvestigationDTO);
-    }
-
-    //@PreAuthorize("hasAuthority('ROLE_ORG_ADMIN')")
-    @PostMapping("/addAllOrgInvestigation")
-    public ResponseEntity<?> addAllOrgInvestigation(@RequestBody List<OrgInvestigationDTO> investigationDTOList) {
-        return new ResponseEntity<>(orgBasedInvestigationService.addMultipleOrgInvestigation(investigationDTOList), HttpStatus.OK);
     }
 
 

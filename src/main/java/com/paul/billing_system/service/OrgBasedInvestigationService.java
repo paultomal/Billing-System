@@ -26,7 +26,7 @@ public class OrgBasedInvestigationService {
         this.organizationRepository = organizationRepository;
     }
 
-    public List<OrgInvestigationPrice> addMultipleOrgInvestigation(List<OrgInvestigationDTO> investigationDTOList) {
+/*    public List<OrgInvestigationPrice> addMultipleOrgInvestigation(List<OrgInvestigationDTO> investigationDTOList) {
         List<OrgInvestigationPrice> orgInvestigationPriceList = new ArrayList<>();
 
         investigationDTOList.forEach(orgBasedInvestigationDTO -> {
@@ -45,7 +45,7 @@ public class OrgBasedInvestigationService {
         });
 
         return orgInvestigationPriceRepository.saveAll(orgInvestigationPriceList);
-    }
+    }*/
 
     @Transactional
     public OrgInvestigationDTO updateInvestigationOrgPrice(OrgInvestigationDTO orgInvestigationDTO) {
