@@ -27,7 +27,7 @@ public class OrganizationService {
         organization.setContact(organizationDTO.getContact());
         OrganizationTypes organizationType = OrganizationTypes.getOrganizationTypeByLabel(organizationDTO.getType());
         organization.setType(organizationType);
-        organization.setOrgCode(organizationDTO.getOrgCode());
+        organization.setOrgCode(organizationDTO.getOrgCode().toUpperCase());
         organization.setEmail(organizationDTO.getEmail());
         organization.setEmergencyContact(organizationDTO.getEmergencyContact());
         organization.setOperatingHour(organizationDTO.getOperatingHour());
@@ -56,7 +56,7 @@ public class OrganizationService {
             organization.get().setName(organizationDTO.getName());
             organization.get().setAddress(organizationDTO.getAddress());
             organization.get().setContact(organizationDTO.getContact());
-            organization.get().setOrgCode(organizationDTO.getOrgCode());
+            organization.get().setOrgCode(organizationDTO.getOrgCode().toUpperCase());
             organization.get().setEmail(organizationDTO.getEmail());
             organization.get().setEmergencyContact(organizationDTO.getEmergencyContact());
             organization.get().setOperatingHour(organizationDTO.getOperatingHour());

@@ -49,16 +49,16 @@ public class AuthController {
 
         try {
             Authentication authenticate = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(authRequestDTO.getUsername(), authRequestDTO.getPassword())
+                    new UsernamePasswordAuthenticationToken(authRequestDTO.getUsername().toLowerCase(), authRequestDTO.getPassword())
             );
             if (authenticate.isAuthenticated()) {
 
                 UserInfo user = userRepository.findByUsername(authRequestDTO.getUsername()).orElse(null);
                 ResponseDTO responseDTO = new ResponseDTO();
 
-                responseDTO.setToken(jwtService.generateToken(authRequestDTO.getUsername(),
+                responseDTO.setToken(jwtService.generateToken(authRequestDTO.getUsername().toLowerCase(),
                         (List) userDetailsService.loadUserByUsername(authRequestDTO.getUsername()).getAuthorities()));
-                responseDTO.setUsername(authRequestDTO.getUsername());
+                responseDTO.setUsername(authRequestDTO.getUsername().toLowerCase());
                 responseDTO.setRoles(jwtService.extractRole(responseDTO.getToken()));
                 responseDTO.setExpiredDate(jwtService.extractExpiration(responseDTO.getToken()));
                 assert user != null;
@@ -87,7 +87,7 @@ public class AuthController {
         if (userRepository.findByUsername("root").isEmpty()) {
             Organization org = new Organization();
             org.setName("root");
-            org.setOrgCode("root");
+            org.setOrgCode("ROOT");
             org.setType(OrganizationTypes.ROOT);
             org.setAddress("Mohakhali");
             org.setEmail("jotno@gmail.com");

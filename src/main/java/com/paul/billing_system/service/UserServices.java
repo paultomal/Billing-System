@@ -38,7 +38,7 @@ public class UserServices {
         userInfoDTO.setPassword(passwordEncoder.encode(userInfoDTO.getPassword()));
         UserInfo userInfo = new UserInfo();
         userInfo.setName(userInfoDTO.getName());
-        userInfo.setUsername(userInfoDTO.getUsername());
+        userInfo.setUsername(userInfoDTO.getUsername().toLowerCase());
         userInfo.setEmail(userInfoDTO.getEmail());
         userInfo.setPassword(userInfoDTO.getPassword());
         userInfo.setContact(userInfoDTO.getContact());
@@ -60,7 +60,7 @@ public class UserServices {
         if (organization.isPresent()) {
             userInfoDTO.setPassword(passwordEncoder.encode(userInfoDTO.getPassword()));
             userInfo.setName(userInfoDTO.getName());
-            userInfo.setUsername(userInfoDTO.getUsername());
+            userInfo.setUsername(userInfoDTO.getUsername().toLowerCase());
             userInfo.setEmail(userInfoDTO.getEmail());
             userInfo.setPassword(userInfoDTO.getPassword());
             userInfo.setContact(userInfoDTO.getContact());
@@ -92,7 +92,7 @@ public class UserServices {
         Optional<UserInfo> userInfo = userRepository.findById(id);
         if (userInfo.isPresent()) {
             userInfo.get().setName(userInfoDTO.getName());
-            userInfo.get().setUsername(userInfoDTO.getUsername());
+            userInfo.get().setUsername(userInfoDTO.getUsername().toLowerCase());
             userInfo.get().setEmail(userInfoDTO.getEmail());
             userInfo.get().setContact(userInfoDTO.getContact());
             userInfo.get().setUpdatedAt(new Date());
@@ -111,7 +111,7 @@ public class UserServices {
         if (organization1.isPresent()) {
             userInfoDTO.setPassword(passwordEncoder.encode(userInfoDTO.getPassword()));
             userInfo.setName(userInfoDTO.getName());
-            userInfo.setUsername(userInfoDTO.getUsername());
+            userInfo.setUsername(userInfoDTO.getUsername().toLowerCase());
             userInfo.setEmail(userInfoDTO.getEmail());
             userInfo.setPassword(userInfoDTO.getPassword());
             userInfo.setContact(userInfoDTO.getContact());
@@ -138,7 +138,7 @@ public class UserServices {
 
         if (userInfo.isPresent()) {
             userInfo.get().setName(userInfoDTO.getName());
-            userInfo.get().setUsername(userInfoDTO.getUsername());
+            userInfo.get().setUsername(userInfoDTO.getUsername().toLowerCase());
             userInfo.get().setEmail(userInfoDTO.getEmail());
             userInfo.get().setContact(userInfoDTO.getContact());
             userInfo.get().setUpdatedAt(new Date());
